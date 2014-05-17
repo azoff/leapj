@@ -8,8 +8,7 @@
 		}
 	});
 
-    // @todo Change the server to the dev server, not the open test server
-    var myDataRef = new Firebase('https://pr5c1gjakw6.firebaseio-demo.com/');
+    var myDataRef = new Firebase(config.firebase);
     // @todo Create a tree structure for rooms
     myDataRef.push({name: "joseph", text: "cool"});
 

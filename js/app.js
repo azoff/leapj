@@ -8,7 +8,7 @@
 		}
 	});
 
-    var myDataRef = new Firebase('https://pr5c1gjakw6.firebaseio-demo.com/');
+    var myDataRef = new Firebase(config.firebase);
     myDataRef.on('child_added', function(snapshot) {
       // @todo Ignore old commands
       console.log(snapshot.val());
