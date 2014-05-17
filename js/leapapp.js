@@ -8,8 +8,8 @@
 		}
 	});
 
-    var myDataRef = new Firebase(config.firebase);
+    var dataRef = new Firebase(config.firebase_room_uri);
     // @todo Create a tree structure for rooms
-    myDataRef.push({name: "joseph", text: "cool"});
+    dataRef.push({name: "joseph", text: "cool"});
 
 })();

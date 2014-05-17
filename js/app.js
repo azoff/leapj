@@ -8,8 +8,8 @@
 		}
 	});
 
-    var myDataRef = new Firebase(config.firebase);
-    myDataRef.on('child_added', function(snapshot) {
+    var dataRef = new Firebase(config.firebase_room_uri);
+    dataRef.on('child_added', function(snapshot) {
       // @todo Ignore old commands
       console.log(snapshot.val());
     });
