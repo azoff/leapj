@@ -3,6 +3,13 @@
 		"name": "Bad Romance",
 		"artist": "Lady Gaga",
 		"stems": {
+            "all": "/stems/gagaall.mp3"
+		}
+	},
+	{
+		"name": "Bad Romance",
+		"artist": "Lady Gaga",
+		"stems": {
             "bass": "/stems/gaga/Bass.mp3",
             "drum": "/stems/gaga/Drum.mp3",
             "lead":  "/stems/gaga/Lead.mp3",
