@@ -4,18 +4,18 @@ define(function(){
 
 		value = value * 20000; // max in Hz
 
-		switch(type) {
+		switch(value.hand) {
 
 			//lowpass
-			case 0:
+			case 'left':
 				scope.filterNode.type = scope.filterNode.LOWPASS;
 				break;
 			//highpass
-			case 1:
+			case 'right':
 				scope.filterNode.type = scope.filterNode.HIGHPASS;
 				break;
 			//bandpass
-			case 2:
+			case '':
 			default:
 				scope.filterNode.type = scope.filterNode.BANDPASS;
 				break;
@@ -42,6 +42,7 @@ define(function(){
 	}
 
 	function processMessage(msg, scope) {
+		console.log(msg);
 		if (msg.type in recognizers) {
 			recognizers[msg.type](msg.value, scope);
 		}
