@@ -33,7 +33,7 @@
 			var job = $.Deferred();
 			controllers.push(job.promise());
 			require(['controller/'+name], function(controller){
-				module.controller(name, ['$scope', controller]);
+				module.controller(name, ['$scope', '$element', controller]);
 				job.resolve();
 			})
 		});
