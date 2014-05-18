@@ -1,6 +1,6 @@
 class LeapToFirebase
-  constructor: ->
-    console.log "Construct LeapToFirebase"
+  constructor: (@firebase_instance) ->
+    console.log "Construct LeapToFirebase. Connecting to #{firebase_instance}"
 
   translate: (leap_event) ->
 
@@ -21,6 +21,12 @@ class LeapToFirebase
       }
     else
       null
+
+  sendToFirebase: (event) ->
+    # after translating, this actually sends event to firebase!
+    console.log "Sending event #{JSON.stringify event} to firebase #{@firebase_instance}"
+    console.error "Not actually sending to firebase YET"
+
 
 # hack to let me use Node style exports in tests, but require-js in app
 module = module or {}
