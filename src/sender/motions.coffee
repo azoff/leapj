@@ -96,17 +96,56 @@ class PinchListener extends LeapEventListener
 class SpaceListener extends LeapEventListener
   constructor: ->
     console.log "Init ThumbAndSlideListener"
+    @lastEventTimestamp = Date.now()
 
   sendEvent: (type, value) ->
     # console.log "Leap:KeyTap event #{type}, #{value}"
     super type, value
 
+  normalize: (value, min, max, debug=false) ->
+    # Normalize values to [0,1] output
+    significant_digits = 3
+    factor = Math.pow 10, significant_digits
+
+    beforeValue = value if debug
+
+    range = (max - min)
+    value = value + min*(-1) if min < 0 # normalize above 0
+    value = value / range
+    value = Math.round(value * factor) / factor # round to have <x> significant_digits
+    value = Math.max (Math.min value, 1), 0 # bound within 0 to 1
+
+    console.log value, beforeValue if debug
+
+    value
+
+
+
+  displayActiveCommand: (type, value) ->
+    super "#{type} - #{value.hand} - #{value.x},#{value.y},#{value.z}"
+
   listen: (frame) ->
+    #
     return unless frame.hands[0] or frame.hands[1]
+
+    # Buffer events
+    timestamp = Date.now()
+    TIME_BETWEEN_EVENTS = 50
+    return unless timestamp - @lastEventTimestamp > TIME_BETWEEN_EVENTS
+    @lastEventTimestamp = timestamp
+
+
     for hand in frame.hands
       continue unless hand
       whichHand = hand.type
-      @sendEvent 'space', {x: hand.palmPosition[0], y: hand.palmPosition[1], z: hand.palmPosition[2]}
+      e = {
+        x: @normalize hand.palmPosition[0], -180, 180
+        y: @normalize hand.palmPosition[1], 75, 300
+        z: @normalize hand.palmPosition[2], -200, 260, true
+        hand: whichHand
+      }
+      @sendEvent 'space', e
+      @displayActiveCommand 'space', e
 
     # initialize the toggle.
     # detect if thumb is close to hand

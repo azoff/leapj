@@ -141,17 +141,51 @@ SpaceListener = (function(_super) {
 
   function SpaceListener() {
     console.log("Init ThumbAndSlideListener");
+    this.lastEventTimestamp = Date.now();
   }
 
   SpaceListener.prototype.sendEvent = function(type, value) {
     return SpaceListener.__super__.sendEvent.call(this, type, value);
   };
 
+  SpaceListener.prototype.normalize = function(value, min, max, debug) {
+    var beforeValue, factor, range, significant_digits;
+    if (debug == null) {
+      debug = false;
+    }
+    significant_digits = 3;
+    factor = Math.pow(10, significant_digits);
+    if (debug) {
+      beforeValue = value;
+    }
+    range = max - min;
+    if (min < 0) {
+      value = value + min * (-1);
+    }
+    value = value / range;
+    value = Math.round(value * factor) / factor;
+    value = Math.max(Math.min(value, 1), 0);
+    if (debug) {
+      console.log(value, beforeValue);
+    }
+    return value;
+  };
+
+  SpaceListener.prototype.displayActiveCommand = function(type, value) {
+    return SpaceListener.__super__.displayActiveCommand.call(this, "" + type + " - " + value.hand + " - " + value.x + "," + value.y + "," + value.z);
+  };
+
   SpaceListener.prototype.listen = function(frame) {
-    var hand, whichHand, _i, _len, _ref, _results;
+    var TIME_BETWEEN_EVENTS, e, hand, timestamp, whichHand, _i, _len, _ref, _results;
     if (!(frame.hands[0] || frame.hands[1])) {
       return;
     }
+    timestamp = Date.now();
+    TIME_BETWEEN_EVENTS = 50;
+    if (!(timestamp - this.lastEventTimestamp > TIME_BETWEEN_EVENTS)) {
+      return;
+    }
+    this.lastEventTimestamp = timestamp;
     _ref = frame.hands;
     _results = [];
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
@@ -160,11 +194,14 @@ SpaceListener = (function(_super) {
         continue;
       }
       whichHand = hand.type;
-      _results.push(this.sendEvent('space', {
-        x: hand.palmPosition[0],
-        y: hand.palmPosition[1],
-        z: hand.palmPosition[2]
-      }));
+      e = {
+        x: this.normalize(hand.palmPosition[0], -180, 180),
+        y: this.normalize(hand.palmPosition[1], 75, 300),
+        z: this.normalize(hand.palmPosition[2], -200, 260, true),
+        hand: whichHand
+      };
+      this.sendEvent('space', e);
+      _results.push(this.displayActiveCommand('space', e));
     }
     return _results;
   };
