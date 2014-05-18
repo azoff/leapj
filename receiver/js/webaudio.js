@@ -42,10 +42,18 @@ function init ()
     bufferLoader = new BufferLoader(
         audioContext,
         [
-        "https://s3.amazonaws.com/musicstems/Queen - We Will Rock You/drums.ogg",
-        // "https://s3.amazonaws.com/musicstems/Queen - We Will Rock You/guitar.ogg",
-        // "https://s3.amazonaws.com/musicstems/Queen - We Will Rock You/rhythm.ogg",
-        // "https://s3.amazonaws.com/musicstems/Queen - We Will Rock You/song.ogg",
+        /*
+        "https://s3.amazonaws.com/leapj-assets/audio/with_stems/Queen - We Will Rock You/drums.ogg",
+        "https://s3.amazonaws.com/leapj-assets/audio/with_stems/Queen - We Will Rock You/guitar.ogg",
+        "https://s3.amazonaws.com/leapj-assets/audio/with_stems/Queen - We Will Rock You/rhythm.ogg",
+        "https://s3.amazonaws.com/leapj-assets/audio/with_stems/Queen - We Will Rock You/song.ogg",
+        */
+        //"/audio/no_stems/Backstreet Boys - Everybody (Backstreet's Back)-6M6samPEMpM.mp4",
+
+        "/audio/with_stems/Beatles%20-%20Sgt%20Pepper/Beatles%20-%20Sgt%20Pepper%20-%20drum.mp3",
+        "/audio/with_stems/Beatles%20-%20Sgt%20Pepper/Beatles%20-%20Sgt%20Pepper%20-%20guiter.mp3",
+        "/audio/with_stems/Beatles%20-%20Sgt%20Pepper/Beatles%20-%20Sgt%20Pepper%20-%20horns.mp3",
+        "/audio/with_stems/Beatles%20-%20Sgt%20Pepper/Beatles%20-%20Sgt%20Pepper%20-%20voice.mp3",
         ],
         finishedLoading
     );
