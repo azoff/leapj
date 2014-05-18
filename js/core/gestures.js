@@ -62,7 +62,7 @@ define(function(){
 
 	function pinchStartRecognizer(value, scope) {
 		if (value.hand == 'left') {
-			console.log("pinch start!")
+			// console.log("pinch start!")
 			adjustGain(0, scope);
 			adjustFilter(0, 'low', scope);
 		}
@@ -71,7 +71,7 @@ define(function(){
 	function pinchStopRecognizer(value, scope) {
 
 		if (value.hand == 'left') {
-			console.log("pinch stop!")
+			// console.log("pinch stop!")
 			adjustGain(1, scope);
 			adjustFilter(1, 'low', scope);
 		}
@@ -81,6 +81,10 @@ define(function(){
 		if (value.hand == 'right') {
 			adjustFilter(value.x, 'low', scope);
 			adjustGain(value.y, scope);
+			// adjustPan(value.x, value.y, value.z, scope);
+		} else if (value.hand == 'left') {
+			adjustFilter(1 - value.x, 'band', scope); // invert
+			// adjustGain(value.y, scope);
 			// adjustPan(value.x, value.y, value.z, scope);
 		}
 	}
