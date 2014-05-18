@@ -19,7 +19,6 @@ class LeapEventListener
 
 class PinchListener extends LeapEventListener
 
-
   constructor: ->
     @PINCH_STRENGTH_ON = .8
     @PINCH_STRENGTH_OFF = .4
@@ -60,12 +59,18 @@ class PinchListener extends LeapEventListener
     @updateUi pinchStrength
 
     if not @pinched and pinchStrength > @PINCH_STRENGTH_ON
+      # Find and save pinching finger
+      {fingerIndex} = @findPinchingFingerType hand
       @pinched = true
       @pinched_finger = fingerIndex
-      {pincher, fingerIndex} = @findPinchingFingerType hand
-      @sendEvent 'pinch-start', fingerIndex
+
+      # Fire event
+      @sendEvent 'pinch-start', @pinched_finger
     else if @pinched and pinchStrength < @PINCH_STRENGTH_OFF
-      @sendEvent 'pinch-end', @pinched_finger
+      # Fire Event
+      @sendEvent 'pinch-stop', @pinched_finger
+
+      # Save 'unpinched' state
       @pinched = false
       @pinched_finger = null
 

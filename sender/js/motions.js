@@ -83,16 +83,16 @@ PinchListener = (function(_super) {
   };
 
   PinchListener.prototype.listen = function(hand) {
-    var fingerIndex, pinchStrength, pincher, _ref;
+    var fingerIndex, pinchStrength;
     pinchStrength = hand.pinchStrength.toPrecision(2);
     this.updateUi(pinchStrength);
     if (!this.pinched && pinchStrength > this.PINCH_STRENGTH_ON) {
+      fingerIndex = this.findPinchingFingerType(hand).fingerIndex;
       this.pinched = true;
       this.pinched_finger = fingerIndex;
-      _ref = this.findPinchingFingerType(hand), pincher = _ref.pincher, fingerIndex = _ref.fingerIndex;
-      return this.sendEvent('pinch-start', fingerIndex);
+      return this.sendEvent('pinch-start', this.pinched_finger);
     } else if (this.pinched && pinchStrength < this.PINCH_STRENGTH_OFF) {
-      this.sendEvent('pinch-end', this.pinched_finger);
+      this.sendEvent('pinch-stop', this.pinched_finger);
       this.pinched = false;
       return this.pinched_finger = null;
     }
