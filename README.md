@@ -7,7 +7,7 @@ A good place to find songs with stems:
 Build
 -----
 
-compass compile
+`compass compile` (or `make build`)
 
 Then run the server of your choice, e.g.
 
@@ -28,4 +28,5 @@ TODO
 ----
 
 * Move fonts/ and scss/ into common/
-* Remove non-web assets (e.g. README.md) before deploying?
+* Remove non-web assets (e.g. README.md) before deploying
+    * This involves creating a folder called "public/" that is pushed to firebase.

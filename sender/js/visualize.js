@@ -22,13 +22,7 @@ visualizeHand = function(controller){
   // To use a plugins, we call `.use` on the controller with options for the plugin.
   // See js.leapmotion.com/plugins for more info
 
-  controller.use('playback', {
-    // This is a compressed JSON file of preprecorded frame data
-    recording: 'pinch-bones-3-57fps.json.lz',
-    // How long, in ms, between repeating the recording.
-    timeBetweenLoops: 1000,
-    pauseOnHand: true
-  }).on('riggedHand.meshAdded', function(handMesh, leapHand){
+  controller.use('playback', {}).on('riggedHand.meshAdded', function(handMesh, leapHand){
     handMesh.material.opacity = 1;
   });
 

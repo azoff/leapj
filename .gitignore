@@ -1,2 +1,5 @@
 .DS_Store
 .idea
+src/sender/*.js
+src/receiver/*.js
+node_modules

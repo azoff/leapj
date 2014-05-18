@@ -1,6 +1,10 @@
 output = document.getElementById("output")
 progress = document.getElementById("progress")
 
+# TODO: Expects the LeapToFirebase exists -- should require it explicitly
+console.error "No LeapToFirebase" unless LeapToFirebase?
+leapToFirebase = new LeapToFirebase
+
 class LeapEventListener
   # Initiali
   constructor: ->
@@ -38,6 +42,11 @@ class PinchListener extends LeapEventListener
       progress.style.width = pinchStrength * 100 + "%"
     else
       console.error "UI hooks aren't configured. output (#{output}), progress (#{progress})"
+
+  sendEvent: (type, value) ->
+    console.log "Leap Event received. Translating and sending FirebaseEvent"
+    firebaseEvent = leapToFirebase.translate {type, value}
+    leapToFirebase.sendToFirebase firebaseEvent if firebaseEvent?
 
   listen: (hand) ->
     # Get pinch strength
