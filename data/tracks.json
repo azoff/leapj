@@ -1,7 +1,7 @@
 [
 	{
 		"name": "Analog Or Digital",
-		"band": "Wildlife Control",
+		"artist": "Wildlife Control",
 		"stems": {
 			"vocals": "/stems/analogordigital/Analog or Digital.Vocals.mp3",
 			"guitarpiano": "/stems/analogordigital/Analog or Digital.GuitarPiano.mp3",
@@ -11,7 +11,7 @@
 	},
 	{
 		"name": "Lasso",
-		"band": "Phoenix",
+		"artist": "Phoenix",
 		"stems": {
 			"guitar": "/stems/lasso/Guitar.mp3",
 			"bass": "/stems/lasso/Bass.mp3",
@@ -22,7 +22,7 @@
 	},
 	{
 		"name": "Armistice",
-		"band": "Phoenix",
+		"artist": "Phoenix",
 		"stems": {
 			"beat": "/stems/armistice/Beat.mp3",
 			"goblins": "/stems/armistice/Goblins.mp3",

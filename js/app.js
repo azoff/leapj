@@ -32,7 +32,7 @@
 			var name = $(el).attr('ng-controller');
 			var job = $.Deferred();
 			controllers.push(job.promise());
-			require(['controller/'+name], function(controller){
+			require(['controllers/'+name], function(controller){
 				module.controller(name, ['$scope', '$element', controller]);
 				job.resolve();
 			})
@@ -41,6 +41,7 @@
 		// finish bootstrap when all controllers load
 		$.when.apply($, controllers).done(function(){
 			angular.resumeBootstrap([module.name]);
+			root.addClass('ready');
 		});
 
 	});
