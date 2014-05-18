@@ -14,32 +14,30 @@
 <body>
 
 	<header>
-		<h1>LeapJ</h1>
+		<h1 id="logo">Leap<em>L</em></h1>
 	</header>
 
-	<div ng-controller="tracks" ng-cloak>
-		<span ng-repeat="track in tracks">
-			<input id="{{ 'radio-' + $index }}" type="radio" ng-model="$parent.selectedTrack" ng-value="track" />
-			<label for="{{ 'radio-' + $index }}">{{ track.name + ' ('+track.band+')' }}</label>
-		</span>
-	</div>
+	<div id="content">
 
-	<div ng-controller="player" ng-cloak>
-
-		<div ng-show="selectedTrack">
-			<h2>{{selectedTrack.name}}</h2>
-			<button ng-disabled="!ready" ng-show="!playing" ng-click="playSelectedTrack()">Play</button>
-			<button ng-disabled="!ready" ng-show="playing" ng-click="stopSelectedTrack()">Stop</button>
+		<div ng-controller="tracks">
+			<button id="start" ng-class="{started:!!selectedTrack}" ng-click="start()" ng-show="tracks">Let's Dance.</button>
 		</div>
 
+		<div ng-controller="player" ng-class="{started:!!selectedTrack}">
 
-		<div ng-show="selectedTrack">
-			<div ng-controller="stem" ng-class="{loading:loading==true}" ng-repeat="(key, url) in selectedTrack.stems">
-				<h2>{{key}}<span ng-show="status"> ({{status}})</span></h2>
-				<input type="range" ng-model="volume" />
-				<canvas></canvas>
-				<span class="spinner" ng-show="loading"></span>
+			<div id="player">
+				<h2 id="track-title">{{selectedTrack.name}} - {{selectedTrack.artist}}</h2>
 			</div>
+
+
+			<div id="stems" ng-controller="stems">
+				<div class="stem" ng-controller="stem" ng-class="{ready:!loading}" ng-repeat="(key, url) in selectedTrack.stems">
+					<h3>{{key}}</h3>
+					<canvas></canvas>
+					<i class="fa fa-spin fa-circle-o-notch"></i>
+				</div>
+			</div>
+
 		</div>
 
 	</div>

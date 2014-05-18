@@ -9,4 +9,4 @@ var config = {
     localPubSub: null,
 //    localPubSub: "http://localhost:8001/",
 }
-config.firebase_room_uri = config.firebase_base_uri + "rooms/" + config.room_name;
+config.firebase_room_uri = config.firebase_base_uri + "session/" + config.room_name;

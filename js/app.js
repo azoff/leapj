@@ -5,11 +5,17 @@
 	requirejs.config({
 		paths: {
 			jquery: '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min',
-			angular: '//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min'
+			angular: '//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min',
+			firebase: '//cdn.firebase.com/js/client/1.0.15/firebase',
+			gestures: 'lib/gestures',
+			pubsub: 'lib/pubsub'
 		},
 		shim: {
 			angular: {
 				exports: 'angular'
+			},
+			firebase: {
+				exports: 'Firebase'
 			}
 		}
 	});
@@ -32,7 +38,7 @@
 			var name = $(el).attr('ng-controller');
 			var job = $.Deferred();
 			controllers.push(job.promise());
-			require(['controller/'+name], function(controller){
+			require(['controllers/'+name], function(controller){
 				module.controller(name, ['$scope', '$element', controller]);
 				job.resolve();
 			})
@@ -41,6 +47,7 @@
 		// finish bootstrap when all controllers load
 		$.when.apply($, controllers).done(function(){
 			angular.resumeBootstrap([module.name]);
+			root.addClass('ready');
 		});
 
 	});

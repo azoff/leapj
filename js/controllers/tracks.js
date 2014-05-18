@@ -8,6 +8,10 @@ define(['require'], function(require){
 
 		require(['data/tracks'], loadTracks);
 
+		scope.start = function() {
+			scope.selectedTrack = scope.tracks[0];
+		};
+
 		function renderTracks(tracks) {
 			scope.tracks = tracks;
 			scope.$apply();
