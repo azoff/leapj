@@ -64,23 +64,25 @@ LedController.prototype.process = function() {
   }, this.timeout);
 };
 
-
+armed = 0;
 strobe = 0;
 timeout = 20;
 (function loop() {
     // Print to time to indicate something is happening
     if (strobe) {
-        if (timeout < 300) {
+        if (timeout < 100) {
         Led.exec('led r\r\n');
-        } else if (timeout < 600) {
+        } else if (timeout < 200) {
         Led.exec('led g\r\n');
         } else {
-        Led.exec('led g\r\n');
+        Led.exec('led b\r\n');
         }
         strobe = 0;
     } else {
         Led.exec('led off\r\n');
-        strobe = 1;
+        if (armed) {
+            strobe = 1;
+        }
     }
     // Call the same function again
     setTimeout(function () {
@@ -95,11 +97,15 @@ var dataRef = new Firebase('https://pr5c1gjakw6.firebaseio-demo.com/rooms/led');
 dataRef.on('child_added', function(snapshot) {
     if (snapshot.val().type == 'space') {
         x = snapshot.val().x;
-        y = snapshot.val().y;
         z = snapshot.val().z;
-        timeout = z*1000;
+        if (z < .9) {
+            armed = 1;
+        } else {
+            armed = 0;
+        }
+        timeout = x*500;
         if (timeout < 25) { timeout = 25; }
-        if (timeout > 1000) { timeout = 1000; }
+        if (timeout > 500) { timeout = 500; }
         //console.log(snapshot.val());
     }
 });
