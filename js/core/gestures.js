@@ -36,11 +36,14 @@ define(function(){
 		console.log('adjusting volume', value);
 	}
 
-	function adjustPan(value, scope) {
+	function adjustPan(x, y, z, scope) {
+		if (!scope.gainNode) return;
+
 		var scale = 10;
-		var x = value.x*scale - scale/2;
-		var y = value.y*scale - scale/2;
-		var z = value.z*scale - scale/2;
+		x = x*scale - scale/2;
+		y = y*scale - scale/2;
+		z = z*scale - scale/2;
+
 		scope.panNode.setPosition(x, y, z);
 		console.log('adjusting pan', x, y, z);
 	}
@@ -54,7 +57,7 @@ define(function(){
 	}
 
 	function spaceRecognizer(value, scope) {
-		adjustPan(value, scope);
+		adjustPan(value.x, value.y, value.z, scope);
 		// adjustFilter(value.x, scope);
 		// adjustGain(value.y, scope);
 	}
