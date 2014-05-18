@@ -62,7 +62,7 @@ define(function(){
 
 	function pinchStartRecognizer(value, scope) {
 		if (value.hand == 'left') {
-			console.log("pinch start!")
+			// console.log("pinch start!")
 			adjustGain(0, scope);
 			adjustFilter(0, 'low', scope);
 		}
@@ -71,7 +71,7 @@ define(function(){
 	function pinchStopRecognizer(value, scope) {
 
 		if (value.hand == 'left') {
-			console.log("pinch stop!")
+			// console.log("pinch stop!")
 			adjustGain(1, scope);
 			adjustFilter(1, 'low', scope);
 		}
