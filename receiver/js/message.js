@@ -9,7 +9,7 @@ dataRef.on('child_added', function(snapshot) {
 
 // send incoming messages to webaudio control handlers
 function senderEvent(o) {
-    switch(o.type) {
+    switch(o.event.type) {
     case "on":
         audioevent.enable(o)
         break;
