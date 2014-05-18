@@ -11,5 +11,7 @@ dataRef.on('child_added', function(snapshot) {
 
 // send incoming messages to webaudio control handlers
 function senderEvent(o) {
-    audioevent[o.type](o)
+    if (gestures.hasOwnProperty(o.type)) {
+        gestures[o.type](o.value)
+    }
 }

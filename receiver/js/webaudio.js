@@ -51,9 +51,9 @@ function init ()
         audioContext,
         [
         "https://s3.amazonaws.com/musicstems/Queen - We Will Rock You/drums.ogg",
-        "https://s3.amazonaws.com/musicstems/Queen - We Will Rock You/guitar.ogg",
-        "https://s3.amazonaws.com/musicstems/Queen - We Will Rock You/rhythm.ogg",
-        "https://s3.amazonaws.com/musicstems/Queen - We Will Rock You/song.ogg",
+        // "https://s3.amazonaws.com/musicstems/Queen - We Will Rock You/guitar.ogg",
+        // "https://s3.amazonaws.com/musicstems/Queen - We Will Rock You/rhythm.ogg",
+        // "https://s3.amazonaws.com/musicstems/Queen - We Will Rock You/song.ogg",
         ],
         finishedLoading
     );
@@ -86,6 +86,7 @@ function finishedLoading(bufferList) {
 }
 
 var audioevent = {
+
     "on": function(event) {
     },
     "off": function(event) {
@@ -131,7 +132,11 @@ var audioevent = {
     },
     "reverb": function(event) {
     },
-    "space": function(event) {
-        console.log('space')
+}
+var gestures = {
+    // leapmotion events
+    "space": function(value) {
+        console.log('space', value.x)
+	stems[0].filterNode.frequency.value = value.x*20000;
     },
 }
