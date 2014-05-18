@@ -66,11 +66,12 @@ function finishedLoading(bufferList) {
         // filter chain
         stems[i].gainNode = audioContext.createGain(); // gain
         stems[i].filterNode = audioContext.createBiquadFilter(); // biquad filter
-        stems[i].reverbNode = audioContext.createConvolver(); // reverb
+        stems[i].panNode = audioContext.createPanner(); // pan filter
 
         // connections
         stems[i].source.connect(stems[i].filterNode);
-        stems[i].filterNode.connect(stems[i].gainNode);
+        stems[i].filterNode.connect(stems[i].panNode);
+        stems[i].panNode.connect(stems[i].gainNode);
         stems[i].gainNode.connect(audioContext.destination);
     }
     $("#play").show();
@@ -105,6 +106,14 @@ function gain(stem, value) {
     value = Math.max(0, value)
     value = Math.min(1, value)
     stems[stem].gainNode.gain.value = value;
+}
+
+function pan(stem, x, y, z) {
+    var scale = 10
+    x = x*scale - scale/2
+    y = y*scale - scale/2
+    z = z*scale - scale/2
+    stems[stem].panNode.setPosition(x, y, z);
 }
 
 var gestures = {
