@@ -20,7 +20,7 @@ describe("Leap To Firebase", function() {
     event: {},
     source: "leap"
   };
-  return _.each([
+  _.each([
     {
       type: 'pinch-start',
       value: {
@@ -47,6 +47,27 @@ describe("Leap To Firebase", function() {
       }
     }
   ], function(pinch_event) {
+    return it("takes a pinch command and outputs a track-on/off", function() {
+      var actual, expected;
+      expected = _.clone(base_event);
+      expected.event = {
+        type: "volume",
+        level: pinch_event.type === 'pinch-start' ? 0 : 1
+      };
+      expected.stem = pinch_event.value.finger;
+      actual = l2f.translate(pinch_event);
+      return assert.deepEqual(actual, expected);
+    });
+  });
+  return _.each([
+    {
+      type: 'space',
+      value: {
+        finger: 0,
+        hand: 'left'
+      }
+    }
+  ], function(space_event) {
     return it("takes a pinch command and outputs a track-on/off", function() {
       var actual, expected;
       expected = _.clone(base_event);

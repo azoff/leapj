@@ -61,10 +61,11 @@ class PinchListener extends LeapEventListener
   displayActiveCommand: (type, value) ->
     super "#{type} - #{value.hand} #{value.finger}"
 
-  listen: (hands) ->
-    for hand in hands
+  listen: (frame) ->
+    return unless frame.hands[0] or frame.hands[1]
+    for hand in frame.hands
       continue unless hand
-      whichHand = hand.type # 'left' or 'kind'
+      whichHand = hand.type # 'left' or 'right'
 
       # Get pinch strength
       pinchStrength = hand.pinchStrength.toPrecision(2)
@@ -91,6 +92,31 @@ class PinchListener extends LeapEventListener
         @pinched = false
         @pinched_finger = null
 
+class SpaceListener extends LeapEventListener
+  constructor: ->
+    console.log "Init ThumbAndSlideListener"
+
+  sendEvent: (type, value) ->
+    # console.log "Leap:KeyTap event #{type}, #{value}"
+    super type, value
+
+  listen: (frame) ->
+    return unless frame.hands[0] or frame.hands[1]
+    for hand in frame.hands
+      continue unless hand
+      whichHand = hand.type
+      @sendEvent 'space', {x: hand.palmPosition[0], y: hand.palmPosition[1], z: hand.palmPosition[2]}
+
+    # initialize the toggle.
+    # detect if thumb is close to hand
+
+    # TODO first:
+    # detect the height of the hand. scale it dude.
+
+# class GrabStrengthListener extends LeapEventListener
+
+#   listen: hand.grabStrength
+
 class KeyTapListener extends LeapEventListener
 
   constructor: ->
@@ -104,23 +130,16 @@ class KeyTapListener extends LeapEventListener
   listen: (gesture) ->
     console.log "key tap listen"
 
+# TODO: Swipe Left/Right to change effect?
+# TODO: hand.grabStrength
 pinchHandler = new PinchListener
-KeyTapListener = new KeyTapListener
+keyTapListener = new KeyTapListener
+spaceListener = new SpaceListener
 
 Leap.loop
   enableGestures: true
   background: true
 ,
   (frame) ->
-    # TODO: Get pinches from both left and right hands
-    # console.log frame.hands
-
-    hands = if frame.hands[0] or frame.hands[1] then frame.hands else null
-    pinchHandler.listen hands if hands
-  # # return {
-  #   hand: (hand) ->
-  # #     pinchHandler.listen hand
-
-  #   gesture: (gesture) ->
-  #     KeyTapListener.listen gesture
-  # }
+    pinchHandler.listen frame
+    spaceListener.listen frame

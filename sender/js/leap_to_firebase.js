@@ -32,6 +32,16 @@ LeapToFirebase = (function() {
         },
         source: 'leap'
       };
+    } else if (leap_event.type === 'space') {
+      return {
+        user: 'string',
+        stem: 1,
+        event: {
+          type: 'volume',
+          level: leap_event.value.x
+        },
+        source: 'leap'
+      };
     } else {
       return null;
     }

@@ -28,3 +28,14 @@ describe "Leap To Firebase", ->
       expected.stem = pinch_event.value.finger
       actual = l2f.translate pinch_event
       assert.deepEqual actual, expected
+
+  _.each [
+    # TODO: Do something different depending on which hand is gesturing
+    { type: 'space', value: { finger: 0, hand: 'left'} }
+  ], (space_event) ->
+    it "takes a pinch command and outputs a track-on/off", ->
+      expected = _.clone base_event
+      expected.event = { type: "volume", level: if pinch_event.type is 'pinch-start' then 0 else 1}
+      expected.stem = pinch_event.value.finger
+      actual = l2f.translate pinch_event
+      assert.deepEqual actual, expected

@@ -25,6 +25,14 @@ class LeapToFirebase
         event:  { type: 'volume', level: 1}
         source: 'leap'
       }
+    else if leap_event.type is 'space'
+      # TODO: this spams like whoa
+      {
+        user: 'string'
+        stem: 1
+        event: { type: 'volume', level: leap_event.value.x }
+        source: 'leap'
+      }
     else
       null
 
