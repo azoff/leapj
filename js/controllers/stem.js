@@ -143,6 +143,7 @@ define(['require', 'gestures', 'jquery'], function(angular, gestures, $){
 			scope.gainNode = audio.createGain();           // volume control
 			scope.filterNode = audio.createBiquadFilter(); // biquad filter
 			scope.filterNode.type = scope.filterNode.ALLPASS;
+			scope.panNode = audio.createPanner(); // 3D pan filter
 
 			// create an audio analyser
 			scope.analyser = audio.createAnalyser();
@@ -150,7 +151,8 @@ define(['require', 'gestures', 'jquery'], function(angular, gestures, $){
 			scope.analyser.fftSize = 256;
 
 			// pass the audio data into the filters
-			scope.bufferSource.connect(scope.gainNode);
+			scope.bufferSource.connect(scope.panNode);
+			scope.panNode.connect(scope.gainNode);
 			scope.gainNode.connect(scope.filterNode);
 			scope.filterNode.connect(scope.analyser);
 			scope.analyser.connect(audio.destination);
