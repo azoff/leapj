@@ -36,6 +36,15 @@ define(function(){
 		console.log('adjusting volume', value);
 	}
 
+	function adjustPan(value, scope) {
+		var scale = 10
+		x = value.x*scale - scale/2
+		y = value.y*scale - scale/2
+		z = value.z*scale - scale/2
+		scope.panNode.setPosition(x, y, z);
+		console.log('adjusting pan', x, y, z);
+	}
+
 	var exports = {
 		processMessage: processMessage
 	};
@@ -45,8 +54,9 @@ define(function(){
 	}
 
 	function spaceRecognizer(event, scope) {
-		adjustFilter(event.x, scope);
-		adjustGain(event.y, scope);
+		adjustPan(event, scope);
+		// adjustFilter(event.x, scope);
+		// adjustGain(event.y, scope);
 	}
 
 	function processMessage(msg, scope) {
