@@ -18,9 +18,15 @@ class LeapEventListener
     console.error "sendEvent: not yet really sending event..."
 
 class PinchListener extends LeapEventListener
+
+
   constructor: ->
-    console.log "Init pinch listener..."
+    @PINCH_STRENGTH_ON = .8
+    @PINCH_STRENGTH_OFF = .4
+    console.log "Init pinch listener... Pinch On=#{@PINCH_STRENGTH_ON}, Off=#{@PINCH_STRENGTH_OFF}"
     @pinched = false
+    @pinched_finger = null
+
 
   findPinchingFingerType: (hand) ->
     console.log "findPinchingFingerType"
@@ -52,24 +58,16 @@ class PinchListener extends LeapEventListener
     # Get pinch strength
     pinchStrength = hand.pinchStrength.toPrecision(2)
     @updateUi pinchStrength
-    if not @pinched and pinchStrength > .6
+
+    if not @pinched and pinchStrength > @PINCH_STRENGTH_ON
       @pinched = true
+      @pinched_finger = fingerIndex
       {pincher, fingerIndex} = @findPinchingFingerType hand
       @sendEvent 'pinch-start', fingerIndex
-      console.log "pinched! Finger = #{fingerIndex}"
-    else if @pinched and pinchStrength < .4
+    else if @pinched and pinchStrength < @PINCH_STRENGTH_OFF
+      @sendEvent 'pinch-end', @pinched_finger
       @pinched = false
-      @sendEvent 'pinch-end', null
-      console.log "un-pinched!"
-    return
-
-# TODO: new handler
-initHandRotationHandler = ->
-  return
-  # base stats
-
-initHandAltitudeHandler = ->
-  height = .5 # height ranges from 0 to
+      @pinched_finger = null
 
 pinchHandler = new PinchListener
 
