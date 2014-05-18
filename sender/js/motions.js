@@ -153,16 +153,13 @@ SpaceListener = (function(_super) {
     if (debug == null) {
       debug = false;
     }
-    significant_digits = 3;
+    significant_digits = 2;
     factor = Math.pow(10, significant_digits);
     if (debug) {
       beforeValue = value;
     }
     range = max - min;
-    if (min < 0) {
-      value = value + min * (-1);
-    }
-    value = value / range;
+    value = (value - min) / range;
     value = Math.round(value * factor) / factor;
     value = Math.max(Math.min(value, 1), 0);
     if (debug) {
@@ -172,7 +169,11 @@ SpaceListener = (function(_super) {
   };
 
   SpaceListener.prototype.displayActiveCommand = function(type, value) {
-    return SpaceListener.__super__.displayActiveCommand.call(this, "" + type + " - " + value.hand + " - " + value.x + "," + value.y + "," + value.z);
+    if (value.x >= 1 || value.y >= 1 || value.z >= 1 || value.x <= 0 || value.y <= 0 || value.z <= 0) {
+      return SpaceListener.__super__.displayActiveCommand.call(this, "<font color='red'>" + type + " - " + value.hand + " - " + value.x + "," + value.y + "," + value.z + "</font>");
+    } else {
+      return SpaceListener.__super__.displayActiveCommand.call(this, "" + type + " - " + value.hand + " - " + value.x + "," + value.y + "," + value.z);
+    }
   };
 
   SpaceListener.prototype.listen = function(frame) {
@@ -195,9 +196,9 @@ SpaceListener = (function(_super) {
       }
       whichHand = hand.type;
       e = {
-        x: this.normalize(hand.palmPosition[0], -180, 180),
-        y: this.normalize(hand.palmPosition[1], 75, 300),
-        z: this.normalize(hand.palmPosition[2], -200, 260, true),
+        x: this.normalize(hand.palmPosition[0], -80, 90),
+        y: this.normalize(hand.palmPosition[1], 55, 200),
+        z: this.normalize(hand.palmPosition[2], -100, 80),
         hand: whichHand
       };
       this.sendEvent('space', e);

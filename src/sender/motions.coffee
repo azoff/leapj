@@ -103,15 +103,13 @@ class SpaceListener extends LeapEventListener
     super type, value
 
   normalize: (value, min, max, debug=false) ->
-    # Normalize values to [0,1] output
-    significant_digits = 3
+    significant_digits = 2
     factor = Math.pow 10, significant_digits
 
     beforeValue = value if debug
 
     range = (max - min)
-    value = value + min*(-1) if min < 0 # normalize above 0
-    value = value / range
+    value = (value - min) / range
     value = Math.round(value * factor) / factor # round to have <x> significant_digits
     value = Math.max (Math.min value, 1), 0 # bound within 0 to 1
 
@@ -122,7 +120,10 @@ class SpaceListener extends LeapEventListener
 
 
   displayActiveCommand: (type, value) ->
-    super "#{type} - #{value.hand} - #{value.x},#{value.y},#{value.z}"
+    if value.x >= 1 || value.y >= 1 || value.z >= 1 || value.x <= 0 || value.y <= 0 || value.z <= 0
+        super "<font color='red'>#{type} - #{value.hand} - #{value.x},#{value.y},#{value.z}</font>"
+    else
+        super "#{type} - #{value.hand} - #{value.x},#{value.y},#{value.z}"
 
   listen: (frame) ->
     #
@@ -138,10 +139,11 @@ class SpaceListener extends LeapEventListener
     for hand in frame.hands
       continue unless hand
       whichHand = hand.type
+      #console.log hand.palmPosition
       e = {
-        x: @normalize hand.palmPosition[0], -180, 180
-        y: @normalize hand.palmPosition[1], 75, 300
-        z: @normalize hand.palmPosition[2], -200, 260, true
+        x: @normalize hand.palmPosition[0], -80, 90
+        y: @normalize hand.palmPosition[1], 55, 200 
+        z: @normalize hand.palmPosition[2], -100, 80
         hand: whichHand
       }
       @sendEvent 'space', e
