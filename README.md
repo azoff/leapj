@@ -7,7 +7,7 @@ A good place to find songs with stems:
 Build
 -----
 
-compass compile
+`compass compile` (or `make build`)
 
 Then run the server of your choice, e.g.
 
