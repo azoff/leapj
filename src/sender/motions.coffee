@@ -136,10 +136,11 @@ class SpaceListener extends LeapEventListener
     for hand in frame.hands
       continue unless hand
       whichHand = hand.type
+      #console.log hand.palmPosition
       e = {
-        x: @normalize hand.palmPosition[0], -90, 90
+        x: @normalize hand.palmPosition[0], -80, 90
         y: @normalize hand.palmPosition[1], 55, 200 
-        z: @normalize hand.palmPosition[2], -80, 80
+        z: @normalize hand.palmPosition[2], -100, 80
         hand: whichHand
       }
       @sendEvent 'space', e

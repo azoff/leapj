@@ -191,10 +191,11 @@ SpaceListener = (function(_super) {
         continue;
       }
       whichHand = hand.type;
+      console.log(hand.palmPosition);
       e = {
-        x: this.normalize(hand.palmPosition[0], -90, 90),
+        x: this.normalize(hand.palmPosition[0], -80, 90),
         y: this.normalize(hand.palmPosition[1], 55, 200),
-        z: this.normalize(hand.palmPosition[2], -80, 80),
+        z: this.normalize(hand.palmPosition[2], -100, 80),
         hand: whichHand
       };
       this.sendEvent('space', e);
