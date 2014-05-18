@@ -16,8 +16,8 @@ class LeapEventListener
 
   sendEvent: (type, value) ->
     console.log "Event: #{type}, Value: #{JSON.stringify value}"
-    firebaseEvent = leapToFirebase.translate {type, value} # TODO: Skip translation step - just send hand event
-    # firebaseEvent = {type, value}
+    # firebaseEvent = leapToFirebase.translate {type, value} # TODO: we're skipping the translation step - just send hand event
+    firebaseEvent = {type, value}
     leapToFirebase.sendToFirebase firebaseEvent if firebaseEvent?
 
   displayActiveCommand: (text) ->

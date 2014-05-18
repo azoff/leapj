@@ -27,10 +27,10 @@ LeapEventListener = (function() {
   LeapEventListener.prototype.sendEvent = function(type, value) {
     var firebaseEvent;
     console.log("Event: " + type + ", Value: " + (JSON.stringify(value)));
-    firebaseEvent = leapToFirebase.translate({
+    firebaseEvent = {
       type: type,
       value: value
-    });
+    };
     if (firebaseEvent != null) {
       return leapToFirebase.sendToFirebase(firebaseEvent);
     }
