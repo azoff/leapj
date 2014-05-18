@@ -5,11 +5,17 @@
 	requirejs.config({
 		paths: {
 			jquery: '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min',
-			angular: '//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min'
+			angular: '//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min',
+			firebase: '//cdn.firebase.com/js/client/1.0.15/firebase',
+			gestures: 'lib/gestures',
+			pubsub: 'lib/pubsub'
 		},
 		shim: {
 			angular: {
 				exports: 'angular'
+			},
+			firebase: {
+				exports: 'Firebase'
 			}
 		}
 	});
