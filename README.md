@@ -24,6 +24,19 @@ Then run the server of your choice, e.g.
 
 python -m SimpleHTTPServer
 
+Internet-flaky mode
+-------------------
+
+Edit `js/config.js` and change `localPubSub` to something non-NULL.
+
+This must be done on *all* senders and receivers.
+
+Then, run the pubsub (and skip Firebase):
+
+```
+node pubsub/server.js
+```
+
 
 Directory structure
 -------------------
