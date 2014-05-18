@@ -26,7 +26,7 @@ define(['require', 'angular'], function(require, angular){
 		player.registerStem = function(url, stem) {
 			stems[url] = stem;
 			player.ready = true;
-			//player.playSelectedTrack();
+			player.playSelectedTrack();
 		};
 
 		function watchSelectedTrack(tracks) {

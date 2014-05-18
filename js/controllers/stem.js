@@ -134,16 +134,30 @@ define(['require', 'jquery'], function(angular, $){
 
 		function setAudioComponents() {
 
-			// set volume controls
-			scope.gainNode = audio.createGain();
-			scope.bufferSource.connect(scope.gainNode);
-			scope.gainNode.connect(audio.destination);
+			// create adjustment filters
+			scope.gainNode = audio.createGain();           // volume control
+			scope.filterNode = audio.createBiquadFilter(); // biquad filter
+			scope.reverbNode = audio.createConvolver();    // reverb
 
-			// set an audio analyser
+			// create an audio analyser
 			scope.analyser = audio.createAnalyser();
 			scope.analyser.smoothingTimeConstant = 0.6;
 			scope.analyser.fftSize = 256;
+
+			// pass the audio data into the filters
+			scope.bufferSource.connect(scope.gainNode);
+			scope.bufferSource.connect(scope.filterNode);
+			scope.bufferSource.connect(scope.reverbNode);
+
+			// pass the filter outputs into the analyser
 			scope.gainNode.connect(scope.analyser);
+			scope.filterNode.connect(scope.analyser);
+			scope.reverbNode.connect(scope.analyser);
+
+			// pass the filter outputs to the speakers
+			scope.gainNode.connect(audio.destination);
+			scope.filterNode.connect(audio.destination);
+			scope.reverbNode.connect(audio.destination);
 
 		}
 
