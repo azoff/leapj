@@ -19,14 +19,6 @@ function playPause(){
         }
 	}
 }
-function volume(data){
-	gainNode.gain.value = data.level;
-}
-
-function setGain(param){
-	gainNode.gain.value = param;
-}
-
 
 var audioContext;
 function init ()
@@ -85,58 +77,43 @@ function finishedLoading(bufferList) {
     $("#loading").hide();
 }
 
-var audioevent = {
+function filter(stem, type, value) {
+    //value = Math.log(value+1) * 20000;
+    value = value * 20000; // max in Hz
 
-    "on": function(event) {
-    },
-    "off": function(event) {
-    },
-    "start": function(event) {
-    },
-    "filter": function(event) {
-        type = event.filterType
-        value = event.value
-        stem = event.stem
-
-	if(value==0){
-	    value = 200;
-	} else{
-	    value = Math.log(value+1) * 10000;
-	}
- 	switch(type){
- 	    //lowpass
- 	case 0:
- 	    stems[stem].filterNode.type = stems[stem].filterNode.LOWPASS;
- 	    break;
- 	    //highpass
- 	case 1:
- 	    stems[stem].filterNode.type = stems[stem].filterNode.HIGHPASS;
- 	    break;
- 	    //bandpass
- 	case 2:
- 	    stems[stem].filterNode.type = stems[stem].filterNode.BANDPASS;
- 	    break;
- 	default:
- 	    stems[stem].filterNode.type = stems[stem].filterNode.BANDPASS;
- 	    break;
- 	}
-	stems[stem].filterNode.frequency.value = value;
-	console.log(value + " is new frequency");
-    },
-    "volume": function(event) {
-	stems[event.stem].gainNode.gain = event.value;
-    },
-    "eq": function(event) {
-    },
-    "pan": function(event) {
-    },
-    "reverb": function(event) {
-    },
+    switch(type) {
+ 	//lowpass
+    case 0:
+ 	stems[stem].filterNode.type = stems[stem].filterNode.LOWPASS;
+ 	break;
+ 	//highpass
+    case 1:
+ 	stems[stem].filterNode.type = stems[stem].filterNode.HIGHPASS;
+ 	break;
+ 	//bandpass
+    case 2:
+ 	stems[stem].filterNode.type = stems[stem].filterNode.BANDPASS;
+ 	break;
+    default:
+ 	stems[stem].filterNode.type = stems[stem].filterNode.BANDPASS;
+ 	break;
+    }
+    stems[stem].filterNode.frequency.value = value;
 }
+
+function gain(stem, value) {
+    value = Math.max(0, value)
+    value = Math.min(1, value)
+    stems[stem].gainNode.gain.value = value;
+}
+
 var gestures = {
     // leapmotion events
     "space": function(value) {
-        console.log('space', value.x)
-	stems[0].filterNode.frequency.value = value.x*20000;
+        //console.log('space', value.x)
+        var stem = 0
+        var type = 0
+        filter(stem, type, value.x)
+        gain(stem, value.y)
     },
 }
