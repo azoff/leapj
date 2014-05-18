@@ -8,9 +8,9 @@ define(['require', 'gestures', 'jquery'], function(angular, gestures, $){
 	var audio = createAudioContext();
 
 	var users = {
-		'3955887555': { name: 'jon', role: 'vocals', master: true },
+		'3955887555': { name: 'jon', role: 'keys', master: true },
 		'1106381882': { name: 'aylan', role: 'bass' },
-		'4225483771': { name: 'nathan', role: 'beat'},
+		'4225483771': { name: 'nathan', role: 'vocals'},
 		'157016914':  { name: 'joseph', role: 'goblins' }
 	};
 
