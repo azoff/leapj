@@ -2,30 +2,38 @@ define(function(){
 
 	function adjustFilter(value, scope) {
 
-		value = value * 20000; // max in Hz
+		if (!scope.filterNode) return;
+		var filter = '';
 
 		switch(value.hand) {
 
 			//lowpass
 			case 'left':
+				filter = 'lowpass';
 				scope.filterNode.type = scope.filterNode.LOWPASS;
 				break;
 			//highpass
 			case 'right':
+				filter = 'highpass';
 				scope.filterNode.type = scope.filterNode.HIGHPASS;
 				break;
 			//bandpass
 			case '':
 			default:
+				filter = 'bandpass';
 				scope.filterNode.type = scope.filterNode.BANDPASS;
 				break;
 		}
 
-		scope.filterNode.frequency.value = value;
+		scope.filterNode.frequency.value = value * 20000; // max in Hz
+		console.log('adjusting', filter, value * 20000);
 	}
 
 	function adjustGain(value, scope) {
-		scope.gainNode.gain.value = Math.max(0, Math.min(1, value));
+		if (!scope.gainNode) return;
+		var value = Math.max(0, Math.min(1, value));
+		scope.gainNode.gain.value = value;
+		console.log('adjusting volume', value);
 	}
 
 	var exports = {
@@ -42,7 +50,6 @@ define(function(){
 	}
 
 	function processMessage(msg, scope) {
-		console.log(msg);
 		if (msg.type in recognizers) {
 			recognizers[msg.type](msg.value, scope);
 		}

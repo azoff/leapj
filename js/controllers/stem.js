@@ -139,7 +139,7 @@ define(['require', 'pubsub', 'gestures', 'jquery'], function(angular, pubsub, ge
 			// create adjustment filters
 			scope.gainNode = audio.createGain();           // volume control
 			scope.filterNode = audio.createBiquadFilter(); // biquad filter
-			scope.reverbNode = audio.createConvolver();    // reverb
+			scope.filterNode.type = scope.filterNode.ALLPASS;
 
 			// create an audio analyser
 			scope.analyser = audio.createAnalyser();
@@ -148,18 +148,9 @@ define(['require', 'pubsub', 'gestures', 'jquery'], function(angular, pubsub, ge
 
 			// pass the audio data into the filters
 			scope.bufferSource.connect(scope.gainNode);
-			scope.bufferSource.connect(scope.filterNode);
-			scope.bufferSource.connect(scope.reverbNode);
-
-			// pass the filter outputs into the analyser
-			scope.gainNode.connect(scope.analyser);
+			scope.gainNode.connect(scope.filterNode);
 			scope.filterNode.connect(scope.analyser);
-			scope.reverbNode.connect(scope.analyser);
-
-			// pass the filter outputs to the speakers
-			scope.gainNode.connect(audio.destination);
-			scope.filterNode.connect(audio.destination);
-			scope.reverbNode.connect(audio.destination);
+			scope.analyser.connect(audio.destination);
 
 		}
 
