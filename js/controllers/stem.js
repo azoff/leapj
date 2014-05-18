@@ -1,7 +1,7 @@
 window.requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame;
 window.AudioContext = window.AudioContext || window.webkitAudioContext;
 
-define(['require', 'jquery'], function(angular, $){
+define(['require', 'pubsub', 'gestures', 'jquery'], function(angular, pubsub, gestures, $){
 
 	"use strict";
 
@@ -79,12 +79,10 @@ define(['require', 'jquery'], function(angular, $){
 
 		var def = $.Deferred();
 
-		scope.volume = 100;
-		scope.loading = true;
-		scope.canvas = el.find('canvas');
-		scope.canvasCtx = createCanvasContext(scope.canvas);
-
+		setupScope();
+		pubsub.subscribe(processMessage);
 		loadBuffer(scope.url, applyBuffer);
+		scope.$watch('volume', adjustVolume);
 
 		scope.play = function() {
 
@@ -108,7 +106,7 @@ define(['require', 'jquery'], function(angular, $){
 					scope.bufferSource.noteGrainOn(0, bufferOffset, 180);
 				}
 
-				setAudioComponents();
+				resetAudioComponents();
 
 			});
 
@@ -125,14 +123,18 @@ define(['require', 'jquery'], function(angular, $){
 			});
 		}
 
-		scope.$watch('volume', function(volume){
-			var value = volume / 100;
-			if (scope.gainNode) {
-				scope.gainNode.gain.value = value;
-			}
-		});
+		function processMessage(msg) {
+			gestures.processMessage(msg, scope);
+		}
 
-		function setAudioComponents() {
+		function setupScope() {
+			scope.volume = 100;
+			scope.loading = true;
+			scope.canvas = el.find('canvas');
+			scope.canvasCtx = createCanvasContext(scope.canvas);
+		}
+
+		function resetAudioComponents() {
 
 			// create adjustment filters
 			scope.gainNode = audio.createGain();           // volume control
@@ -174,6 +176,13 @@ define(['require', 'jquery'], function(angular, $){
 		function renderLoop() {
 			renderAnalyzer(scope.canvasCtx, scope.analyser, el.width()*2, el.height());
 			window.requestAnimationFrame(renderLoop);
+		}
+
+		function adjustVolume(volume){
+			var value = volume / 100;
+			if (scope.gainNode) {
+				scope.gainNode.gain.value = value;
+			}
 		}
 
 		require(['scope/player'], function(player){
