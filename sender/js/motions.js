@@ -159,10 +159,7 @@ SpaceListener = (function(_super) {
       beforeValue = value;
     }
     range = max - min;
-    if (min < 0) {
-      value = value + min * (-1);
-    }
-    value = value / range;
+    value = (value - min) / range;
     value = Math.round(value * factor) / factor;
     value = Math.max(Math.min(value, 1), 0);
     if (debug) {
@@ -195,9 +192,9 @@ SpaceListener = (function(_super) {
       }
       whichHand = hand.type;
       e = {
-        x: this.normalize(hand.palmPosition[0], -180, 180),
-        y: this.normalize(hand.palmPosition[1], 75, 300),
-        z: this.normalize(hand.palmPosition[2], -200, 260, true),
+        x: this.normalize(hand.palmPosition[0], -90, 90),
+        y: this.normalize(hand.palmPosition[1], 55, 200),
+        z: this.normalize(hand.palmPosition[2], -80, 80),
         hand: whichHand
       };
       this.sendEvent('space', e);
