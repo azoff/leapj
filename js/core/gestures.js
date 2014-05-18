@@ -1,19 +1,19 @@
 define(function(){
 
-	function adjustFilter(value, scope) {
+	function adjustFilter(value, filter_type, scope) {
 
 		if (!scope.filterNode) return;
 		var filter = '';
 
-		switch(value.hand) {
+		switch(filter_type) {
 
 			//lowpass
-			case 'left':
+			case 'low':
 				filter = 'lowpass';
 				scope.filterNode.type = scope.filterNode.LOWPASS;
 				break;
 			//highpass
-			case 'right':
+			case 'high':
 				filter = 'highpass';
 				scope.filterNode.type = scope.filterNode.HIGHPASS;
 				break;
@@ -25,8 +25,9 @@ define(function(){
 				break;
 		}
 
-		scope.filterNode.frequency.value = value * 20000; // max in Hz
-		console.log('adjusting', filter, 'for', scope.key, 'to', value * 20000);
+		var newValue = value * 10000
+		scope.filterNode.frequency.value = newValue; // max in Hz
+		console.log('adjusting', filter, 'for', scope.key, 'to', newValue);
 	}
 
 	function adjustGain(value, scope) {
@@ -58,11 +59,16 @@ define(function(){
 
 	function spaceRecognizer(value, scope) {
 		if (value.hand == 'left') {
-			adjustPan(value.x, value.y, value.z, scope);
-		} else {
+			adjustFilter(value.x, 'low', scope);
+			adjustGain(value.y, scope);
+			// adjustPan(value.x, value.y, value.z, scope);
+
+		} else { // Right hand
+			// adjustFilter(value.x, 'high', scope);
+			adjustFilter(value.x, 'low', scope);
 			adjustGain(value.y, scope);
 		}
-		// adjustFilter(value.x, scope);
+
 	}
 
 	function processMessage(msg, scope) {
