@@ -153,7 +153,7 @@ SpaceListener = (function(_super) {
     if (debug == null) {
       debug = false;
     }
-    significant_digits = 3;
+    significant_digits = 2;
     factor = Math.pow(10, significant_digits);
     if (debug) {
       beforeValue = value;
@@ -169,7 +169,11 @@ SpaceListener = (function(_super) {
   };
 
   SpaceListener.prototype.displayActiveCommand = function(type, value) {
-    return SpaceListener.__super__.displayActiveCommand.call(this, "" + type + " - " + value.hand + " - " + value.x + "," + value.y + "," + value.z);
+    if (value.x >= 1 || value.y >= 1 || value.z >= 1 || value.x <= 0 || value.y <= 0 || value.z <= 0) {
+      return SpaceListener.__super__.displayActiveCommand.call(this, "<font color='red'>" + type + " - " + value.hand + " - " + value.x + "," + value.y + "," + value.z + "</font>");
+    } else {
+      return SpaceListener.__super__.displayActiveCommand.call(this, "" + type + " - " + value.hand + " - " + value.x + "," + value.y + "," + value.z);
+    }
   };
 
   SpaceListener.prototype.listen = function(frame) {
@@ -191,7 +195,6 @@ SpaceListener = (function(_super) {
         continue;
       }
       whichHand = hand.type;
-      console.log(hand.palmPosition);
       e = {
         x: this.normalize(hand.palmPosition[0], -80, 90),
         y: this.normalize(hand.palmPosition[1], 55, 200),

@@ -103,7 +103,7 @@ class SpaceListener extends LeapEventListener
     super type, value
 
   normalize: (value, min, max, debug=false) ->
-    significant_digits = 3
+    significant_digits = 2
     factor = Math.pow 10, significant_digits
 
     beforeValue = value if debug
@@ -120,7 +120,10 @@ class SpaceListener extends LeapEventListener
 
 
   displayActiveCommand: (type, value) ->
-    super "#{type} - #{value.hand} - #{value.x},#{value.y},#{value.z}"
+    if value.x >= 1 || value.y >= 1 || value.z >= 1 || value.x <= 0 || value.y <= 0 || value.z <= 0
+        super "<font color='red'>#{type} - #{value.hand} - #{value.x},#{value.y},#{value.z}</font>"
+    else
+        super "#{type} - #{value.hand} - #{value.x},#{value.y},#{value.z}"
 
   listen: (frame) ->
     #
