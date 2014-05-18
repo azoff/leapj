@@ -2,9 +2,10 @@
 var LeapToFirebase, module;
 
 LeapToFirebase = (function() {
-  function LeapToFirebase(firebase_instance) {
-    this.firebase_instance = firebase_instance;
-    console.log("Construct LeapToFirebase. Connecting to " + firebase_instance);
+  function LeapToFirebase(firebase_room_uri) {
+    console.log("Construct LeapToFirebase. Connecting to " + firebase_room_uri);
+    this.firebase_room_uri = firebase_room_uri;
+    this.firebase = new Firebase(this.firebase_room_uri);
   }
 
   LeapToFirebase.prototype.translate = function(leap_event) {
@@ -34,8 +35,8 @@ LeapToFirebase = (function() {
   };
 
   LeapToFirebase.prototype.sendToFirebase = function(event) {
-    console.log("Sending event " + (JSON.stringify(event)) + " to firebase " + this.firebase_instance);
-    return console.error("Not actually sending to firebase YET");
+    console.log("Sending event " + (JSON.stringify(event)) + " to firebase " + this.firebase_room_uri);
+    return this.firebase.push(event);
   };
 
   return LeapToFirebase;

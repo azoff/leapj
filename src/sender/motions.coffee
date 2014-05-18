@@ -2,8 +2,8 @@ output = document.getElementById("output")
 progress = document.getElementById("progress")
 
 # TODO: Expects the LeapToFirebase exists -- should require it explicitly
-console.error "No LeapToFirebase" unless LeapToFirebase?
-leapToFirebase = new LeapToFirebase
+throw "No LeapToFirebase" unless LeapToFirebase?
+leapToFirebase = new LeapToFirebase config.firebase_room_uri
 
 class LeapEventListener
   # Initiali

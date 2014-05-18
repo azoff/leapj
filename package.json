@@ -27,7 +27,9 @@
     "coffee-script": "^1.7.1",
     "coffee-errors": "^0.8.6",
     "gulp": "^3.6.2",
-    "gulp-coffeelint": "^0.3.2"
+    "gulp-coffeelint": "^0.3.2",
+    "gulp-exec": "^2.0.1",
+    "exec": "^0.1.1"
   },
   "dependencies": {
     "underscore": "^1.6.0",

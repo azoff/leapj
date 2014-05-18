@@ -8,10 +8,10 @@ output = document.getElementById("output");
 progress = document.getElementById("progress");
 
 if (typeof LeapToFirebase === "undefined" || LeapToFirebase === null) {
-  console.error("No LeapToFirebase");
+  throw "No LeapToFirebase";
 }
 
-leapToFirebase = new LeapToFirebase;
+leapToFirebase = new LeapToFirebase(config.firebase_room_uri);
 
 LeapEventListener = (function() {
   function LeapEventListener() {
