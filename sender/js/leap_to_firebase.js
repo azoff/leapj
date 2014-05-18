@@ -14,6 +14,7 @@ LeapToFirebase = (function() {
     if (firebase_room_uri) {
       this.firebase = new Firebase(this.firebase_room_uri);
     }
+    this.localDataRef = new Faye.Client('http://localhost:8001/');
   }
 
   LeapToFirebase.prototype.translate = function(leap_event) {
@@ -59,7 +60,10 @@ LeapToFirebase = (function() {
     }
     event.fingerprint = fingerprint;
     console.log("Sending event " + (JSON.stringify(event)) + " to firebase " + this.firebase_room_uri);
-    return this.firebase.push(event);
+    this.firebase.push(event);
+    return this.localDataRef.publish('/events', {
+      event: event
+    });
   };
 
   return LeapToFirebase;

@@ -18,6 +18,13 @@ dataRef.on('child_added', function(snapshot) {
     }
 });
 
+var localDataRef = new Faye.Client('http://localhost:8001/');
+console.log("hi");
+console.log(localDataRef);
+localDataRef.subscribe('/events', function(event) {
+  console.log(event)
+});
+
 // send incoming messages to webaudio control handlers
 function senderEvent(o) {
     audioevent[o.type](o)
