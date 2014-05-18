@@ -141,9 +141,9 @@ define(['require', 'gestures', 'jquery'], function(angular, gestures, $){
 
 			// create adjustment filters
 			scope.gainNode = audio.createGain();           // volume control
+			scope.panNode = audio.createPanner();          // 3D pan filter
 			scope.filterNode = audio.createBiquadFilter(); // biquad filter
 			scope.filterNode.type = scope.filterNode.ALLPASS;
-			scope.panNode = audio.createPanner(); // 3D pan filter
 
 			// create an audio analyser
 			scope.analyser = audio.createAnalyser();
