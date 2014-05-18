@@ -7,6 +7,6 @@ var config = {
 
     // If this value is defined, use the local pub sub instead of firebase
 //    localPubSub: null,
-    localPubSub: "http://localhost:8001",
+    localPubSub: "http://localhost:8001/",
 }
 config.firebase_room_uri = config.firebase_base_uri + "rooms/" + config.room_name;

@@ -9,12 +9,13 @@ fingerprint = new Fingerprint().get();
 
 LeapToFirebase = (function() {
   function LeapToFirebase(firebase_room_uri) {
-    console.log("Construct LeapToFirebase. Connecting to " + firebase_room_uri);
-    this.firebase_room_uri = firebase_room_uri;
-    if (firebase_room_uri) {
+    if (!config.localPubSub) {
+      console.log("Construct LeapToFirebase. Connecting to " + firebase_room_uri);
+      this.firebase_room_uri = firebase_room_uri;
       this.firebase = new Firebase(this.firebase_room_uri);
+    } else {
+      this.localDataRef = new Faye.Client(config.localPubSub);
     }
-    this.localDataRef = new Faye.Client('http://localhost:8001/');
   }
 
   LeapToFirebase.prototype.translate = function(leap_event) {
@@ -59,11 +60,14 @@ LeapToFirebase = (function() {
       event.createdAt = Firebase.ServerValue.TIMESTAMP;
     }
     event.fingerprint = fingerprint;
-    console.log("Sending event " + (JSON.stringify(event)) + " to firebase " + this.firebase_room_uri);
-    this.firebase.push(event);
-    return this.localDataRef.publish('/events', {
-      event: event
-    });
+    if (!config.localPubSub) {
+      console.log("Sending event " + (JSON.stringify(event)) + " to firebase " + this.firebase_room_uri);
+      return this.firebase.push(event);
+    } else {
+      return this.localDataRef.publish('/events', {
+        event: event
+      });
+    }
   };
 
   return LeapToFirebase;

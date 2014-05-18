@@ -4,10 +4,12 @@ fingerprint = new Fingerprint().get()
 
 class LeapToFirebase
   constructor: (firebase_room_uri) ->
-    console.log "Construct LeapToFirebase. Connecting to #{firebase_room_uri}"
-    @firebase_room_uri = firebase_room_uri
-    @firebase = new Firebase @firebase_room_uri if firebase_room_uri
-    @localDataRef = new Faye.Client 'http://localhost:8001/'
+    if !config.localPubSub
+        console.log "Construct LeapToFirebase. Connecting to #{firebase_room_uri}"
+        @firebase_room_uri = firebase_room_uri
+        @firebase = new Firebase @firebase_room_uri
+    else
+        @localDataRef = new Faye.Client config.localPubSub
 
   translate: (leap_event) ->
     console.log JSON.stringify leap_event
@@ -45,9 +47,11 @@ class LeapToFirebase
     # after translating, this actually sends event to firebase!
     event.createdAt ?= Firebase.ServerValue.TIMESTAMP
     event.fingerprint = fingerprint
-    console.log "Sending event #{JSON.stringify event} to firebase #{@firebase_room_uri}"
-    @firebase.push event
-    @localDataRef.publish '/events', { event: event }
+    if !config.localPubSub
+        console.log "Sending event #{JSON.stringify event} to firebase #{@firebase_room_uri}"
+        @firebase.push event
+    else
+        @localDataRef.publish '/events', { event: event }
 
 # hack to let me use Node style exports in tests, but require-js in app
 module = module or {}
