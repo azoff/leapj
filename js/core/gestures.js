@@ -25,7 +25,7 @@ define(function(){
 				break;
 		}
 
-		var newValue = value * 20000
+		var newValue = value * 10000
 		scope.filterNode.frequency.value = newValue; // max in Hz
 		console.log('adjusting', filter, 'for', scope.key, 'to', newValue);
 	}
@@ -59,11 +59,14 @@ define(function(){
 
 	function spaceRecognizer(value, scope) {
 		if (value.hand == 'left') {
-			// adjustPan(value.x, value.y, value.z, scope);
 			adjustFilter(value.x, 'low', scope);
-		} else {
-			adjustFilter(value.x, 'high', scope);
-			// adjustGain(value.y, scope);
+			adjustGain(value.y, scope);
+			// adjustPan(value.x, value.y, value.z, scope);
+
+		} else { // Right hand
+			// adjustFilter(value.x, 'high', scope);
+			adjustFilter(value.x, 'low', scope);
+			adjustGain(value.y, scope);
 		}
 
 	}
