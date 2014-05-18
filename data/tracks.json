@@ -1,5 +1,15 @@
 [
 	{
+		"name": "We Will Rock You",
+		"artist": "Queen",
+		"stems": {
+			"vocals": "/stems/wewillrockyou/drums.mp3",
+			"guitarpiano": "/stems/wewillrockyou/rhythm.ogg",
+			"drums": "/stems/wewillrockyou/guitar.ogg",
+			"bass": "/stems/wewillrockyou/song.ogg"
+		}
+	},
+	{
 		"name": "Analog Or Digital",
 		"artist": "Wildlife Control",
 		"stems": {
@@ -30,6 +40,18 @@
 			"keys": "/stems/armistice/Keys + CS.mp3",
 			"bass": "/stems/armistice/Bass.mp3",
 			"vocals": "/stems/armistice/Accapela.mp3"
+		}
+	},
+	{
+		"name": "Sail",
+		"artist": "AWOLNATION",
+		"stems": {
+			"beat": "/stems/sail/bass.mp3",
+			"goblins": "/stems/sail/drums.mp3",
+			"guitar": "/stems/sail/piano.mp3",
+			"keys": "/stems/sail/strings.mp3",
+			"bass": "/stems/sail/synth.mp3",
+			"vocals": "/stems/sail/vocals.mp3"
 		}
 	}
 ]
