@@ -3,13 +3,14 @@ var serialPort = new SerialPort("/dev/buspirate", {
   baudrate: 115200
 }, false); // this is the openImmediately flag [default is true]
 
+Led = new LedController();
+
 serialPort.open(function () {
   console.log('open');
   serialPort.on('data', function(data) {
     //console.log('data received: ' + data);
   });
 
-    Led = new LedController();
     ledInit();
     //ledSet(1);
 });
@@ -63,24 +64,42 @@ LedController.prototype.process = function() {
   }, this.timeout);
 };
 
+
+strobe = 0;
+timeout = 20;
+(function loop() {
+    // Print to time to indicate something is happening
+    if (strobe) {
+        if (timeout < 300) {
+        Led.exec('led r\r\n');
+        } else if (timeout < 600) {
+        Led.exec('led g\r\n');
+        } else {
+        Led.exec('led g\r\n');
+        }
+        strobe = 0;
+    } else {
+        Led.exec('led off\r\n');
+        strobe = 1;
+    }
+    // Call the same function again
+    setTimeout(function () {
+        process.nextTick(function () {
+            loop();
+        });
+    }, timeout);
+})();
+
 var Firebase = require('firebase');
-var dataRef = new Firebase('https://pr5c1gjakw6.firebaseio-demo.com/rooms/github');
+var dataRef = new Firebase('https://pr5c1gjakw6.firebaseio-demo.com/rooms/led');
 dataRef.on('child_added', function(snapshot) {
     if (snapshot.val().type == 'space') {
         x = snapshot.val().x;
         y = snapshot.val().y;
         z = snapshot.val().z;
-        if (z > 0.9) {
-            Led.exec('led off\r\n');
-        } else {
-            if (x < 0.33) {
-                Led.exec('led r\r\n');
-            } else if (x < 0.66) {
-                Led.exec('led g\r\n');
-            } else {
-                Led.exec('led b\r\n');
-            }
-        }
-        console.log(snapshot.val());
+        timeout = z*1000;
+        if (timeout < 25) { timeout = 25; }
+        if (timeout > 1000) { timeout = 1000; }
+        //console.log(snapshot.val());
     }
 });
