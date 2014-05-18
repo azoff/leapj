@@ -64,13 +64,13 @@ LedController.prototype.process = function() {
 };
 
 var Firebase = require('firebase');
-var dataRef = new Firebase('https://pr5c1gjakw6.firebaseio-demo.com/rooms/win2');
+var dataRef = new Firebase('https://pr5c1gjakw6.firebaseio-demo.com/rooms/github');
 dataRef.on('child_added', function(snapshot) {
     if (snapshot.val().type == 'space') {
         x = snapshot.val().x;
         y = snapshot.val().y;
         z = snapshot.val().z;
-        if (z > 0.75) {
+        if (z > 0.9) {
             Led.exec('led off\r\n');
         } else {
             if (x < 0.33) {
