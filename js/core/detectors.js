@@ -52,7 +52,8 @@ define(['jquery', 'leap'], function($, Leap){
 					finger: pinchMotionDetector.pinchedFinger,
 					hand: hand.type
 				});
-			} else if (this.pinched && pinchStrength < 0.4) {
+			} else if (pinchMotionDetector.pinched && pinchStrength < 0.4) {
+				pinchMotionDetector.pinched = false;
 				callback({
 					type: 'pinch-stop',
 					finger: pinchMotionDetector.pinchedFinger,

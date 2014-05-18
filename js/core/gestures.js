@@ -54,21 +54,35 @@ define(function(){
 	};
 
 	var recognizers = {
-		space: spaceRecognizer
+		space: spaceRecognizer,
+		'pinch-start': pinchStartRecognizer,
+		'pinch-stop': pinchStopRecognizer
+
+	}
+
+	function pinchStartRecognizer(value, scope) {
+		if (value.hand == 'left') {
+			console.log("pinch start!")
+			adjustGain(0, scope);
+			adjustFilter(0, 'low', scope);
+		}
+	}
+
+	function pinchStopRecognizer(value, scope) {
+
+		if (value.hand == 'left') {
+			console.log("pinch stop!")
+			adjustGain(1, scope);
+			adjustFilter(1, 'low', scope);
+		}
 	}
 
 	function spaceRecognizer(value, scope) {
-		if (value.hand == 'left') {
+		if (value.hand == 'right') {
 			adjustFilter(value.x, 'low', scope);
 			adjustGain(value.y, scope);
 			// adjustPan(value.x, value.y, value.z, scope);
-
-		} else { // Right hand
-			// adjustFilter(value.x, 'high', scope);
-			adjustFilter(value.x, 'low', scope);
-			adjustGain(value.y, scope);
 		}
-
 	}
 
 	function processMessage(msg, scope) {
