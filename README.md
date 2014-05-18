@@ -12,3 +12,20 @@ compass compile
 Then run the server of your choice, e.g.
 
 python -m SimpleHTTPServer
+
+
+Directory structure
+-------------------
+
+receiver/
+    The music player.
+sender/
+    Sends leap gestures as music events.
+common/
+    Files shared by receiver and sender.
+
+TODO
+----
+
+* Move fonts/ and scss/ into common/
+* Remove non-web assets (e.g. README.md) before deploying?
