@@ -1,34 +1,34 @@
 var dataRef = new Firebase(config.firebase_room_uri);
 dataRef.on('child_added', function(snapshot) {
-    //parseMsg(snapshot.val())
+    parseMsg(snapshot.val())
 });
 
 // send incoming messages to webaudio control handlers
 function parseMsg(o) {
     switch(o.type) {
     case "on":
-        app.enable(o)
+        audioevent.enable(o)
         break;
     case "off":
-        app.disable(o)
+        audioevent.disable(o)
         break;
     case "start":
-        app.start(o)
+        audioevent.start(o)
         break;
     case "filter":
-        app.filter(o)
+        audioevent.filter(o)
         break;
     case "volume":
-        app.volume(o)
+        audioevent.volume(o)
         break;
     case "eq":
-        app.eq(o)
+        audioevent.eq(o)
         break;
     case "pan":
-        app.pan(o)
+        audioevent.pan(o)
         break;
     case "reverb":
-        app.reverb(o)
+        audioevent.reverb(o)
         break;
     }
 }
