@@ -26,14 +26,14 @@ define(function(){
 		}
 
 		scope.filterNode.frequency.value = value * 20000; // max in Hz
-		console.log('adjusting', filter, value * 20000);
+		console.log('adjusting', filter, 'for', scope.key, 'to', value * 20000);
 	}
 
 	function adjustGain(value, scope) {
 		if (!scope.gainNode) return;
 		var value = Math.max(0, Math.min(1, value));
 		scope.gainNode.gain.value = value;
-		console.log('adjusting volume', value);
+		console.log('adjusting volume for', scope.key, 'to', value);
 	}
 
 	function adjustPan(x, y, z, scope) {
@@ -45,7 +45,7 @@ define(function(){
 		z = z*scale - scale/2;
 
 		scope.panNode.setPosition(x, y, z);
-		console.log('adjusting pan', x, y, z);
+		console.log('adjusting pan', 'for', scope.key, 'to', x, y, z);
 	}
 
 	var exports = {

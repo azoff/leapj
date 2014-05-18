@@ -81,7 +81,6 @@ define(['require', 'gestures', 'jquery'], function(angular, gestures, $){
 
 		setupScope();
 		loadBuffer(scope.url, applyBuffer);
-		scope.$watch('volume', adjustVolume);
 
 		require(['pubsub'], function(pubsub){
 			pubsub.subscribe(processMessage);
@@ -126,8 +125,23 @@ define(['require', 'gestures', 'jquery'], function(angular, gestures, $){
 			});
 		}
 
+		function acceptPrint(print, player) {
+			var rid = player.stemIdByPrint(print);
+			var rprint = player.printByStem(scope);
+			if (!rid && !rprint) {
+				player.registerPrint(print, scope);
+				return true;
+			} else {
+				return rid === scope.$id;
+			}
+		}
+
 		function processMessage(msg) {
-			gestures.processMessage(msg, scope);
+			require(['scope/player'], function(player) {
+				if (!acceptPrint(msg.fingerprint, player)) return;
+				console.log(msg.fingerprint, scope.key);
+				gestures.processMessage(msg, scope);
+			});
 		}
 
 		function setupScope() {
@@ -172,13 +186,6 @@ define(['require', 'gestures', 'jquery'], function(angular, gestures, $){
 		function renderLoop() {
 			renderAnalyzer(scope.canvasCtx, scope.analyser, el.width()*2, el.height());
 			window.requestAnimationFrame(renderLoop);
-		}
-
-		function adjustVolume(volume){
-			var value = volume / 100;
-			if (scope.gainNode) {
-				scope.gainNode.gain.value = value;
-			}
 		}
 
 		require(['scope/player'], function(player){

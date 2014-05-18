@@ -4,7 +4,9 @@ define(['require', 'angular'], function(require, angular){
 
 	return function(player) {
 
-		var stems = {};
+		var ids = {};
+		var stemIdToPrints = {};
+		var printsToStemIds = {};
 		var promises = [];
 
 		require(['scope/tracks'], watchSelectedTrack);
@@ -29,6 +31,19 @@ define(['require', 'angular'], function(require, angular){
 			player.playSelectedTrack();
 		};
 
+		player.registerPrint = function(print, stem) {
+			stemIdToPrints[stem.$id] = print;
+			printsToStemIds[print] = stem.$id;
+		};
+
+		player.stemIdByPrint = function(print) {
+			return printsToStemIds[print];
+		};
+
+		player.printByStem = function(stem) {
+			return stemIdToPrints[stem.$id];
+		};
+
 		function watchSelectedTrack(tracks) {
 			player.selectedTrack = tracks.selectedTrack;
 			tracks.$watch('selectedTrack', changeSelectedTrack);
@@ -39,6 +54,8 @@ define(['require', 'angular'], function(require, angular){
 				player.stopSelectedTrack();
 			player.ready = false;
 			promises = [];
+			stemIdToPrints = {};
+			printsToStemIds = {};
 			player.selectedTrack = selectedTrack;
 		}
 
