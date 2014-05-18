@@ -52,6 +52,8 @@ function init ()
 
     var playButton = document.getElementById("play");
     playButton.onclick = playPause;
+    $("#play").hide();      // Hide until buffering is done
+    $("#loading").show();
 
     bufferLoader = new BufferLoader(
         audioContext,
@@ -80,4 +82,6 @@ function finishedLoading(bufferList) {
         stems[i].source.connect(stems[i].gainNode);
         stems[i].gainNode.connect(audioContext.destination);
     }
+    $("#play").show();
+    $("#loading").hide();
 }
