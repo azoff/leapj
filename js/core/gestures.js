@@ -83,7 +83,7 @@ define(function(){
 			adjustGain(value.y, scope);
 			// adjustPan(value.x, value.y, value.z, scope);
 		} else if (value.hand == 'left') {
-			adjustFilter(1 - value.x, 'high', scope); // invert
+			adjustFilter(1 - value.x, 'band', scope); // invert
 			// adjustGain(value.y, scope);
 			// adjustPan(value.x, value.y, value.z, scope);
 		}
