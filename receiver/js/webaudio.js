@@ -10,15 +10,16 @@ function playPause(){
 
 	if(playing == false){
 		console.log("stop playing.")
-		source.stop(0);
-		
+        for (var i = 0; i < stems.length; i++) { 
+            stems[i].source.stop(0);
+        }
 	}
 	else if(playing == true){
 		console.log("start playing.")
-		source.start(0);
-		
+        for (var i = 0; i < stems.length; i++) { 
+            stems[i].source.start(0);
+        }
 	}
-
 }
 
 
@@ -55,10 +56,10 @@ function init ()
     bufferLoader = new BufferLoader(
         audioContext,
         [
-        "/audio//Queen - We Will Rock You/drums.ogg",
-        "/audio//Queen - We Will Rock You/guitar.ogg",
-        "/audio//Queen - We Will Rock You/rhythm.ogg",
-        "/audio//Queen - We Will Rock You/song.ogg",
+        "https://s3.amazonaws.com/musicstems/Queen - We Will Rock You/drums.ogg",
+        "https://s3.amazonaws.com/musicstems/Queen - We Will Rock You/guitar.ogg",
+        "https://s3.amazonaws.com/musicstems/Queen - We Will Rock You/rhythm.ogg",
+        "https://s3.amazonaws.com/musicstems/Queen - We Will Rock You/song.ogg",
         ],
         finishedLoading
     );
@@ -78,8 +79,5 @@ function finishedLoading(bufferList) {
         stems[i].gainNode = audioContext.createGain();
         stems[i].source.connect(stems[i].gainNode);
         stems[i].gainNode.connect(audioContext.destination);
-    }
-    for (var i = 0; i < stems.length; i++) { 
-//        stems[i].source.start(0);
     }
 }
