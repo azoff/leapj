@@ -3,10 +3,10 @@
 		"name": "We Will Rock You",
 		"artist": "Queen",
 		"stems": {
-			"vocals": "/stems/wewillrockyou/drums.mp3",
-			"guitarpiano": "/stems/wewillrockyou/rhythm.ogg",
-			"drums": "/stems/wewillrockyou/guitar.ogg",
-			"bass": "/stems/wewillrockyou/song.ogg"
+			"rhythm": "/stems/wewillrockyou/rhythm.ogg",
+			"guitar": "/stems/wewillrockyou/guitar.ogg",
+			"drums": "/stems/wewillrockyou/drums.ogg",
+			"song": "/stems/wewillrockyou/song.ogg"
 		}
 	},
 	{

@@ -57,9 +57,12 @@ define(function(){
 	}
 
 	function spaceRecognizer(value, scope) {
-		adjustPan(value.x, value.y, value.z, scope);
+		if (value.hand == 'left') {
+			adjustPan(value.x, value.y, value.z, scope);
+		} else {
+			adjustGain(value.y, scope);
+		}
 		// adjustFilter(value.x, scope);
-		// adjustGain(value.y, scope);
 	}
 
 	function processMessage(msg, scope) {
