@@ -16,7 +16,8 @@ class LeapEventListener
 
   sendEvent: (type, value) ->
     console.log "Event: #{type}, Value: #{JSON.stringify value}"
-    firebaseEvent = leapToFirebase.translate {type, value}
+    firebaseEvent = leapToFirebase.translate {type, value} # TODO: Skip translation step - just send hand event
+    # firebaseEvent = {type, value}
     leapToFirebase.sendToFirebase firebaseEvent if firebaseEvent?
 
   displayActiveCommand: (text) ->
@@ -134,7 +135,7 @@ class KeyTapListener extends LeapEventListener
 # TODO: hand.grabStrength
 pinchHandler = new PinchListener
 keyTapListener = new KeyTapListener
-spaceListener = new SpaceListener
+# spaceListener = new SpaceListener
 
 Leap.loop
   enableGestures: true
@@ -142,4 +143,4 @@ Leap.loop
 ,
   (frame) ->
     pinchHandler.listen frame
-    spaceListener.listen frame
+    # spaceListener.listen frame
