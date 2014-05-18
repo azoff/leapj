@@ -86,6 +86,10 @@ define(['require', 'gestures', 'jquery'], function(angular, gestures, $){
 			pubsub.subscribe(processMessage);
 		});
 
+		scope.load = function() {
+			return def.promise();
+		};
+
 		scope.play = function() {
 
 			def.done(function(){
@@ -189,7 +193,7 @@ define(['require', 'gestures', 'jquery'], function(angular, gestures, $){
 		}
 
 		require(['scope/player'], function(player){
-			player.registerStem(scope.url, scope);
+			player.registerStem(scope);
 		});
 
 	}

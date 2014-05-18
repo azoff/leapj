@@ -14,7 +14,7 @@ define(['require', 'leap', 'detectors'], function(require, Leap, detectors){
 		};
 
 		scope.startReceiving = function() {
-			scope.selectedTrack = scope.tracks[0];
+			scope.selectedTrack = scope.tracks[4];
 			scope.startSending();
 			scope.mode = 'receiving';
 		};
