@@ -37,10 +37,10 @@ define(function(){
 	}
 
 	function adjustPan(value, scope) {
-		var scale = 10
-		x = value.x*scale - scale/2
-		y = value.y*scale - scale/2
-		z = value.z*scale - scale/2
+		var scale = 10;
+		var x = value.x*scale - scale/2;
+		var y = value.y*scale - scale/2;
+		var z = value.z*scale - scale/2;
 		scope.panNode.setPosition(x, y, z);
 		console.log('adjusting pan', x, y, z);
 	}
@@ -53,15 +53,15 @@ define(function(){
 		space: spaceRecognizer
 	}
 
-	function spaceRecognizer(event, scope) {
-		adjustPan(event, scope);
-		// adjustFilter(event.x, scope);
-		// adjustGain(event.y, scope);
+	function spaceRecognizer(value, scope) {
+		adjustPan(value, scope);
+		// adjustFilter(value.x, scope);
+		// adjustGain(value.y, scope);
 	}
 
 	function processMessage(msg, scope) {
 		if (msg.type in recognizers) {
-			recognizers[msg.type](msg.value, scope);
+			recognizers[msg.type](msg, scope);
 		}
 	}
 
