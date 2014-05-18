@@ -5,14 +5,17 @@ LeapToFirebase = (function() {
   function LeapToFirebase(firebase_room_uri) {
     console.log("Construct LeapToFirebase. Connecting to " + firebase_room_uri);
     this.firebase_room_uri = firebase_room_uri;
-    this.firebase = new Firebase(this.firebase_room_uri);
+    if (firebase_room_uri) {
+      this.firebase = new Firebase(this.firebase_room_uri);
+    }
   }
 
   LeapToFirebase.prototype.translate = function(leap_event) {
+    console.log(JSON.stringify(leap_event));
     if (leap_event.type === 'pinch-start') {
       return {
         user: 'string',
-        stem: leap_event.value,
+        stem: leap_event.value.finger,
         event: {
           type: 'volume',
           level: 0
@@ -22,7 +25,7 @@ LeapToFirebase = (function() {
     } else if (leap_event.type === 'pinch-stop') {
       return {
         user: 'string',
-        stem: leap_event.value,
+        stem: leap_event.value.finger,
         event: {
           type: 'volume',
           level: 1

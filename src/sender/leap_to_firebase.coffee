@@ -2,9 +2,10 @@ class LeapToFirebase
   constructor: (firebase_room_uri) ->
     console.log "Construct LeapToFirebase. Connecting to #{firebase_room_uri}"
     @firebase_room_uri = firebase_room_uri
-    @firebase = new Firebase @firebase_room_uri
+    @firebase = new Firebase @firebase_room_uri if firebase_room_uri
 
   translate: (leap_event) ->
+    console.log JSON.stringify leap_event
     # Takes an event send by the leap controller (e.g. a gesture and value)
     # and translates it into the events that our audio engine expects.
     # We call it 'Firebase' since I'm passing those values to firebase,
@@ -12,7 +13,7 @@ class LeapToFirebase
     if leap_event.type is 'pinch-start'
       {
         user: 'string'
-        stem: leap_event.value
+        stem: leap_event.value.finger
         event:  { type: 'volume', level: 0}
         source: 'leap'
       }
@@ -20,7 +21,7 @@ class LeapToFirebase
       # TODO: Stop current sends value = 0
       {
         user: 'string'
-        stem: leap_event.value
+        stem: leap_event.value.finger
         event:  { type: 'volume', level: 1}
         source: 'leap'
       }

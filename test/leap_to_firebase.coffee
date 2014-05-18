@@ -16,14 +16,15 @@ describe "Leap To Firebase", ->
     source: "leap"
 
   _.each [
-    { type: 'pinch-start', value: 0 }
-    { type: 'pinch-start', value: 1 }
-    { type: 'pinch-stop', value: 0 }
-    { type: 'pinch-stop', value: 1 }
+    # TODO: Do something different depending on which hand is gesturing
+    { type: 'pinch-start', value: { finger: 0, hand: 'left'} }
+    { type: 'pinch-start', value: { finger: 1, hand: 'left'} }
+    { type: 'pinch-stop', value: { finger: 0, hand: 'left'} }
+    { type: 'pinch-stop', value: { finger: 1, hand: 'left'} }
   ], (pinch_event) ->
     it "takes a pinch command and outputs a track-on/off", ->
       expected = _.clone base_event
       expected.event = { type: "volume", level: if pinch_event.type is 'pinch-start' then 0 else 1}
-      expected.stem = pinch_event.value
+      expected.stem = pinch_event.value.finger
       actual = l2f.translate pinch_event
       assert.deepEqual actual, expected

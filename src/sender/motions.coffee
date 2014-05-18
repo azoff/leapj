@@ -1,5 +1,6 @@
 output = document.getElementById("output")
 progress = document.getElementById("progress")
+activeCommands = document.getElementById("activeCommands")
 
 # TODO: Expects the LeapToFirebase exists -- should require it explicitly
 throw "No LeapToFirebase" unless LeapToFirebase?
@@ -13,9 +14,13 @@ class LeapEventListener
   listen: ->
     console.log "Listening for event"
 
-  sendEvent: (event_name, value) ->
-    console.log "Event: #{event_name}, Value: #{value}"
-    console.error "sendEvent: not yet really sending event..."
+  sendEvent: (type, value) ->
+    console.log "Event: #{type}, Value: #{JSON.stringify value}"
+    firebaseEvent = leapToFirebase.translate {type, value}
+    leapToFirebase.sendToFirebase firebaseEvent if firebaseEvent?
+
+  displayActiveCommand: (text) ->
+    activeCommands.innerHTML = "<h1> #{text} </h1>" if activeCommands
 
 class PinchListener extends LeapEventListener
 
@@ -49,36 +54,73 @@ class PinchListener extends LeapEventListener
       console.error "UI hooks aren't configured. output (#{output}), progress (#{progress})"
 
   sendEvent: (type, value) ->
-    console.log "Leap Event received. Translating and sending FirebaseEvent"
-    firebaseEvent = leapToFirebase.translate {type, value}
-    leapToFirebase.sendToFirebase firebaseEvent if firebaseEvent?
+    console.log "Leap:Pinch event"
+    @displayActiveCommand type, value
+    super type, value
 
-  listen: (hand) ->
-    # Get pinch strength
-    pinchStrength = hand.pinchStrength.toPrecision(2)
-    @updateUi pinchStrength
+  displayActiveCommand: (type, value) ->
+    super "#{type} - #{value.hand} #{value.finger}"
 
-    if not @pinched and pinchStrength > @PINCH_STRENGTH_ON
-      # Find and save pinching finger
-      {fingerIndex} = @findPinchingFingerType hand
-      @pinched = true
-      @pinched_finger = fingerIndex
+  listen: (hands) ->
+    for hand in hands
+      continue unless hand
+      whichHand = hand.type # 'left' or 'kind'
 
-      # Fire event
-      @sendEvent 'pinch-start', @pinched_finger
-    else if @pinched and pinchStrength < @PINCH_STRENGTH_OFF
-      # Fire Event
-      @sendEvent 'pinch-stop', @pinched_finger
+      # Get pinch strength
+      pinchStrength = hand.pinchStrength.toPrecision(2)
+      @updateUi pinchStrength
 
-      # Save 'unpinched' state
-      @pinched = false
-      @pinched_finger = null
+      if not @pinched and pinchStrength > @PINCH_STRENGTH_ON
+        # Find and save pinching finger
+        {fingerIndex} = @findPinchingFingerType hand
+        @pinched = true
+        @pinched_finger = fingerIndex
+
+        # Fire event
+        @sendEvent 'pinch-start', {
+          finger: @pinched_finger
+          hand: whichHand
+        }
+      else if @pinched and pinchStrength < @PINCH_STRENGTH_OFF
+        # Fire Event
+        @sendEvent 'pinch-stop', {
+          finger: @pinched_finger
+          hand: whichHand
+        }
+        # Save 'unpinched' state
+        @pinched = false
+        @pinched_finger = null
+
+class KeyTapListener extends LeapEventListener
+
+  constructor: ->
+    console.log "Init KeyTapListener"
+
+  sendEvent: (type, value) ->
+    # console.log "Leap:KeyTap event #{type}, #{value}"
+    # firebaseEvent = leapToFirebase.translate {type, value}
+    # leapToFirebase.sendToFirebase firebaseEvent if firebaseEvent?
+
+  listen: (gesture) ->
+    console.log "key tap listen"
 
 pinchHandler = new PinchListener
+KeyTapListener = new KeyTapListener
 
 Leap.loop
+  enableGestures: true
   background: true
 ,
-  hand: (hand) ->
-    pinchHandler.listen hand
-    return
+  (frame) ->
+    # TODO: Get pinches from both left and right hands
+    # console.log frame.hands
+
+    hands = if frame.hands[0] or frame.hands[1] then frame.hands else null
+    pinchHandler.listen hands if hands
+  # # return {
+  #   hand: (hand) ->
+  # #     pinchHandler.listen hand
+
+  #   gesture: (gesture) ->
+  #     KeyTapListener.listen gesture
+  # }
