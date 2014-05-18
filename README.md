@@ -9,6 +9,13 @@ Build
 
 `compass compile` (or `make build`)
 
+To work on CoffeeScript files in `/src`
+
+```bash
+npm install
+gulp
+```
+
 Then run the server of your choice, e.g.
 
 python -m SimpleHTTPServer
