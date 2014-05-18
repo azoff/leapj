@@ -135,7 +135,7 @@ class KeyTapListener extends LeapEventListener
 # TODO: hand.grabStrength
 pinchHandler = new PinchListener
 keyTapListener = new KeyTapListener
-# spaceListener = new SpaceListener
+spaceListener = new SpaceListener
 
 Leap.loop
   enableGestures: true
@@ -143,4 +143,4 @@ Leap.loop
 ,
   (frame) ->
     pinchHandler.listen frame
-    # spaceListener.listen frame
+    spaceListener.listen frame

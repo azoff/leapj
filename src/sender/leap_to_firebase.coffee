@@ -38,6 +38,7 @@ class LeapToFirebase
 
   sendToFirebase: (event) ->
     # after translating, this actually sends event to firebase!
+    event.createdAt ?= Date() # Firebase.ServerValue.TIMESTAMP # TODO: Add it here if you want
     console.log "Sending event #{JSON.stringify event} to firebase #{@firebase_room_uri}"
     @firebase.push event
 

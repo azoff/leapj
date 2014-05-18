@@ -48,6 +48,9 @@ LeapToFirebase = (function() {
   };
 
   LeapToFirebase.prototype.sendToFirebase = function(event) {
+    if (event.createdAt == null) {
+      event.createdAt = Date();
+    }
     console.log("Sending event " + (JSON.stringify(event)) + " to firebase " + this.firebase_room_uri);
     return this.firebase.push(event);
   };
