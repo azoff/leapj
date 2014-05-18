@@ -7,6 +7,13 @@ define(['require', 'gestures', 'jquery'], function(angular, gestures, $){
 
 	var audio = createAudioContext();
 
+	var users = {
+		'3955887555': { name: 'jon', role: 'vocals', master: true },
+		'1106381882': { name: 'aylan', role: 'bass' },
+		'4225483771': { name: 'nathan', role: 'beat'},
+		'157016914':  { name: 'joseph', role: 'goblins' }
+	};
+
 	var i = 0;
 	var colors = [
 		['#00A9E0', '#67CDDC'],
@@ -127,16 +134,30 @@ define(['require', 'gestures', 'jquery'], function(angular, gestures, $){
 				}
 				scope.pauseTime = audio.currentTime - scope.startTime;
 			});
+		};
+
+		function acceptsUser(user) {
+			if (user.role === scope.key) {
+				scope.$apply(function(){
+					scope.key = user.name;
+				});
+				return true;
+			}
+			return user.master || user.name === scope.key;
 		}
 
 		function acceptPrint(print, player) {
-			var rid = player.stemIdByPrint(print);
-			var rprint = player.printByStem(scope);
-			if (!rid && !rprint) {
-				player.registerPrint(print, scope);
-				return true;
+			if (print in users) {
+				return acceptsUser(users[print]);
 			} else {
-				return rid === scope.$id;
+				var rid = player.stemIdByPrint(print);
+				var rprint = player.printByStem(scope);
+				if (!rid && !rprint) {
+					player.registerPrint(print, scope);
+					return true;
+				} else {
+					return rid === scope.$id;
+				}
 			}
 		}
 
