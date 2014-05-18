@@ -85,3 +85,14 @@ function finishedLoading(bufferList) {
     $("#play").show();
     $("#loading").hide();
 }
+
+var audioevent = {
+    "on": function(event) {},
+    "off": function(event) {},
+    "start": function(event) {},
+    "filter": function(event) {},
+    "volume": function(event) { playPause(); },
+    "eq": function(event) {},
+    "pan": function(event) {},
+    "reverb": function(event) {},
+}

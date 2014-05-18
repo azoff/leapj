@@ -1,0 +1,51 @@
+
+<!DOCTYPE html>
+<html ng-app="index">
+
+<head>
+	<meta charset="utf-8">
+	<title>LeapJ | DJ Anywhere.</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<link rel="stylesheet" href="/css/screen.css">
+</head>
+
+<body>
+
+	<header>
+		<h1>LeapJ</h1>
+	</header>
+
+	<div ng-controller="tracks" ng-cloak>
+		<span ng-repeat="track in tracks">
+			<input id="{{ 'radio-' + $index }}" type="radio" ng-model="$parent.selectedTrack" ng-value="track" />
+			<label for="{{ 'radio-' + $index }}">{{ track.name + ' ('+track.band+')' }}</label>
+		</span>
+	</div>
+
+	<div ng-controller="player" ng-cloak>
+
+		<div ng-show="selectedTrack">
+			<h2>{{selectedTrack.name}}</h2>
+			<button ng-disabled="!ready" ng-show="!playing" ng-click="playSelectedTrack()">Play</button>
+			<button ng-disabled="!ready" ng-show="playing" ng-click="stopSelectedTrack()">Stop</button>
+		</div>
+
+
+		<div ng-show="selectedTrack">
+			<div ng-controller="stem" ng-class="{loading:loading==true}" ng-repeat="(key, url) in selectedTrack.stems">
+				<h2>{{key}}<span ng-show="status"> ({{status}})</span></h2>
+				<input type="range" ng-model="volume" />
+				<canvas></canvas>
+				<span class="spinner" ng-show="loading"></span>
+			</div>
+		</div>
+
+	</div>
+
+	<script async src="/js/requirejs-2.1.10/require.js" data-main="/js/app.js"></script>
+
+</body>
+
+</html>
