@@ -114,11 +114,11 @@ body {
 		-webkit-box-reflect: below 0px -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(50%, transparent), to(rgba(255,255,255,0.2)));
 		@include rotateY(0deg);
 		&.ready {
+			&:nth-child(3n) {
+				@include rotateY(-20deg);
+			}
 			&:nth-child(3n+1) {
 				@include rotateY(20deg);
-			}
-			&:nth-child(2n+3) {
-				@include rotateY(-20deg);
 			}
 			&:nth-child(3n+2) {
 				@include translateZ(-65px);
