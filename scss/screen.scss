@@ -68,6 +68,8 @@ body {
 	width: 40%;
 	position: absolute;
 	margin: ($size-unit*-2) 0 0 (-20%);
+	z-index: 11;
+
 	[type=text] {
 		width: 100%;
 	}
@@ -177,6 +179,7 @@ body {
 	margin: -100px 0 0 (-20%);
 	font-size: 3em;
 	text-align: right;
+	z-index: 10;
 
 	color: $color-secondary-dark;
 	strong {
