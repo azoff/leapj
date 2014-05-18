@@ -19,8 +19,9 @@
 
 	<div id="content">
 
-		<div ng-controller="tracks">
-			<button id="start" ng-class="{started:!!selectedTrack}" ng-click="start()" ng-show="tracks">Let's Dance.</button>
+		<div ng-controller="tracks" ng-show="tracks" id="start">
+			<input type="text" placeholder="Where you at?!" ng-model="room" />
+			<button id="start-receiving" ng-click="startReceiving()">Dance.</button><button id="start-gesturing" ng-click="startSending()">Leap.</button>
 		</div>
 
 		<div ng-controller="player" ng-class="{started:!!selectedTrack}">
@@ -38,6 +39,19 @@
 				</div>
 			</div>
 
+		</div>
+
+		<div id="message" ng-controller="message" ng-class="{started:!!enabled, empty:!gestureEvent}">
+			<i class="fa fa-spin fa-circle-o-notch"></i>
+			<div class="eventdata">
+				<span>Type: </span><strong>{{ gestureEvent.type }}</strong>
+			</div>
+			<div class="eventdata">
+				<span>X: </span><strong>{{ gestureEvent.x }}</strong>
+			</div>
+			<div class="eventdata">
+				<span>Y: </span><strong>{{ gestureEvent.y }}</strong>
+			</div>
 		</div>
 
 	</div>

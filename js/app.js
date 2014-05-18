@@ -4,15 +4,35 @@
 
 	requirejs.config({
 		paths: {
-			jquery: '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min',
-			angular: '//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min',
-			firebase: '//cdn.firebase.com/js/client/1.0.15/firebase',
-			gestures: 'lib/gestures',
-			pubsub: 'lib/pubsub'
+			jquery: 'jquery-2.1.1/jquery.min',
+			angular: 'angular-1.2.15/angular',
+			firebase: 'firebase-1.0.15/firebase',
+			detectors: 'core/detectors',
+			gestures: 'core/gestures',
+			pubsub: 'core/pubsub',
+			fingerprint: 'fingerprint/fingerprint',
+			three: 'leap/three',
+			leap: 'leap/leap-0.6.0',
+			leapPlugins: 'leap/leap-plugins-0.1.6',
+			leapHand: 'leap/leap.rigged-hand-0.1.4.min'
 		},
 		shim: {
 			angular: {
+				deps: ['jquery'],
 				exports: 'angular'
+			},
+			three: {
+				exports: 'THREE'
+			},
+			leap: {
+				exports: 'Leap'
+			},
+			leapPlugins: {
+				exports: 'Leap'
+			},
+			leapHand: {
+				deps: ['leap', 'leapPlugins', 'three'],
+				exports: 'Leap'
 			},
 			firebase: {
 				exports: 'Firebase'

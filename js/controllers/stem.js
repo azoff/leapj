@@ -1,7 +1,7 @@
 window.requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame;
 window.AudioContext = window.AudioContext || window.webkitAudioContext;
 
-define(['require', 'pubsub', 'gestures', 'jquery'], function(angular, pubsub, gestures, $){
+define(['require', 'gestures', 'jquery'], function(angular, gestures, $){
 
 	"use strict";
 
@@ -80,9 +80,12 @@ define(['require', 'pubsub', 'gestures', 'jquery'], function(angular, pubsub, ge
 		var def = $.Deferred();
 
 		setupScope();
-		pubsub.subscribe(processMessage);
 		loadBuffer(scope.url, applyBuffer);
 		scope.$watch('volume', adjustVolume);
+
+		require(['pubsub'], function(pubsub){
+			pubsub.subscribe(processMessage);
+		});
 
 		scope.play = function() {
 

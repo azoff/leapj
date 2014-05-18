@@ -65,11 +65,37 @@ body {
 #start {
 	top: 50%;
 	left: 50%;
-	margin: ($size-unit*-2) 0 0 -135px;
+	width: 40%;
 	position: absolute;
-	font-size: $size-unit * 2;
+	margin: ($size-unit*-2) 0 0 (-20%);
+	[type=text] {
+		width: 100%;
+	}
+	button {
+		width: 50%;
+		display: inline-block;
+		@include opacity(0);
+	}
+	&.has-room {
+		[type=text] {
+			@include border-radius(5px 5px 0 0);
+			border-bottom-width: 0;
+		}
+		button {
+			@include opacity(1);
+		}
+	}
+	button, [type=text] {
+		font-size: $size-unit * 2;
+	}
+	#start-receiving {
+		@include border-radius(0 0 0 5px);
+	}
+	#start-gesturing {
+		@include border-radius(0 0 5px 0);
+	}
 	&.started {
-		top: -80px;
+		top: -200px;
 		@include opacity(0);
 	}
 }
@@ -128,15 +154,53 @@ body {
 	}
 }
 
-button {
-	cursor: pointer;
+[type=text],button {
 	@include appearence(none);
+	text-align: center;
 	padding: 0.5em 1em;
 	background-color: fade-out($color-primary-dark, 1);
 	border: solid 1px $color-primary-dark;
 	color: $color-primary-dark;
 	@include border-radius(5px);
 	&:hover, &:focus {
+		color: $color-primary-light;
+		border-color: $color-primary-light;
+	}
+}
+
+#message {
+
+	top: 50%;
+	left: 50%;
+	width: 40%;
+	position: absolute;
+	margin: -100px 0 0 (-20%);
+	font-size: 3em;
+	text-align: right;
+
+	color: $color-secondary-dark;
+	strong {
+		color: $color-primary-dark;
+	}
+
+	.fa {
+		top: 50%;
+		left: 50%;
+		position: absolute;
+		margin: 0 0 0 -0.5em;
+	}
+
+	&, .fa, &.empty .eventdata {
+		@include opacity(0);
+	}
+	.eventdata, &.empty .fa, &.started {
+		@include opacity(1);
+	}
+}
+
+button {
+	cursor: pointer;
+	&:active {
 		color: $color-neutral-light;
 		border-color: $color-primary-dark;
 		background-color: $color-primary-dark;
