@@ -1,10 +1,14 @@
 var dataRef = new Firebase(config.firebase_room_uri);
 dataRef.on('child_added', function(snapshot) {
-    parseMsg(snapshot.val())
+    console.log(snapshot.val());
+    if (playing) {
+        console.log("playing");
+        senderEvent(snapshot.val());
+    }
 });
 
 // send incoming messages to webaudio control handlers
-function parseMsg(o) {
+function senderEvent(o) {
     switch(o.type) {
     case "on":
         audioevent.enable(o)
