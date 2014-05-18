@@ -4,7 +4,7 @@ define(['require', 'angular'], function(require, angular){
 
 	return function(player) {
 
-		var ids = {};
+		var urlToStems = {};
 		var stemIdToPrints = {};
 		var printsToStemIds = {};
 		var promises = [];
@@ -13,8 +13,11 @@ define(['require', 'angular'], function(require, angular){
 
 		player.playSelectedTrack = function() {
 			if (player.selectedTrack) {
-				angular.forEach(player.selectedTrack.stems, playStem);
-				player.playing = true;
+				angular.forEach(player.selectedTrack.stems, loadStem);
+				$.when.apply($, promises).done(function(){
+					angular.forEach(player.selectedTrack.stems, playStem);
+					player.playing = true;
+				});
 			}
 		};
 
@@ -25,10 +28,11 @@ define(['require', 'angular'], function(require, angular){
 			}
 		};
 
-		player.registerStem = function(url, stem) {
-			stems[url] = stem;
-			player.ready = true;
-			player.playSelectedTrack();
+		player.registerStem = function(stem) {
+			urlToStems[stem.url] = stem;
+			if (Object.keys(urlToStems).length === Object.keys(player.selectedTrack.stems).length) {
+				player.playSelectedTrack();
+			}
 		};
 
 		player.registerPrint = function(print, stem) {
@@ -59,15 +63,21 @@ define(['require', 'angular'], function(require, angular){
 			player.selectedTrack = selectedTrack;
 		}
 
-		function playStem(stem) {
-			if (stem in stems) {
-				stems[stem].play();
+		function loadStem(url) {
+			if (url in urlToStems) {
+				promises.push(urlToStems[url].load());
 			}
 		}
 
-		function stopStem(stem) {
-			if (stem in stems) {
-				stems[stem].stop();
+		function playStem(url) {
+			if (url in urlToStems) {
+				urlToStems[url].play();
+			}
+		}
+
+		function stopStem(url) {
+			if (url in urlToStems) {
+				urlToStems[url].stop();
 			}
 		}
 
