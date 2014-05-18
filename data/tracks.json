@@ -1,5 +1,16 @@
 [
 	{
+		"name": "Bad Romance",
+		"artist": "Lady Gaga",
+		"stems": {
+            "bass": "/stems/gaga/Bass.mp3",
+            "drum": "/stems/gaga/Drum.mp3",
+            "lead":  "/stems/gaga/Lead.mp3",
+            "synth": "/stems/gaga/Synth.mp3",
+            "voice": "/stems/gaga/Voice.mp3"
+		}
+	},
+	{
 		"name": "We Will Rock You",
 		"artist": "Queen",
 		"stems": {

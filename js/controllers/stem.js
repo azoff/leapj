@@ -163,8 +163,8 @@ define(['require', 'gestures', 'jquery'], function(angular, gestures, $){
 
 		function processMessage(msg) {
 			require(['scope/player'], function(player) {
-				if (!acceptPrint(msg.fingerprint, player)) return;
-				console.log(msg.fingerprint, scope.key);
+//				if (!acceptPrint(msg.fingerprint, player)) return;
+//				console.log(msg.fingerprint, scope.key);
 				gestures.processMessage(msg, scope);
 			});
 		}
