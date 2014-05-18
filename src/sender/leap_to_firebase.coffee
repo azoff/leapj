@@ -1,3 +1,7 @@
+# TODO: require it properly
+throw "Couldn't find Fingerprint library" unless Fingerprint?
+fingerprint = new Fingerprint().get()
+
 class LeapToFirebase
   constructor: (firebase_room_uri) ->
     console.log "Construct LeapToFirebase. Connecting to #{firebase_room_uri}"
@@ -39,6 +43,7 @@ class LeapToFirebase
   sendToFirebase: (event) ->
     # after translating, this actually sends event to firebase!
     event.createdAt ?= Date() # Firebase.ServerValue.TIMESTAMP # TODO: Add it here if you want
+    event.fingerprint = fingerprint
     console.log "Sending event #{JSON.stringify event} to firebase #{@firebase_room_uri}"
     @firebase.push event
 
