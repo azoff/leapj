@@ -1,4 +1,6 @@
 var dataRef = new Firebase(config.firebase_room_uri);
+dataRef.remove(); // Clear the existing firebase events
+
 dataRef.on('child_added', function(snapshot) {
     console.log(snapshot.val());
     if (playing) {
