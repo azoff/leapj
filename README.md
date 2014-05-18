@@ -28,4 +28,5 @@ TODO
 ----
 
 * Move fonts/ and scss/ into common/
-* Remove non-web assets (e.g. README.md) before deploying?
+* Remove non-web assets (e.g. README.md) before deploying
+    * This involves creating a folder called "public/" that is pushed to firebase.
