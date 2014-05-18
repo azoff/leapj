@@ -3,65 +3,33 @@
 		"name": "Analog Or Digital",
 		"band": "Wildlife Control",
 		"stems": {
-			"vocals": "//cbateman.com/demos/AudioTrackr/files/analogordigital/Analog or Digital.Vocals.mp3",
-			"guitarpiano": "//cbateman.com/demos/AudioTrackr/files/analogordigital/Analog or Digital.GuitarPiano.mp3",
-			"drums": "//cbateman.com/demos/AudioTrackr/files/analogordigital/Analog or Digital.Drums.mp3",
-			"bass": "//cbateman.com/demos/AudioTrackr/files/analogordigital/Analog or Digital.Bass.mp3"
+			"vocals": "/stems/analogordigital/Analog or Digital.Vocals.mp3",
+			"guitarpiano": "/stems/analogordigital/Analog or Digital.GuitarPiano.mp3",
+			"drums": "/stems/analogordigital/Analog or Digital.Drums.mp3",
+			"bass": "/stems/analogordigital/Analog or Digital.Bass.mp3"
 		}
 	},
 	{
 		"name": "Lasso",
 		"band": "Phoenix",
 		"stems": {
-			"guitar": "//cbateman.com/demos/AudioTrackr/files/lasso/Guitar.mp3",
-			"bass": "//cbateman.com/demos/AudioTrackr/files/lasso/Bass.mp3",
-			"beat": "//cbateman.com/demos/AudioTrackr/files/lasso/Beat.mp3",
-			"key": "//cbateman.com/demos/AudioTrackr/files/lasso/Key.mp3",
-			"vocals": "//cbateman.com/demos/AudioTrackr/files/lasso/Accapela.mp3"
+			"guitar": "/stems/lasso/Guitar.mp3",
+			"bass": "/stems/lasso/Bass.mp3",
+			"beat": "/stems/lasso/Beat.mp3",
+			"key": "/stems/lasso/Key.mp3",
+			"vocals": "/stems/lasso/Accapela.mp3"
 		}
 	},
 	{
 		"name": "Armistice",
 		"band": "Phoenix",
 		"stems": {
-			"beat": "//cbateman.com/demos/AudioTrackr/files/armistice/Beat.mp3",
-			"goblins": "//cbateman.com/demos/AudioTrackr/files/armistice/Goblins.mp3",
-			"guitar": "//cbateman.com/demos/AudioTrackr/files/armistice/Guitar.mp3",
-			"keys": "//cbateman.com/demos/AudioTrackr/files/armistice/Keys + CS.mp3",
-			"bass": "//cbateman.com/demos/AudioTrackr/files/armistice/Bass.mp3",
-			"vocals": "//cbateman.com/demos/AudioTrackr/files/armistice/Accapela.mp3"
-		}
-	},
-	{
-		"name": "Lisztomania",
-		"band": "Phoenix",
-		"stems": {
-			"Bass": "//cbateman.com/demos/AudioTrackr///cbateman.com/demos/AudioTrackr/files/lisztomania/Bass-combined.mp3",
-			"Beat": "//s1.cbateman.com/demos/AudioTrackr///cbateman.com/demos/AudioTrackr/files/lisztomania/Beat.mp3",
-			"Brass": "//s2.cbateman.com/demos/AudioTrackr///cbateman.com/demos/AudioTrackr/files/lisztomania/Brass.mp3",
-			"Cocotte": "//cbateman.com/demos/AudioTrackr///cbateman.com/demos/AudioTrackr/files/lisztomania/Cocotte.mp3",
-			"Guitar1": "//s1.cbateman.com/demos/AudioTrackr///cbateman.com/demos/AudioTrackr/files/lisztomania/Guitar1.mp3",
-			"Guitar2": "//s2.cbateman.com/demos/AudioTrackr///cbateman.com/demos/AudioTrackr/files/lisztomania/Guitar2.mp3",
-			"Guitar3": "//cbateman.com/demos/AudioTrackr///cbateman.com/demos/AudioTrackr/files/lisztomania/Guitar3.mp3",
-			"Key": "//s1.cbateman.com/demos/AudioTrackr///cbateman.com/demos/AudioTrackr/files/lisztomania/Key.mp3",
-			"Motif": "//s2.cbateman.com/demos/AudioTrackr///cbateman.com/demos/AudioTrackr/files/lisztomania/Motif.mp3",
-			"Vocals": "//cbateman.com/demos/AudioTrackr///cbateman.com/demos/AudioTrackr/files/lisztomania/Vox.mp3"
-		}
-	},
-	{
-		"name": "Trying to be Cool",
-		"band": "Phoenix",
-		"stems": {
-			"Electric Guitars": "//cbateman.com/demos/AudioTrackr///cbateman.com/demos/AudioTrackr/files/tryingtobecool/ALL ELEC GTRS.mp3",
-			"Solinas": "//s1.cbateman.com/demos/AudioTrackr///cbateman.com/demos/AudioTrackr/files/tryingtobecool/ALL SOLINAS.mp3",
-			"Bass": "//s2.cbateman.com/demos/AudioTrackr///cbateman.com/demos/AudioTrackr/files/tryingtobecool/BASS.mp3",
-			"Beat": "//cbateman.com/demos/AudioTrackr///cbateman.com/demos/AudioTrackr/files/tryingtobecool/BEAT.mp3",
-			"China Sonus Tone": "//s1.cbateman.com/demos/AudioTrackr///cbateman.com/demos/AudioTrackr/files/tryingtobecool/CHINA SONUS TONE.mp3",
-			"Glock Claps": "//s2.cbateman.com/demos/AudioTrackr///cbateman.com/demos/AudioTrackr/files/tryingtobecool/GLOCK CLAPS.mp3",
-			"Guitar12": "//cbateman.com/demos/AudioTrackr///cbateman.com/demos/AudioTrackr/files/tryingtobecool/GTR12.mp3",
-			"Moog": "//s1.cbateman.com/demos/AudioTrackr///cbateman.com/demos/AudioTrackr/files/tryingtobecool/MOOG MEGAWAVE.mp3",
-			"Riff": "//s2.cbateman.com/demos/AudioTrackr///cbateman.com/demos/AudioTrackr/files/tryingtobecool/RIFF.mp3",
-			"Vocals": "//cbateman.com/demos/AudioTrackr///cbateman.com/demos/AudioTrackr/files/tryingtobecool/LEAD DRY.mp3"
+			"beat": "/stems/armistice/Beat.mp3",
+			"goblins": "/stems/armistice/Goblins.mp3",
+			"guitar": "/stems/armistice/Guitar.mp3",
+			"keys": "/stems/armistice/Keys + CS.mp3",
+			"bass": "/stems/armistice/Bass.mp3",
+			"vocals": "/stems/armistice/Accapela.mp3"
 		}
 	}
 ]

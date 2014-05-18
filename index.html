@@ -24,22 +24,25 @@
 		</span>
 	</div>
 
-	<div ng-controller="player" ng-show="selectedTrack" ng-cloak>
-		<h2>{{selectedTrack.name}}</h2>
-		<button ng-disabled="!ready" ng-show="!playing" ng-click="playSelectedTrack()">Play</button>
-		<button ng-disabled="!ready" ng-show="playing" ng-click="stopSelectedTrack()">Stop</button>
-	</div>
+	<div ng-controller="player" ng-cloak>
 
-	<!--
-	<div class="track-container" ng-cloak>
-		<div ng-controller="TrackController" class="track" ng-class="{loading:loading==true}" ng-repeat="(key, track) in currentSong.tracks">
-			<h2>{{key}}<span ng-show="status"> ({{status}})</span></h2>
-			<input type="range" ng-model="trackVolume" />
-			<canvas></canvas>
-			<span class="spinner" ng-show="loading"></span>
+		<div ng-show="selectedTrack">
+			<h2>{{selectedTrack.name}}</h2>
+			<button ng-disabled="!ready" ng-show="!playing" ng-click="playSelectedTrack()">Play</button>
+			<button ng-disabled="!ready" ng-show="playing" ng-click="stopSelectedTrack()">Stop</button>
 		</div>
+
+
+		<div ng-show="selectedTrack">
+			<div ng-controller="stem" ng-class="{loading:loading==true}" ng-repeat="(key, url) in selectedTrack.stems">
+				<h2>{{key}}<span ng-show="status"> ({{status}})</span></h2>
+				<input type="range" ng-model="volume" />
+				<canvas></canvas>
+				<span class="spinner" ng-show="loading"></span>
+			</div>
+		</div>
+
 	</div>
-	-->
 
 	<script async src="/js/requirejs-2.1.10/require.js" data-main="/js/app.js"></script>
 

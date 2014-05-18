@@ -4,19 +4,29 @@ define(['require', 'angular'], function(require, angular){
 
 	return function(player) {
 
-		define('scope/player', player);
+		var stems = {};
+		var promises = [];
 
 		require(['scope/tracks'], watchSelectedTrack);
 
 		player.playSelectedTrack = function() {
-			angular.forEach(player.selectedTrack.stems, playStem);
-			player.playing = true;
+			if (player.selectedTrack) {
+				angular.forEach(player.selectedTrack.stems, playStem);
+				player.playing = true;
+			}
 		};
 
 		player.stopSelectedTrack = function() {
-			angular.forEach(player.selectedTrack.stems, stopStem);
-			player.playing = true;
+			if (player.selectedTrack) {
+				angular.forEach(player.selectedTrack.stems, stopStem);
+				player.playing = false;
+			}
 		};
+
+		player.registerStem = function(url, stem) {
+			stems[url] = stem;
+			player.ready = true;
+		}
 
 		function watchSelectedTrack(tracks) {
 			player.selectedTrack = tracks.selectedTrack;
@@ -24,18 +34,26 @@ define(['require', 'angular'], function(require, angular){
 		}
 
 		function changeSelectedTrack(selectedTrack) {
+			if (player.playing)
+				player.stopSelectedTrack();
+			player.ready = false;
+			promises = [];
 			player.selectedTrack = selectedTrack;
-			player.ready = true;
 		}
 
 		function playStem(stem) {
-			stem.play();
+			if (stem in stems) {
+				stems[stem].play();
+			}
 		}
 
 		function stopStem(stem) {
-			stem.stop();
+			if (stem in stems) {
+				stems[stem].stop();
+			}
 		}
 
+		define('scope/player', player);
 
 	}
 
