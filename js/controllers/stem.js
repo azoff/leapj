@@ -24,7 +24,7 @@ define(['visuals', 'pubsub', 'gestures', 'user', 'audio'], function(visuals, pub
 
 		function applyControlMessage(msg) {
 			var user = msg.user;
-			if (!user || !user.isControllingStem(scope.stem))
+			if (!user.isControllingStem(scope.stem))
 				return;
 			scope.$apply(function(){
 				gestures.processMessage(msg, scope.stem);

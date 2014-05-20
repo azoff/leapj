@@ -27,7 +27,8 @@
 
 		<ul id="users" ng-controller="users" ng-class="{visible:userKeys.length}">
 			<li class="user" ng-repeat="key in userKeys">
-				<div ng-style="{'background-color': users[key].hexColor}">
+				<div id="{{ users[key].alias }}" ng-style="{'background-color': users[key].hexColor}">
+					<div class="thumb"></div>
 					<strong>{{ users[key].alias }}</strong>
 					<small ng-repeat="(key,val) in users[key].stems()">{{ key }}{{$last ? '' : ', '}}</small>
 				</div>

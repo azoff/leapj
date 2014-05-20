@@ -81,6 +81,21 @@ body {
 	}
 	.user {
 		div {
+			position: relative;
+		}
+		.thumb {
+			padding: 0;
+			background-color: fade-out(black, 0.5);
+			margin-right: $size-half-unit;
+			float: left;
+			height: 64px;
+			width: 64px;
+			video {
+				width: 100%;
+				height: 100%;
+			}
+		}
+		div {
 			padding: $size-half-unit;
 		}
 		strong {

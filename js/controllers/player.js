@@ -1,4 +1,4 @@
-define(['require', 'angular', 'audio', 'jquery', 'pubsub', 'timing', 'user'], function(require, angular, audio, $, pubsub, timing, users){
+define(['require', 'angular', 'audio', 'jquery'], function(require, angular, audio, $){
 
 	"use strict";
 
@@ -9,8 +9,6 @@ define(['require', 'angular', 'audio', 'jquery', 'pubsub', 'timing', 'user'], fu
 		scope.playing = false;
 		scope.$watch('selectedTrack', changeTrack);
 		scope.$watch('started', togglePlayback);
-
-		setInterval(publishSync, 1000);
 
 		function togglePlayback(started) {
 			if (started && !scope.playing) play();
@@ -52,16 +50,6 @@ define(['require', 'angular', 'audio', 'jquery', 'pubsub', 'timing', 'user'], fu
 				stem.player.stop();
 			});
 			scope.playing = false;
-		}
-
-		function publishSync() {
-			if (!player.playing)
-				return;
-			pubsub.publish({
-				type: 'sync',
-				user: users.session,
-				ts: new timing.Timestamp()
-			});
 		}
 
 	}
