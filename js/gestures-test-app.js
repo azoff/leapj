@@ -52,6 +52,7 @@
 			detectors.space(frame, publishMotionEvent);
 			detectors.pinch(frame, publishMotionEvent);
 			detectors.triangle(frame, publishMotionEvent);
+			detectors.swipe(frame, publishMotionEvent);
 		}
 
 		Leap.loop({ enableGestures: true, background: true }, detectMotions);
