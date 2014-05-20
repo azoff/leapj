@@ -1,6 +1,18 @@
 [
 	{
-		"name": "Mashup",
+		"name": "Mashup #1",
+		"artist": "Aylan",
+		"stems": {
+			"Drums #1": "https://leapj-assets.s3.amazonaws.com/audio/with_stems/Aylan/SFTechSummit%20drum1.mp3",
+			"Drums #2": "https://leapj-assets.s3.amazonaws.com/audio/with_stems/Aylan/SFTechSummit%20drum2.mp3",
+			"Effects": "https://leapj-assets.s3.amazonaws.com/audio/with_stems/Aylan/SFTechSummit%20fx.mp3",
+			"Melody": "https://leapj-assets.s3.amazonaws.com/audio/with_stems/Aylan/SFTechSummit%20melody.mp3",
+			"Vocals": "https://leapj-assets.s3.amazonaws.com/audio/with_stems/Aylan/SFTechSummit%20vocals.mp3",
+			"Robots": "https://leapj-assets.s3.amazonaws.com/audio/with_stems/Aylan/weRLeapJ.mp3"
+		}
+	},
+	{
+		"name": "Mashup #2",
 		"artist": "Aylan",
 		"stems": {
 			"drum1": "https://leapj-assets.s3.amazonaws.com/audio/with_stems/mashup-stems/drum1.mp3",
