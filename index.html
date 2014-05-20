@@ -31,7 +31,7 @@
 
 			<div id="stems" ng-controller="stems">
 				<div class="stem" ng-controller="stem" ng-class="{ready:!loading}" ng-repeat="stem in stems">
-					<h3>{{key}}</h3>
+					<h3>{{stem.name}}</h3>
 					<canvas></canvas>
 					<i class="fa fa-circle-o-notch"></i>
 				</div>
