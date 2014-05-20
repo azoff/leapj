@@ -17,31 +17,29 @@
 		<h1 id="logo">Leap<em>L</em></h1>
 	</header>
 
-	<div id="content">
+	<div id="content" ng-controller="tracks">
 
-		<div ng-controller="tracks" ng-show="tracks" id="start">
+		<div ng-show="tracks" id="start" ng-class="{'has-room':room,started:mode}">
 			<input type="text" placeholder="Where you at?!" ng-model="room" />
-			<button id="start-receiving" ng-click="startReceiving()">Dance.</button><button id="start-gesturing" ng-click="startSending()">Leap.</button>
+			<button id="start-receiving" ng-click="startReceiving()">Dance.
+			</button><button id="start-gesturing" ng-click="startSending()">Leap.</button>
 		</div>
 
-		<div ng-controller="player" ng-class="{started:!!selectedTrack}">
+		<div id="player" ng-controller="player" ng-class="{started:mode==='receiving'}">
 
-			<div id="player">
-				<h2 id="track-title">{{selectedTrack.name}} - {{selectedTrack.artist}}</h2>
-			</div>
-
+			<h2 id="track-title">{{selectedTrack.name}} - {{selectedTrack.artist}}</h2>
 
 			<div id="stems" ng-controller="stems">
-				<div class="stem" ng-controller="stem" ng-class="{ready:!loading}" ng-repeat="(key, url) in selectedTrack.stems">
+				<div class="stem" ng-controller="stem" ng-class="{ready:!loading}" ng-repeat="stem in stems">
 					<h3>{{key}}</h3>
 					<canvas></canvas>
-					<i class="fa fa-spin fa-circle-o-notch"></i>
+					<i class="fa fa-circle-o-notch"></i>
 				</div>
 			</div>
 
 		</div>
 
-		<div id="message" ng-controller="message" ng-class="{started:!!enabled, empty:!gestureEvent}">
+		<div id="message" ng-controller="message" ng-class="{started:mode==='sending',empty:!gestureEvent}">
 			<i class="fa fa-spin fa-circle-o-notch"></i>
 			<div class="eventdata">
 				<span>Type: </span><strong>{{ gestureEvent.type }}</strong>

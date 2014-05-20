@@ -57,7 +57,7 @@ body {
 
 #player {
 	@include opacity(0);
-	.started & {
+	&.started {
 		@include opacity(1);
 	}
 }
@@ -76,7 +76,10 @@ body {
 	button {
 		width: 50%;
 		display: inline-block;
+		position: relative;
 		@include opacity(0);
+		@include transition(opacity 500ms);
+		left: -9999px;
 	}
 	&.has-room {
 		[type=text] {
@@ -85,6 +88,7 @@ body {
 		}
 		button {
 			@include opacity(1);
+			left: auto;
 		}
 	}
 	button, [type=text] {

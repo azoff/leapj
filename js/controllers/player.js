@@ -1,87 +1,56 @@
-define(['require', 'angular'], function(require, angular){
+define(['require', 'angular', 'audio', 'jquery'], function(require, angular, audio, $){
 
 	"use strict";
 
-	return function(player) {
+	return function(scope) {
 
-		var urlToStems = {};
-		var stemIdToPrints = {};
-		var printsToStemIds = {};
-		var promises = [];
+		var promises  = [];
+		scope.stems   = [];
+		scope.playing = false;
+		scope.$watch('selectedTrack', changeTrack);
+		scope.$watch('mode', togglePlayback);
 
-		require(['scope/tracks'], watchSelectedTrack);
-
-		player.playSelectedTrack = function() {
-			if (player.selectedTrack) {
-				angular.forEach(player.selectedTrack.stems, loadStem);
-				$.when.apply($, promises).done(function(){
-					angular.forEach(player.selectedTrack.stems, playStem);
-					player.playing = true;
-				});
-			}
-		};
-
-		player.stopSelectedTrack = function() {
-			if (player.selectedTrack) {
-				angular.forEach(player.selectedTrack.stems, stopStem);
-				player.playing = false;
-			}
-		};
-
-		player.registerStem = function(stem) {
-			urlToStems[stem.url] = stem;
-			if (Object.keys(urlToStems).length === Object.keys(player.selectedTrack.stems).length) {
-				player.playSelectedTrack();
-			}
-		};
-
-		player.registerPrint = function(print, stem) {
-			stemIdToPrints[stem.$id] = print;
-			printsToStemIds[print] = stem.$id;
-		};
-
-		player.stemIdByPrint = function(print) {
-			return printsToStemIds[print];
-		};
-
-		player.printByStem = function(stem) {
-			return stemIdToPrints[stem.$id];
-		};
-
-		function watchSelectedTrack(tracks) {
-			player.selectedTrack = tracks.selectedTrack;
-			tracks.$watch('selectedTrack', changeSelectedTrack);
+		function togglePlayback(mode) {
+			if (mode === 'receiving' && !scope.playing) play();
+			else if (scope.playing) stop();
 		}
 
-		function changeSelectedTrack(selectedTrack) {
-			if (player.playing)
-				player.stopSelectedTrack();
-			player.ready = false;
+		function changeTrack(track) {
+			if (scope.playing) stop();
+			scope.stems = [];
+			if (track) loadStems(track);
+		}
+
+		function loadStems(track) {
 			promises = [];
-			stemIdToPrints = {};
-			printsToStemIds = {};
-			player.selectedTrack = selectedTrack;
+			angular.forEach(track.stems, loadStem);
 		}
 
-		function loadStem(url) {
-			if (url in urlToStems) {
-				promises.push(urlToStems[url].load());
-			}
+		function loadStem(url, name) {
+			var stem = new audio.Stem(name, url);
+			scope.stems.push(stem);
+			promises.push(stem.promise);
 		}
 
-		function playStem(url) {
-			if (url in urlToStems) {
-				urlToStems[url].play();
-			}
+		function whenStemsLoaded() {
+			return $.when.apply($, promises);
 		}
 
-		function stopStem(url) {
-			if (url in urlToStems) {
-				urlToStems[url].stop();
-			}
+		function play() {
+			whenStemsLoaded().done(function(){
+				angular.forEach(scope.stems, function(stem){
+					stem.player.play();
+				});
+				scope.playing = true;
+			});
 		}
 
-		define('scope/player', player);
+		function stop() {
+			angular.each(scope.stems, function(stem){
+				stem.player.stop();
+			});
+			scope.playing = false;
+		}
 
 	}
 

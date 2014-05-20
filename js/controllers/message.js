@@ -1,16 +1,19 @@
-define([], function(){
+define(['pubsub'], function(){
 
 	"use strict";
 
 	return function(scope) {
 
-		require(['scope/tracks'], function(tracks){
-			tracks.$watch('mode', toggleEnabled);
-			tracks.onGestureEvent = setGestureEvent;
-		});
+		scope.$watch('mode', toggleEnabled);
 
 		function toggleEnabled(mode) {
 			scope.enabled = mode === 'sending';
+			if (scope.enabled && !scope.subscription) {
+				scope.subscription = pubsub.subscribe(setGestureEvent)
+			} else if(scope.subscription) {
+				pubsub.unsubscribe(scope.subscription)
+				scope.subscription = null;
+			}
 		}
 
 		var debounce;

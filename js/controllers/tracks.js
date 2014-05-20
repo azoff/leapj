@@ -1,10 +1,8 @@
-define(['require', 'leap', 'detectors'], function(require, Leap, detectors){
+define(['require', 'leap', 'detectors', 'pubsub'], function(require, Leap, detectors, pubsub){
 
 	"use strict";
 
-	return function(scope, el) {
-
-		define('scope/tracks', scope);
+	return function(scope) {
 
 		require(['data/tracks'], loadTracks);
 
@@ -14,20 +12,16 @@ define(['require', 'leap', 'detectors'], function(require, Leap, detectors){
 		};
 
 		scope.startReceiving = function() {
-			scope.selectedTrack = scope.tracks[0];
 			scope.startSending();
 			scope.mode = 'receiving';
 		};
 
 		scope.startSending = function() {
+			pubsub.startSession(scope.room);
 			Leap.loop({ enableGestures: true, background: true }, detectMotions);
-			el.addClass('started')
+			scope.started = true;
 			scope.mode = 'sending';
 		};
-
-		scope.$watch('room', function(a, b){
-			if (a !== b) el.addClass('has-room');
-		});
 
 		function detectMotions(frame) {
 			detectors.space(frame, publishMotionEvent);
@@ -36,21 +30,20 @@ define(['require', 'leap', 'detectors'], function(require, Leap, detectors){
 
 		function publishMotionEvent(event) {
 			if (!event) return;
-			if (scope.onGestureEvent)
-				scope.onGestureEvent(event);
-			require(['pubsub'], function(pubsub){
-				pubsub.publish(event);
-			});
+			pubsub.publish(event);
 		}
 
-		function renderTracks(tracks) {
-			scope.tracks = tracks;
-			scope.$apply();
+		function selectTrack(tracks) {
+			scope.$apply(function(){
+				var index = parseInt(window.location.hash || '0', 10);
+				scope.tracks = tracks;
+				scope.selectedTrack = scope.tracks[scope.tracks.length > index ? index : 0];
+			});
 		}
 
 		function loadTracks(loader) {
 			//TODO: connect this with the scope controller for the app, so that we can show errors
-			loader.done(renderTracks);
+			loader.done(selectTrack);
 		}
 
 	}
