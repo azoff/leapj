@@ -6,6 +6,7 @@ define(['jquery', 'exports', 'user'], function($, exports, users){
 	var api = new AudioContext();
 	var speakers = api.destination;
 	api.createGain = api.createGain || api.createGainNode;
+	exports.api = api;
 
 	function defaultMiddleware(source) {
 		return source;
@@ -28,8 +29,8 @@ define(['jquery', 'exports', 'user'], function($, exports, users){
 		this._middleware = $.isFunction(middleware) ? middleware : defaultMiddleware;
 	};
 
-	Player.prototype.play = function(startTime) {
-		var offset = startTime ? (users.newTimestamp() - startTime) : 0;
+	Player.prototype.play = function(currentTime) {
+		var offset = currentTime ? currentTime  : api.currentTime;
 		var source = this._source = api.createBufferSource(); source.buffer = this._buffer;
 		this._middleware(source).connect(speakers);
 		source.start(0, offset);

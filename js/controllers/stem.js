@@ -23,15 +23,15 @@ define(['visuals', 'pubsub', 'gestures', 'user'], function(visuals, pubsub, gest
 		}
 
 		function resetPlayhead(offset) {
-			users.session.playStart = offset;
+			users.session.currentTime = offset;
 			scope.stem.player.stop();
 			scope.stem.player.play(offset);
 		}
 
 		function applyControlMessage(msg) {
 			var user = msg.user;
-			if (user.playStart < users.session.playStart) {
-				resetPlayhead(user.playStart);
+			if (user.currentTime > users.session.currentTime) {
+				resetPlayhead(user.currentTime);
 			}
 			if (!user.isControllingStem(scope.stem))
 				return;

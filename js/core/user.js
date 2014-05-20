@@ -5,7 +5,7 @@ define(['visuals'], function(visuals){
 	function User(user) {
 		user = user || {}
 		this.alias = user.alias || 'me';
-		this.playStart = user.playStart || newTimestamp();
+		this.currentTime = user.currentTime || 0;
 		this.color = user.color || visuals.randomNeutralRGB();
 		this.hexColor = visuals.rgbToHex(this.color);
 		this._stems = user._stems || {};
