@@ -2,9 +2,12 @@ define(['visuals'], function(visuals){
 
 	"use strict";
 
-	function User() {
-		this.color = visuals.randomNeutralRGB();
+	function User(user) {
+		user = user || {}
+		this.alias = user.alias || 'me';
+		this.color = user.color || visuals.randomNeutralRGB();
 		this.hexColor = visuals.rgbToHex(this.color);
+		this._stems = user._stems || {};
 	}
 
 	User.prototype.stems = function() {
@@ -30,6 +33,9 @@ define(['visuals'], function(visuals){
 		}
 	};
 
-	return new User();
+	return {
+		session: new User(),
+		User: User
+	};
 
 });
