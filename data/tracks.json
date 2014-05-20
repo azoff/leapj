@@ -1,5 +1,15 @@
 [
 	{
+		"name": "Blue Monday",
+		"artist": "Cover",
+		"stems": {
+			"rhythm": "/stems/Amir Hirsch - Blue Monday/Amir Hirsch - Blue Monday (rhythm).mp3",
+			"synth": "/stems/Amir Hirsch - Blue Monday/Amir Hirsch - Blue Monday (synths).mp3",
+			"layer1": "/stems/Amir Hirsch - Blue Monday/Amir Hirsch - Blue Monday (extra synth 1).mp3",
+			"layer2": "/stems/Amir Hirsch - Blue Monday/Amir Hirsch - Blue Monday (extra synth 2).mp3"
+		}
+	},
+	{
 		"name": "Armistice",
 		"artist": "Phoenix",
 		"stems": {
