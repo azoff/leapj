@@ -1,5 +1,6 @@
 .DS_Store
 .idea
+.sass-cache
 src/sender/*.js
 src/receiver/*.js
 node_modules
