@@ -46,7 +46,7 @@ define(['pubsub', 'timing', 'user', 'SayCheese', 'jquery'], function(pubsub, tim
 			}
 
 			setTimeout(function(){ camera.takeSnapshot(size, size); }, timeout);
-			if (snapshot)
+			if (snapshot && snapshot.getImageData)
 				pubsub.publish({ type: 'picture', data: snapshot.getImageData(0, 0, size, size) });
 
 		}
