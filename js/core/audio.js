@@ -28,10 +28,11 @@ define(['jquery', 'exports'], function($, exports){
 		this._middleware = $.isFunction(middleware) ? middleware : defaultMiddleware;
 	};
 
-	Player.prototype.play = function() {
+	Player.prototype.play = function(startTime) {
+		var offset = startTime ? ((new Date().getTime()/1000) - startTime) : 0;
 		var source = this._source = api.createBufferSource(); source.buffer = this._buffer;
 		this._middleware(source).connect(speakers);
-		source.start(0, 0);
+		source.start(0, offset);
 	};
 
 	Player.prototype.stop = function() {

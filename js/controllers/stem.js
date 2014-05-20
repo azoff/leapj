@@ -22,8 +22,17 @@ define(['visuals', 'pubsub', 'gestures', 'user'], function(visuals, pubsub, gest
 			else scope.visualizer.stop();
 		}
 
+		function resetPlayhead(offset) {
+			users.session.playStart = user.playStart;
+			scope.stem.stop();
+			scope.stem.play(offset);
+		}
+
 		function applyControlMessage(msg) {
 			var user = msg.user;
+			if (user.playStart < users.session.playStart) {
+				resetPlayhead(user.playStart);
+			}
 			if (!user.isControllingStem(scope.stem))
 				return;
 			scope.$apply(function(){
