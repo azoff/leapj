@@ -38,7 +38,6 @@ define(['require', 'angular', 'audio', 'jquery', 'user'], function(require, angu
 
 		function play() {
 			whenStemsLoaded().done(function(){
-				users.session.currentTime = audio.api.currentTime;
 				angular.forEach(scope.stems, function(stem){
 					stem.player.play(users.session.currentTime);
 				});

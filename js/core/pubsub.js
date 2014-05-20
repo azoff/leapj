@@ -1,4 +1,4 @@
-define(['firebase', 'user', 'jquery'], function(Firebase, users, $){
+define(['firebase', 'user', 'jquery', 'audio'], function(Firebase, users, $, audio){
 
 	var ROOM_BASE_URL = 'https://pr5c1gjakw6.firebaseio-demo.com/rooms';
 
@@ -30,6 +30,7 @@ define(['firebase', 'user', 'jquery'], function(Firebase, users, $){
 		},
 		publish: function(event) {
 			event.user = users.session;
+			event.user.currentTime = audio.api.currentTime;
 			event.createdAt = Firebase.ServerValue.TIMESTAMP;
 			session.done(function(room){
 				room.push(event);
