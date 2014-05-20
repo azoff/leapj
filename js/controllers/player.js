@@ -1,4 +1,4 @@
-define(['require', 'angular', 'audio', 'jquery'], function(require, angular, audio, $){
+define(['require', 'angular', 'audio', 'jquery', 'user'], function(require, angular, audio, $, users){
 
 	"use strict";
 
@@ -38,8 +38,9 @@ define(['require', 'angular', 'audio', 'jquery'], function(require, angular, aud
 
 		function play() {
 			whenStemsLoaded().done(function(){
+				users.session.playStart = new Date().getTime() / 1000;
 				angular.forEach(scope.stems, function(stem){
-					stem.player.play();
+					stem.player.play(users.session.playStart);
 				});
 				scope.playing = true;
 			});

@@ -56,9 +56,42 @@ body {
 }
 
 #player {
+	width: 100%;
+	position: relative;
+	z-index: 1;
 	@include opacity(0);
 	&.started {
 		@include opacity(1);
+	}
+	&.shrink {
+		width: 80%;
+	}
+}
+
+#users {
+	width: 0%;
+	overflow: hidden;
+	float: right;
+	display: block;
+	position: relative;
+	z-index: 2;
+	list-style: none;
+	&.visible {
+		width: 15%;
+	}
+	.user {
+		div {
+			padding: $size-half-unit;
+		}
+		strong {
+			display: block;
+			color: fade-out(white, 0.1);
+			font-size: larger;
+		}
+		small {
+			color: fade-out(white, 0.2);
+			font-size: smaller;
+		}
 	}
 }
 
@@ -160,6 +193,7 @@ body {
 			display: block;
 			height: 100%;
 			width: 100%;
+			border: solid 1px transparent;
 		}
 		.fa {
 			font-size: $size-unit * 2;
@@ -187,43 +221,6 @@ body {
 	&:hover, &:focus {
 		color: $color-primary-light;
 		border-color: $color-primary-light;
-	}
-}
-
-#message {
-
-	top: 50%;
-	left: -9999px;
-	width: 40%;
-	position: absolute;
-	margin: -100px 0 0 (-20%);
-	font-size: 3em;
-	text-align: right;
-	z-index: 10;
-
-	color: $color-secondary-dark;
-	strong {
-		color: $color-primary-dark;
-	}
-
-	.fa {
-		top: 50%;
-		left: 50%;
-		position: absolute;
-		margin: 0 0 0 -0.5em;
-	}
-
-	@include transition(opacity 500ms);
-
-	&, .fa, &.empty .eventdata {
-		@include opacity(0);
-	}
-	.eventdata, &.empty .fa, &.started {
-		@include opacity(1);
-	}
-
-	&.started {
-		left: 50%;
 	}
 }
 

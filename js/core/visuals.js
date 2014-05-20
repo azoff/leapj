@@ -20,10 +20,6 @@ define(['exports'], function(exports){
 		return hex.length == 1 ? "0" + hex : hex;
 	}
 
-	function rgbToHex(rgb) {
-		return "#" + intToHex(rgb[0]) + intToHex(rgb[1]) + intToHex(rgb[2]);
-	}
-
 	var Visualizer = exports.Visualizer = function(canvas, player) {
 		this._player = player;
 		this._canvas = canvas;
@@ -32,6 +28,7 @@ define(['exports'], function(exports){
 	};
 
 	Visualizer.prototype.setBaseColor = function(rgb) {
+		if (!this.baseColor) this.baseColor = rgb;
 		var base = rgbToHex(rgb);
 		var lighten = rgbToHex(randomLightenRGB(rgb));
 		var gradient = this._context.createLinearGradient(0, 0, 0, this._canvas.height());
@@ -97,6 +94,10 @@ define(['exports'], function(exports){
 		if (analyser) this.draw(analyser);
 		if (this._looping)
 			requestAnimationFrame(this.looper());
+	};
+
+	var rgbToHex = exports.rgbToHex = function(rgb) {
+		return "#" + intToHex(rgb[0]) + intToHex(rgb[1]) + intToHex(rgb[2]);
 	};
 
 	exports.randomNeutralRGB = function() {

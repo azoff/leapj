@@ -1,68 +1,12 @@
 [
 	{
-		"name": "Armistice",
-		"artist": "Phoenix",
+		"name": "Mashup",
+		"artist": "Aylan",
 		"stems": {
-			"beat": "/stems/armistice/Beat.mp3",
-			"goblins": "/stems/armistice/Goblins.mp3",
-			"guitar": "/stems/armistice/Guitar.mp3",
-			"keys": "/stems/armistice/Keys + CS.mp3",
-			"bass": "/stems/armistice/Bass.mp3",
-			"vocals": "/stems/armistice/Accapela.mp3"
-		}
-	},
-	{
-		"name": "Bad Romance",
-		"artist": "Lady Gaga",
-		"stems": {
-			"bass": "/stems/gaga/Bass.mp3",
-			"drum": "/stems/gaga/Drum.mp3",
-			"lead": "/stems/gaga/Lead.mp3",
-			"synth": "/stems/gaga/Synth.mp3",
-			"voice": "/stems/gaga/Voice.mp3"
-		}
-	},
-	{
-		"name": "We Will Rock You",
-		"artist": "Queen",
-		"stems": {
-			"rhythm": "/stems/wewillrockyou/rhythm.ogg",
-			"guitar": "/stems/wewillrockyou/guitar.ogg",
-			"drums": "/stems/wewillrockyou/drums.ogg",
-			"song": "/stems/wewillrockyou/song.ogg"
-		}
-	},
-	{
-		"name": "Analog Or Digital",
-		"artist": "Wildlife Control",
-		"stems": {
-			"vocals": "/stems/analogordigital/Analog or Digital.Vocals.mp3",
-			"guitarpiano": "/stems/analogordigital/Analog or Digital.GuitarPiano.mp3",
-			"drums": "/stems/analogordigital/Analog or Digital.Drums.mp3",
-			"bass": "/stems/analogordigital/Analog or Digital.Bass.mp3"
-		}
-	},
-	{
-		"name": "Lasso",
-		"artist": "Phoenix",
-		"stems": {
-			"guitar": "/stems/lasso/Guitar.mp3",
-			"bass": "/stems/lasso/Bass.mp3",
-			"beat": "/stems/lasso/Beat.mp3",
-			"key": "/stems/lasso/Key.mp3",
-			"vocals": "/stems/lasso/Accapela.mp3"
-		}
-	},
-	{
-		"name": "Sail",
-		"artist": "AWOLNATION",
-		"stems": {
-			"beat": "/stems/sail/bass.mp3",
-			"goblins": "/stems/sail/drums.mp3",
-			"guitar": "/stems/sail/piano.mp3",
-			"keys": "/stems/sail/strings.mp3",
-			"bass": "/stems/sail/synth.mp3",
-			"vocals": "/stems/sail/vocals.mp3"
+			"drum1": "https://leapj-assets.s3.amazonaws.com/audio/with_stems/mashup-stems/drum1.mp3",
+			"drum2": "https://leapj-assets.s3.amazonaws.com/audio/with_stems/mashup-stems/drum2.mp3",
+			"melody": "https://leapj-assets.s3.amazonaws.com/audio/with_stems/mashup-stems/melody.mp3",
+			"voice": "https://leapj-assets.s3.amazonaws.com/audio/with_stems/mashup-stems/voice.mp3"
 		}
 	}
 ]

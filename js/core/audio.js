@@ -28,10 +28,11 @@ define(['jquery', 'exports'], function($, exports){
 		this._middleware = $.isFunction(middleware) ? middleware : defaultMiddleware;
 	};
 
-	Player.prototype.play = function() {
+	Player.prototype.play = function(startTime) {
+		var offset = startTime ? ((new Date().getTime()/1000) - startTime) : 0;
 		var source = this._source = api.createBufferSource(); source.buffer = this._buffer;
 		this._middleware(source).connect(speakers);
-		source.start(0, 0);
+		source.start(0, offset);
 	};
 
 	Player.prototype.stop = function() {
@@ -42,11 +43,12 @@ define(['jquery', 'exports'], function($, exports){
 
 	Player.prototype.isPlaying = function() {
 		return !!this._source;
-	}
+	};
 
 	var Stem = exports.Stem = function(name, url) {
 		var stem     = this;
 		stem.name    = name;
+		stem.key     = name;
 		stem.url     = url;
 		stem.promise = download(url).done(function(b){
 			stem.setBuffer(b);

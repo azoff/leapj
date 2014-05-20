@@ -25,18 +25,24 @@
 			<button ng-click="start()">Dance.</button>
 		</div>
 
-		<div id="player" ng-controller="player" ng-class="{started:started}">
+		<ul id="users" ng-controller="users" ng-class="{visible:userKeys.length}">
+			<li class="user" ng-repeat="key in userKeys">
+				<div ng-style="{'background-color': users[key].hexColor}">
+					<strong>{{ users[key].alias }}</strong>
+					<small ng-repeat="(key,val) in users[key].stems()">{{ key }}{{$last ? '' : ', '}}</small>
+				</div>
+			</li>
+		</ul>
 
+		<div id="player" ng-controller="player" ng-class="{started:started,shrink:userKeys.length}">
 			<h2 id="track-title">{{selectedTrack.name}} - {{selectedTrack.artist}}</h2>
-
 			<div id="stems" ng-controller="stems">
 				<div class="stem" ng-controller="stem" ng-class="{ready:!loading}" ng-repeat="stem in stems">
 					<h3>{{stem.name}}</h3>
-					<canvas></canvas>
+					<canvas ng-style="{'border-color':borderColor}" ng-click="toggleOwner()"></canvas>
 					<i class="fa fa-circle-o-notch"></i>
 				</div>
 			</div>
-
 		</div>
 
 	</div>

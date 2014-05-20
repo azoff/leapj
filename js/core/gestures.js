@@ -2,6 +2,8 @@ define(function(){
 
 	function adjustFilter(value, filterType, stem) {
 
+		if (!stem.player.filterNode) return;
+
 		var filter = '';
 
 		switch(filterType) {
@@ -30,12 +32,14 @@ define(function(){
 	}
 
 	function adjustGain(value, stem) {
+		if (!stem.player.gainNode) return;
 		var value = Math.max(0, Math.min(1, value));
 		stem.player.gainNode.gain.value = value;
 //		console.log('adjusting volume for', stem.name, 'to', value);
 	}
 
 	function adjustPan(x, y, z, stem) {
+		if (!stem.player.panNode) return;
 		var scale = 10;
 		x = x*scale - scale/2;
 		y = y*scale - scale/2;
@@ -80,6 +84,7 @@ define(function(){
 	}
 
 	function processMessage(msg, stem) {
+		if (!stem.player) return;
 		if (msg.type in recognizers) {
 			recognizers[msg.type](msg, stem);
 		}
