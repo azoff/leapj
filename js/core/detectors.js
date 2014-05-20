@@ -145,9 +145,19 @@ define(['jquery', 'leap'], function($, Leap){
 				if (gesture.type == 'swipe') {
 					if (debounce(swipeDetector, 600)) { return };
 					var swipeDirection = computeSwipe(gesture);
+
+					// Detect Hand
+					var whichHand = 'unknown';
+					for (var k=0; k < frame.hands.length; k++) {
+						if (frame.hands[k].id == gesture.handIds[0]) {
+							whichHand = frame.hands[k].type;
+						}
+					}
+
 					callback({
 						'type': 'swipe',
-						'direction' :  swipeDirection
+						'direction' :  swipeDirection,
+						'hand' : whichHand
 					});
 					return;
 				}

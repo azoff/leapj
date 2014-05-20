@@ -1,5 +1,9 @@
 define(function(){
 
+	function togglePhaser(value, stem) {
+		stem.player.phaserNode.toggleBypass(value);
+	}
+
 	function adjustFilter(value, filterType, stem) {
 
 		if (!stem.player.filterNode) return;
@@ -56,8 +60,8 @@ define(function(){
 	var recognizers = {
 		space: spaceRecognizer,
 		'pinch-start': pinchStartRecognizer,
-		'pinch-stop': pinchStopRecognizer
-
+		'pinch-stop': pinchStopRecognizer,
+		'swipe' : swipeRecognizer
 	}
 
 	function pinchStartRecognizer(value, stem) {
@@ -79,7 +83,17 @@ define(function(){
 			adjustFilter(value.x, 'low', stem);
 			adjustGain(value.y, stem);
 		} else if (value.hand == 'left') {
-			adjustFilter(1 - value.x, 'band', stem); // invert
+			// adjustFilter(1 - value.x, 'band', stem); // invert
+		}
+	}
+
+	function swipeRecognizer(value, stem) {
+		if (! value.hand == 'left' ) return; // only accept left hand swipes
+
+		if (value.direction == 'right') {
+			togglePhaser(true, stem);
+		} else if (value.direction == 'left') {
+			togglePhaser(false, stem);
 		}
 	}
 
