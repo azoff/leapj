@@ -22,7 +22,7 @@ define(['pubsub', 'timing', 'user', 'SayCheese', 'jquery'], function(pubsub, tim
 			var container = getUserContainer(msg.user);
 			if (!container) return;
 			var img = $(document.createElement('img')).appendTo(container.empty());
-			img.src = data;
+			img.get(0).src = data;
 		}
 
 		function getUserContainer(user) {
