@@ -57,7 +57,7 @@ body {
 
 #player {
 	@include opacity(0);
-	.started & {
+	&.started {
 		@include opacity(1);
 	}
 }
@@ -76,7 +76,10 @@ body {
 	button {
 		width: 50%;
 		display: inline-block;
+		position: relative;
 		@include opacity(0);
+		@include transition(opacity 500ms);
+		left: -9999px;
 	}
 	&.has-room {
 		[type=text] {
@@ -85,6 +88,7 @@ body {
 		}
 		button {
 			@include opacity(1);
+			left: auto;
 		}
 	}
 	button, [type=text] {
@@ -112,17 +116,18 @@ body {
 		text-align: center;
 		font-size: $size-unit;
 		-webkit-box-reflect: below 0px -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(50%, transparent), to(rgba(255,255,255,0.2)));
-		@include rotateY(0deg);
+		@include opacity(0.5);
+		&:nth-child(3n) {
+			@include rotateY(-20deg);
+		}
+		&:nth-child(3n+1) {
+			@include rotateY(20deg);
+		}
+		&:nth-child(3n+2) {
+			@include translateZ(-65px);
+		}
 		&.ready {
-			&:nth-child(3n) {
-				@include rotateY(-20deg);
-			}
-			&:nth-child(3n+1) {
-				@include rotateY(20deg);
-			}
-			&:nth-child(3n+2) {
-				@include translateZ(-65px);
-			}
+			@include opacity(1);
 		}
 		h3 {
 			top: 0;
@@ -173,7 +178,7 @@ body {
 #message {
 
 	top: 50%;
-	left: 50%;
+	left: -9999px;
 	width: 40%;
 	position: absolute;
 	margin: -100px 0 0 (-20%);
@@ -193,11 +198,17 @@ body {
 		margin: 0 0 0 -0.5em;
 	}
 
+	@include transition(opacity 500ms);
+
 	&, .fa, &.empty .eventdata {
 		@include opacity(0);
 	}
 	.eventdata, &.empty .fa, &.started {
 		@include opacity(1);
+	}
+
+	&.started {
+		left: 50%;
 	}
 }
 

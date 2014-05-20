@@ -1,9 +1,6 @@
-define(['firebase', 'scope/tracks', 'fingerprint'], function(Firebase, tracks, Fingerprint){
+define(['firebase', 'jquery'], function(Firebase, $){
 
-	//NOTE: we use one room for the demo
-	var fingerprint = (new Fingerprint).get();
-	var session = new Firebase('https://pr5c1gjakw6.firebaseio-demo.com/rooms').child(tracks.room);
-	session.remove(); // clear out all child messages
+	var ROOM_BASE_URL = 'https://pr5c1gjakw6.firebaseio-demo.com/rooms';
 
 	function childToMsgConverter(cb) {
 		return function(child) {
@@ -11,14 +8,29 @@ define(['firebase', 'scope/tracks', 'fingerprint'], function(Firebase, tracks, F
 		};
 	}
 
+	var session = $.Deferred();
+
 	return {
+		startSession: function(name) {
+			var room = new Firebase(ROOM_BASE_URL).child(name);
+			room.remove(function(){ session.resolve(room); });
+		},
+		unsubscribe: function(cb) {
+			session.done(function(room){
+				room.off('child_added', cb);
+			});
+		},
 		subscribe: function(cb) {
-			session.on('child_added', childToMsgConverter(cb));
+			cb = childToMsgConverter(cb);
+			session.done(function(room){
+				room.on('child_added', cb);
+			});
 		},
 		publish: function(event) {
 			event.createdAt = Firebase.ServerValue.TIMESTAMP;
-			event.fingerprint = fingerprint;
-			session.push(event);
+			session.done(function(room){
+				room.push(event);
+			});
 		}
 	};
 

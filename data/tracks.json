@@ -1,9 +1,14 @@
 [
 	{
-		"name": "Bad Romance",
-		"artist": "Lady Gaga",
+		"name": "Armistice",
+		"artist": "Phoenix",
 		"stems": {
-            "all": "/stems/gagaall.mp3"
+			"beat": "/stems/armistice/Beat.mp3",
+			"goblins": "/stems/armistice/Goblins.mp3",
+			"guitar": "/stems/armistice/Guitar.mp3",
+			"keys": "/stems/armistice/Keys + CS.mp3",
+			"bass": "/stems/armistice/Bass.mp3",
+			"vocals": "/stems/armistice/Accapela.mp3"
 		}
 	},
 	{
@@ -46,18 +51,6 @@
 			"beat": "/stems/lasso/Beat.mp3",
 			"key": "/stems/lasso/Key.mp3",
 			"vocals": "/stems/lasso/Accapela.mp3"
-		}
-	},
-	{
-		"name": "Armistice",
-		"artist": "Phoenix",
-		"stems": {
-			"beat": "/stems/armistice/Beat.mp3",
-			"goblins": "/stems/armistice/Goblins.mp3",
-			"guitar": "/stems/armistice/Guitar.mp3",
-			"keys": "/stems/armistice/Keys + CS.mp3",
-			"bass": "/stems/armistice/Bass.mp3",
-			"vocals": "/stems/armistice/Accapela.mp3"
 		}
 	},
 	{
