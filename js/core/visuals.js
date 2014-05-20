@@ -32,6 +32,7 @@ define(['exports'], function(exports){
 	};
 
 	Visualizer.prototype.setBaseColor = function(rgb) {
+		if (!this.baseColor) this.baseColor = rgb;
 		var base = rgbToHex(rgb);
 		var lighten = rgbToHex(randomLightenRGB(rgb));
 		var gradient = this._context.createLinearGradient(0, 0, 0, this._canvas.height());

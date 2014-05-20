@@ -32,7 +32,7 @@
 			<div id="stems" ng-controller="stems">
 				<div class="stem" ng-controller="stem" ng-class="{ready:!loading}" ng-repeat="stem in stems">
 					<h3>{{stem.name}}</h3>
-					<canvas></canvas>
+					<canvas ng-style="{color:borderColor}" ng-click="toggleOwner()"></canvas>
 					<i class="fa fa-circle-o-notch"></i>
 				</div>
 			</div>

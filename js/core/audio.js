@@ -42,11 +42,12 @@ define(['jquery', 'exports'], function($, exports){
 
 	Player.prototype.isPlaying = function() {
 		return !!this._source;
-	}
+	};
 
 	var Stem = exports.Stem = function(name, url) {
 		var stem     = this;
 		stem.name    = name;
+		stem.key     = name;
 		stem.url     = url;
 		stem.promise = download(url).done(function(b){
 			stem.setBuffer(b);
