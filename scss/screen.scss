@@ -56,9 +56,42 @@ body {
 }
 
 #player {
+	width: 100%;
+	position: relative;
+	z-index: 1;
 	@include opacity(0);
 	&.started {
 		@include opacity(1);
+	}
+	&.shrink {
+		width: 80%;
+	}
+}
+
+#users {
+	width: 0%;
+	overflow: hidden;
+	float: right;
+	display: block;
+	position: relative;
+	z-index: 2;
+	list-style: none;
+	&.visible {
+		width: 15%;
+	}
+	.user {
+		div {
+			padding: $size-half-unit;
+		}
+		strong {
+			display: block;
+			color: fade-out(white, 0.1);
+			font-size: larger;
+		}
+		small {
+			color: fade-out(white, 0.2);
+			font-size: smaller;
+		}
 	}
 }
 

@@ -6,12 +6,30 @@ define(['require', 'leap', 'detectors', 'pubsub', 'user'], function(require, Lea
 
 		require(['data/tracks'], loadTracks);
 
+		scope.users = {};
+		scope.userKeys = [];
+
 		scope.start = function() {
 			pubsub.startSession(scope.room);
+			pubsub.subscribe(trackUser);
 			Leap.loop({ enableGestures: true, background: true }, detectMotions);
 			scope.started = true;
 			user.alias = scope.alias;
 		};
+
+		function trackUser(msg) {
+			var user = msg.user;
+			scope.$apply(function(){
+				var exists = scope.users.hasOwnProperty(user.alias);
+				if (user.controlsStems()) {
+					if (!exists) scope.userKeys.push(user.alias);
+					scope.users[user.alias] = user;
+				} else if (exists) {
+					scope.userKeys.splice(scope.userKeys.indexOf(user.alias), 1);
+					delete scope.users[user.alias];
+				}
+			});
+		}
 
 		function detectMotions(frame) {
 			detectors.space(frame, publishMotionEvent);
