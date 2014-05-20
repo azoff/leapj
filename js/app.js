@@ -12,6 +12,7 @@
 			pubsub: 'core/pubsub',
 			visuals: 'core/visuals',
 			audio: 'core/audio',
+			user: 'core/user',
 			fingerprint: 'fingerprint/fingerprint',
 			three: 'leap/three',
 			leap: 'leap/leap-0.6.0',

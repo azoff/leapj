@@ -99,7 +99,7 @@ define(['exports'], function(exports){
 			requestAnimationFrame(this.looper());
 	};
 
-	exports.andomNeutralRGB = function() {
+	exports.randomNeutralRGB = function() {
 		return [
 			randomInt(85, 170),
 			randomInt(85, 170),

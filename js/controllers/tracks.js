@@ -1,4 +1,4 @@
-define(['require', 'leap', 'detectors', 'pubsub'], function(require, Leap, detectors, pubsub){
+define(['require', 'leap', 'detectors', 'pubsub', 'user'], function(require, Leap, detectors, pubsub, user){
 
 	"use strict";
 
@@ -20,6 +20,7 @@ define(['require', 'leap', 'detectors', 'pubsub'], function(require, Leap, detec
 			pubsub.startSession(scope.room);
 			Leap.loop({ enableGestures: true, background: true }, detectMotions);
 			scope.started = true;
+			user.alias = scope.alias;
 			scope.mode = 'sending';
 		};
 

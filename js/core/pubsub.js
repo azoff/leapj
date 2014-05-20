@@ -1,4 +1,4 @@
-define(['firebase', 'jquery'], function(Firebase, $){
+define(['firebase', 'user', 'jquery'], function(Firebase, user, $){
 
 	var ROOM_BASE_URL = 'https://pr5c1gjakw6.firebaseio-demo.com/rooms';
 
@@ -27,6 +27,7 @@ define(['firebase', 'jquery'], function(Firebase, $){
 			});
 		},
 		publish: function(event) {
+			event.user = user;
 			event.createdAt = Firebase.ServerValue.TIMESTAMP;
 			session.done(function(room){
 				room.push(event);
