@@ -1,3 +1,16 @@
 $fa-font-path: "//netdna.bootstrapcdn.com/font-awesome/4.1.0/fonts";
 @import "font-awesome/font-awesome";
-@import url(http://fonts.googleapis.com/css?family=Comfortaa:700|Fjalla+One);
+
+@font-face {
+	font-family: 'Comfortaa';
+	font-style: normal;
+	font-weight: 700;
+	src: local('Comfortaa Bold'), local('Comfortaa-Bold'), url(/fonts/comfortaa/v5/fND5XPYKrF2tQDwwfWZJI6RDOzjiPcYnFooOUGCOsRk.woff) format('woff');
+}
+
+@font-face {
+	font-family: 'Fjalla One';
+	font-style: normal;
+	font-weight: 400;
+	src: local('Fjalla One'), local('FjallaOne-Regular'), url(/fonts/fjallaone/v2/rxxXUYj4oZ6Q5oDJFtEd6r3hpw3pgy2gAi-Ip7WPMi0.woff) format('woff');
+}

@@ -1,4 +1,4 @@
-define(['require', 'angular', 'audio', 'jquery', 'user'], function(require, angular, audio, $, users){
+define(['require', 'angular', 'audio', 'jquery', 'pubsub', 'timing', 'user'], function(require, angular, audio, $, pubsub, timing, users){
 
 	"use strict";
 
@@ -9,6 +9,8 @@ define(['require', 'angular', 'audio', 'jquery', 'user'], function(require, angu
 		scope.playing = false;
 		scope.$watch('selectedTrack', changeTrack);
 		scope.$watch('started', togglePlayback);
+
+		setInterval(publishSync, 1000);
 
 		function togglePlayback(started) {
 			if (started && !scope.playing) play();
@@ -39,7 +41,7 @@ define(['require', 'angular', 'audio', 'jquery', 'user'], function(require, angu
 		function play() {
 			whenStemsLoaded().done(function(){
 				angular.forEach(scope.stems, function(stem){
-					stem.player.play(users.session.currentTime);
+					stem.player.play();
 				});
 				scope.playing = true;
 			});
@@ -50,6 +52,16 @@ define(['require', 'angular', 'audio', 'jquery', 'user'], function(require, angu
 				stem.player.stop();
 			});
 			scope.playing = false;
+		}
+
+		function publishSync() {
+			if (!player.playing)
+				return;
+			pubsub.publish({
+				type: 'sync',
+				user: users.session,
+				ts: new timing.Timestamp()
+			});
 		}
 
 	}

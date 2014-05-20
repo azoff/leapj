@@ -1,4 +1,4 @@
-define(['firebase', 'user', 'jquery', 'audio'], function(Firebase, users, $, audio){
+define(['firebase', 'user', 'jquery', 'timing'], function(Firebase, users, $, timing){
 
 	var ROOM_BASE_URL = 'https://pr5c1gjakw6.firebaseio-demo.com/rooms';
 
@@ -6,6 +6,7 @@ define(['firebase', 'user', 'jquery', 'audio'], function(Firebase, users, $, aud
 		return function(child) {
 			var msg = child.val();
 			msg.user = new users.User(msg.user);
+			if (msg.ts) msg.ts = new timing.Timestamp(msg.ts);
 			cb(msg);
 		};
 	}
@@ -30,8 +31,6 @@ define(['firebase', 'user', 'jquery', 'audio'], function(Firebase, users, $, aud
 		},
 		publish: function(event) {
 			event.user = users.session;
-			event.user.currentTime = audio.api.currentTime;
-			event.createdAt = Firebase.ServerValue.TIMESTAMP;
 			session.done(function(room){
 				room.push(event);
 			});

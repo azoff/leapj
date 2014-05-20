@@ -13,6 +13,7 @@
 			visuals: 'core/visuals',
 			audio: 'core/audio',
 			user: 'core/user',
+			timing: 'core/timing',
 			fingerprint: 'fingerprint/fingerprint',
 			three: 'leap/three',
 			leap: 'leap/leap-0.6.0',

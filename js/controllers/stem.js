@@ -1,4 +1,4 @@
-define(['visuals', 'pubsub', 'gestures', 'user'], function(visuals, pubsub, gestures, users){
+define(['visuals', 'pubsub', 'gestures', 'user', 'audio'], function(visuals, pubsub, gestures, users, audio){
 
 	"use strict";
 
@@ -22,18 +22,9 @@ define(['visuals', 'pubsub', 'gestures', 'user'], function(visuals, pubsub, gest
 			else scope.visualizer.stop();
 		}
 
-		function resetPlayhead(offset) {
-			users.session.currentTime = offset;
-			scope.stem.player.stop();
-			scope.stem.player.play(offset);
-		}
-
 		function applyControlMessage(msg) {
 			var user = msg.user;
-			if (user.currentTime > users.session.currentTime) {
-				resetPlayhead(user.currentTime);
-			}
-			if (!user.isControllingStem(scope.stem))
+			if (!user || !user.isControllingStem(scope.stem))
 				return;
 			scope.$apply(function(){
 				gestures.processMessage(msg, scope.stem);

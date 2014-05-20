@@ -5,7 +5,6 @@ define(['visuals'], function(visuals){
 	function User(user) {
 		user = user || {}
 		this.alias = user.alias || 'me';
-		this.currentTime = user.currentTime || 0;
 		this.color = user.color || visuals.randomNeutralRGB();
 		this.hexColor = visuals.rgbToHex(this.color);
 		this._stems = user._stems || {};
@@ -34,12 +33,7 @@ define(['visuals'], function(visuals){
 		}
 	};
 
-	function newTimestamp() {
-		return new Date().getTime() / 1000;
-	}
-
 	return {
-		newTimestamp: newTimestamp,
 		session: new User(),
 		User: User
 	};
