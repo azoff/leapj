@@ -71,33 +71,28 @@ body {
 	margin: (-48px) 0 0 (-20%);
 	z-index: 11;
 
-	[type=text] {
-		width: 100%;
-	}
-	button {
-		width: 50%;
-	}
 	button, [type=text] {
+		width: 100%;
 		@include opacity(1);
 		font-size: $size-unit * 2;
 		display: inline-block;
 		position: relative;
 	}
+
 	button, #room {
 		@include transition(opacity 500ms);
 		@include opacity(0);
 		left: -9999px;
 	}
-	#start-receiving {
-		border-right: solid 0;
-		@include border-radius(0 0 0 5px);
+
+	button {
+		@include border-radius(0 0 5px 5px);
 	}
-	#start-gesturing {
-		@include border-radius(0 0 5px 0);
-	}
+
 	#room {
 		@include border-radius(0 0 5px 5px);
 	}
+
 	&.has-alias {
 		margin-top: -72px;
 		#alias {

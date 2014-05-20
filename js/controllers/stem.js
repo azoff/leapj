@@ -14,8 +14,6 @@ define(['visuals', 'pubsub', 'gestures'], function(visuals, pubsub, gestures){
 			else scope.visualizer.stop();
 		}
 
-		pubsub.subscribe(applyControlMessage);
-
 		function applyControlMessage(msg) {
 			gestures.processMessage(msg, scope.stem);
 			scope.$apply(function(){
@@ -31,6 +29,7 @@ define(['visuals', 'pubsub', 'gestures'], function(visuals, pubsub, gestures){
 			scope.$apply(function(){
 				scope.loading = false;
 			});
+			pubsub.subscribe(applyControlMessage);
 		}
 
 	}

@@ -19,14 +19,13 @@
 
 	<div id="content" ng-controller="tracks">
 
-		<div ng-show="tracks" id="start" ng-class="{'has-alias':alias,'has-room':room,started:mode}">
+		<div ng-show="tracks" id="start" ng-class="{'has-alias':alias,'has-room':room,started:started}">
 			<input id="alias" type="text" placeholder="Name Please" ng-model="alias" />
 			<input id="room" type="text" placeholder="Join A Room" ng-model="room" />
-			<button id="start-receiving" ng-click="startReceiving()">Dance.
-			</button><button id="start-gesturing" ng-click="startSending()">Leap.</button>
+			<button ng-click="start()">Dance.</button>
 		</div>
 
-		<div id="player" ng-controller="player" ng-class="{started:mode==='receiving'}">
+		<div id="player" ng-controller="player" ng-class="{started:started}">
 
 			<h2 id="track-title">{{selectedTrack.name}} - {{selectedTrack.artist}}</h2>
 
@@ -38,25 +37,6 @@
 				</div>
 			</div>
 
-		</div>
-
-		<div id="message" ng-controller="message" ng-class="{started:mode==='sending',empty:!gestureEvent}">
-			<i class="fa fa-spin fa-circle-o-notch"></i>
-			<div class="eventdata">
-				<span>Type: </span><strong>{{ gestureEvent.type }}</strong>
-			</div>
-			<div class="eventdata">
-				<span>X: </span><strong>{{ gestureEvent.x }}</strong>
-			</div>
-			<div class="eventdata">
-				<span>Y: </span><strong>{{ gestureEvent.y }}</strong>
-			</div>
-			<div class="eventdata">
-				<span>Z: </span><strong>{{ gestureEvent.z }}</strong>
-			</div>
-			<div class="eventdata">
-				<span>hand: </span><strong>{{ gestureEvent.hand }}</strong>
-			</div>
 		</div>
 
 	</div>

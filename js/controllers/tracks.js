@@ -6,22 +6,11 @@ define(['require', 'leap', 'detectors', 'pubsub', 'user'], function(require, Lea
 
 		require(['data/tracks'], loadTracks);
 
-		scope.startBoth = function() {
-			scope.startReceiving();
-			scope.startSending();
-		};
-
-		scope.startReceiving = function() {
-			scope.startSending();
-			scope.mode = 'receiving';
-		};
-
-		scope.startSending = function() {
+		scope.start = function() {
 			pubsub.startSession(scope.room);
 			Leap.loop({ enableGestures: true, background: true }, detectMotions);
 			scope.started = true;
 			user.alias = scope.alias;
-			scope.mode = 'sending';
 		};
 
 		function detectMotions(frame) {

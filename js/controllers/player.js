@@ -8,10 +8,10 @@ define(['require', 'angular', 'audio', 'jquery'], function(require, angular, aud
 		scope.stems   = [];
 		scope.playing = false;
 		scope.$watch('selectedTrack', changeTrack);
-		scope.$watch('mode', togglePlayback);
+		scope.$watch('started', togglePlayback);
 
-		function togglePlayback(mode) {
-			if (mode === 'receiving' && !scope.playing) play();
+		function togglePlayback(started) {
+			if (started && !scope.playing) play();
 			else if (scope.playing) stop();
 		}
 
