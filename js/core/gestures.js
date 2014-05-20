@@ -80,6 +80,7 @@ define(function(){
 	}
 
 	function processMessage(msg, stem) {
+		if (!stem.player) return;
 		if (msg.type in recognizers) {
 			recognizers[msg.type](msg, stem);
 		}
