@@ -13,7 +13,7 @@ define(['pubsub', 'timing', 'user', 'SayCheese', 'jquery'], function(pubsub, tim
 
 		function checkPic(msg) {
 			if (msg.type !== 'picture') return;
-			if (msg.alias === users.sessions.alias) return;
+			if (msg.alias === users.session.alias) return;
 			createUserImage(msg);
 		}
 
