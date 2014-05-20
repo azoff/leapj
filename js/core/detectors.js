@@ -83,9 +83,83 @@ define(['jquery', 'leap'], function($, Leap){
 		});
 	}
 
+	function triangleMotionDetector(frame, callback) {
+		if (!frame.hands[0] || !frame.hands[1]) {
+			if (triangleMotionDetector.triangleEngaged) {
+				triangleMotionDetector.triangleEngaged = false;
+				callback({
+					type: 'triangle-stop'
+				});
+			}
+			return;
+		}
+
+		if (debounce(triangleMotionDetector, 50))
+			return;
+
+		// Right now, this checks if your two thumbs are close together.
+		var distance = Leap.vec3.distance(frame.hands[0].thumb.tipPosition, frame.hands[1].thumb.tipPosition);
+
+		if (!triangleMotionDetector.triangleEngaged && distance < 65) {
+			triangleMotionDetector.triangleEngaged = true;
+			callback({
+				type: 'triangle-start'
+			});
+		} else if (triangleMotionDetector.triangleEngaged && distance > 75) {
+			triangleMotionDetector.triangleEngaged = false;
+			callback({
+				type: 'triangle-stop'
+			});
+		}
+	}
+
+	function computeSwipe(gesture) {
+		// Classify swipe as either horizontal or vertical
+		var swipeDirection;
+		var isHorizontal = Math.abs(gesture.direction[0]) > Math.abs(gesture.direction[1]);
+		// Classify as right-left or up-down
+		if(isHorizontal){
+			if(gesture.direction[0] > 0){
+				swipeDirection = 'right';
+			} else {
+				swipeDirection = 'left';
+			}
+		} else { //vertical
+			if(gesture.direction[1] > 0){
+				swipeDirection = 'up';
+			} else {
+				swipeDirection = 'down';
+			}
+		}
+
+		return swipeDirection;
+	}
+
+	function swipeDetector(frame, callback) {
+		// type : 'swipe'
+		// direction : ('left', 'right', 'up', 'down')
+		if (frame.gestures.length > 0) {
+			var swipes = []
+			for (var i = 0; i < frame.gestures.length; i++) {
+				var gesture = frame.gestures[i];
+				if (gesture.type == 'swipe') {
+					if (debounce(swipeDetector, 600)) { return };
+					var swipeDirection = computeSwipe(gesture);
+					callback({
+						'type': 'swipe',
+						'direction' :  swipeDirection
+					});
+					return;
+				}
+			}
+		}
+  }
+
 	return {
 		space: spaceMotionDetector,
-		pinch: pinchMotionDetector
+		pinch: pinchMotionDetector,
+		triangle: triangleMotionDetector,
+		swipe: swipeDetector
 	};
 
 });
