@@ -1,9 +1,12 @@
-define(['jquery', 'exports', 'user'], function($, exports, users){
+define(['jquery', 'exports', 'user', 'tuna'], function($, exports, users, Tuna){
 
 	var AudioContext = window.AudioContext || window.webkitAudioContext;
 
 	// audio API
 	var api = new AudioContext();
+	globalAudioApi = api;
+	var tuna = new Tuna(api);
+	globalTuna = tuna;
 	var speakers = api.destination;
 	api.createGain = api.createGain || api.createGainNode;
 
@@ -63,6 +66,44 @@ define(['jquery', 'exports', 'user'], function($, exports, users){
 		this.filterNode = api.createBiquadFilter(); // biquad filter
 		this.filterNode.type = this.filterNode.ALLPASS;
 
+		// Tuna Effects
+		// this.tremoloNode = new tuna.Tremolo({
+  //     intensity: 0.3,    //0 to 1
+  //     rate: 0.1,         //0.001 to 8
+  //     stereoPhase: 0,    //0 to 180
+  //     bypass: 1
+  //   });
+  //   this.wahWahNode = new tuna.WahWah({
+  //     automode: true, //true/false
+  //     baseFrequency: 0.5, //0 to 1
+  //     excursionOctaves: 3, //1 to 6
+  //     sweep: 0, //0 to 1
+  //     resonance: 2, //1 to 100
+  //     sensitivity: 1, //-1 to 1
+  //     bypass: 1
+  //   });
+    this.phaserNode = new tuna.Phaser({
+      rate: 1.2, //0.01 to 8 is a decent range, but higher values are possible
+      depth: 0.8, //0 to 1
+      feedback: 0.9, //0 to 1+
+      stereoPhase: 180, //0 to 180
+      baseModulationFrequency: 700, //500 to 1500
+      bypass: 1
+    });
+
+    this.phaserNode.toggleBypass = function(doBypass) {
+      if (doBypass) {
+      	this.input.disconnect();
+        this.input.connect(this.activateNode);
+        if(this.activateCallback) {
+            this.activateCallback(doActivate);
+        }
+      } else {
+        this.input.disconnect();
+        this.input.connect(this.output);
+      }
+    }
+
 		// create an audio analyser
 		this.analyser = api.createAnalyser();
 		this.analyser.smoothingTimeConstant = 0.6;
@@ -72,7 +113,11 @@ define(['jquery', 'exports', 'user'], function($, exports, users){
 		source.connect(this.panNode);
 		this.panNode.connect(this.gainNode);
 		this.gainNode.connect(this.filterNode);
-		this.filterNode.connect(this.analyser);
+
+		var specialFxNode = this.phaserNode;
+    gFxNode = specialFxNode; // TODO: remove this. for debugging
+    this.filterNode.connect(specialFxNode.input)
+    specialFxNode.connect(this.analyser);
 
 		// return the last node in the chain
 		return this.analyser;
