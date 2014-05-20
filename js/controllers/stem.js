@@ -31,6 +31,7 @@ define(['visuals', 'pubsub', 'gestures', 'user'], function(visuals, pubsub, gest
 		function applyControlMessage(msg) {
 			var user = msg.user;
 			if (user.playStart < users.session.playStart) {
+				console.log('FOUND OLDER TIMESTAMP', user.playStart, users.session.playStart);
 				resetPlayhead(user.playStart);
 			}
 			if (!user.isControllingStem(scope.stem))

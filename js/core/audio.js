@@ -30,6 +30,7 @@ define(['jquery', 'exports', 'user'], function($, exports, users){
 
 	Player.prototype.play = function(startTime) {
 		var offset = startTime ? (users.newTimestamp() - startTime) : 0;
+		console.log('STARTING STEM', startTime, offset);
 		var source = this._source = api.createBufferSource(); source.buffer = this._buffer;
 		this._middleware(source).connect(speakers);
 		source.start(0, offset);
