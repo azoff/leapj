@@ -19,8 +19,9 @@ define(['pubsub', 'timing', 'user', 'SayCheese', 'jquery'], function(pubsub, tim
 
 		function createUserImage(msg) {
 			var data = msg.data;
-			var container = getUserContainer(msg.user).empty();
-			var canvas = $(document.createElement('canvas')).appendTo(container);
+			var container = getUserContainer(msg.user);
+			if (!container) return;
+			var canvas = $(document.createElement('canvas')).appendTo(container.empty());
 			var context = canvas.get(0).getContext('2d');
 			console.log(context.putImageData);
 			context.putImageData(data, 0, 0);
