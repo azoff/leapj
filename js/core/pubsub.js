@@ -1,10 +1,12 @@
-define(['firebase', 'user', 'jquery'], function(Firebase, user, $){
+define(['firebase', 'user', 'jquery'], function(Firebase, users, $){
 
 	var ROOM_BASE_URL = 'https://pr5c1gjakw6.firebaseio-demo.com/rooms';
 
 	function childToMsgConverter(cb) {
 		return function(child) {
-			cb(child.val());
+			var msg = child.val();
+			msg.user = new users.User(msg.user);
+			cb(msg);
 		};
 	}
 
@@ -27,7 +29,7 @@ define(['firebase', 'user', 'jquery'], function(Firebase, user, $){
 			});
 		},
 		publish: function(event) {
-			event.user = user;
+			event.user = users.session;
 			event.createdAt = Firebase.ServerValue.TIMESTAMP;
 			session.done(function(room){
 				room.push(event);

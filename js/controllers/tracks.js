@@ -1,4 +1,4 @@
-define(['require', 'leap', 'detectors', 'pubsub', 'user'], function(require, Leap, detectors, pubsub, user){
+define(['require', 'leap', 'detectors', 'pubsub', 'user'], function(require, Leap, detectors, pubsub, users){
 
 	"use strict";
 
@@ -14,7 +14,7 @@ define(['require', 'leap', 'detectors', 'pubsub', 'user'], function(require, Lea
 			pubsub.subscribe(trackUser);
 			Leap.loop({ enableGestures: true, background: true }, detectMotions);
 			scope.started = true;
-			user.alias = scope.alias;
+			users.session.alias = scope.alias;
 		};
 
 		function trackUser(msg) {

@@ -1,4 +1,4 @@
-define(['visuals', 'pubsub', 'gestures', 'user'], function(visuals, pubsub, gestures, sessionUser){
+define(['visuals', 'pubsub', 'gestures', 'user'], function(visuals, pubsub, gestures, users){
 
 	"use strict";
 
@@ -9,8 +9,8 @@ define(['visuals', 'pubsub', 'gestures', 'user'], function(visuals, pubsub, gest
 		scope.$watch('playing', toggleVisuals);
 
 		scope.toggleOwner = function() {
-			if (sessionUser.toggleStemControl(scope.stem)) {
-				applyUser(sessionUser);
+			if (users.session.toggleStemControl(scope.stem)) {
+				applyUser(users.session);
 			} else {
 				removeUser();
 			}
@@ -34,12 +34,14 @@ define(['visuals', 'pubsub', 'gestures', 'user'], function(visuals, pubsub, gest
 
 		function removeUser() {
 			scope.stem.name = scope.stem.key;
-			scope.visualizer.setBaseColor(scope.visualizer.baseColor);
+			if (scope.visualizer)
+				scope.visualizer.setBaseColor(scope.visualizer.baseColor);
 			scope.borderColor = 'transparent';
 		}
 
 		function applyUser(user) {
-			scope.visualizer.setBaseColor(user.color);
+			if (scope.visualizer)
+				scope.visualizer.setBaseColor(user.color);
 			scope.borderColor = user.hexColor;
 			scope.stem.name = user.alias;
 		}
