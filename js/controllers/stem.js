@@ -18,6 +18,10 @@ define(['visuals', 'pubsub', 'gestures'], function(visuals, pubsub, gestures){
 
 		function applyControlMessage(msg) {
 			gestures.processMessage(msg, scope.stem);
+			scope.$apply(function(){
+				scope.visualizer.setBaseColor(msg.user.color);
+				scope.stem.name = msg.user.alias;
+			});
 		}
 
 		function loaded() {
