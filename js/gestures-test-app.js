@@ -45,12 +45,13 @@
 
 	require(['jquery', 'leap', 'detectors'], function($, Leap, detectors) {
 		function publishMotionEvent(event) {
-			console.log("event");
+			console.log(event.type);
 		}
 
 		function detectMotions(frame) {
 			detectors.space(frame, publishMotionEvent);
 			detectors.pinch(frame, publishMotionEvent);
+			detectors.triangle(frame, publishMotionEvent);
 		}
 
 		Leap.loop({ enableGestures: true, background: true }, detectMotions);

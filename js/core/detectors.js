@@ -83,9 +83,40 @@ define(['jquery', 'leap'], function($, Leap){
 		});
 	}
 
+	function triangleMotionDetector(frame, callback) {
+		if (!frame.hands[0] || !frame.hands[1]) {
+			if (triangleMotionDetector.triangleEngaged) {
+				triangleMotionDetector.triangleEngaged = false;
+				callback({
+					type: 'triangle-stop'
+				});
+			}
+			return;
+		}
+
+		if (debounce(triangleMotionDetector, 50))
+			return;
+
+		// Right now, this checks if your two thumbs are close together.
+		var distance = Leap.vec3.distance(frame.hands[0].thumb.tipPosition, frame.hands[1].thumb.tipPosition);
+
+		if (!triangleMotionDetector.triangleEngaged && distance < 65) {
+			triangleMotionDetector.triangleEngaged = true;
+			callback({
+				type: 'triangle-start'
+			});
+		} else if (triangleMotionDetector.triangleEngaged && distance > 75) {
+			triangleMotionDetector.triangleEngaged = false;
+			callback({
+				type: 'triangle-stop'
+			});
+		}
+	}
+
 	return {
 		space: spaceMotionDetector,
-		pinch: pinchMotionDetector
+		pinch: pinchMotionDetector,
+		triangle: triangleMotionDetector
 	};
 
 });
