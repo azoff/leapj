@@ -10,6 +10,8 @@
 			detectors: 'core/detectors',
 			gestures: 'core/gestures',
 			pubsub: 'core/pubsub',
+			visuals: 'core/visuals',
+			audio: 'core/audio',
 			fingerprint: 'fingerprint/fingerprint',
 			three: 'leap/three',
 			leap: 'leap/leap-0.6.0',

@@ -1,52 +1,48 @@
 define(function(){
 
-	function adjustFilter(value, filter_type, scope) {
+	function adjustFilter(value, filterType, stem) {
 
-		if (!scope.filterNode) return;
 		var filter = '';
 
-		switch(filter_type) {
+		switch(filterType) {
 
 			//lowpass
 			case 'low':
 				filter = 'lowpass';
-				scope.filterNode.type = scope.filterNode.LOWPASS;
+				stem.player.filterNode.type = stem.player.filterNode.LOWPASS;
 				break;
 			//highpass
 			case 'high':
 				filter = 'highpass';
-				scope.filterNode.type = scope.filterNode.HIGHPASS;
+				stem.player.filterNode.type = stem.player.filterNode.HIGHPASS;
 				break;
 			//bandpass
 			case '':
 			default:
 				filter = 'bandpass';
-				scope.filterNode.type = scope.filterNode.BANDPASS;
+				stem.player.filterNode.type = stem.player.filterNode.BANDPASS;
 				break;
 		}
 
 		var newValue = value * 10000
-		scope.filterNode.frequency.value = newValue; // max in Hz
-		console.log('adjusting', filter, 'for', scope.key, 'to', newValue);
+		stem.player.filterNode.frequency.value = newValue; // max in Hz
+//		console.log('adjusting', filter, 'for', stem.name, 'to', newValue);
 	}
 
-	function adjustGain(value, scope) {
-		if (!scope.gainNode) return;
+	function adjustGain(value, stem) {
 		var value = Math.max(0, Math.min(1, value));
-		scope.gainNode.gain.value = value;
-		console.log('adjusting volume for', scope.key, 'to', value);
+		stem.player.gainNode.gain.value = value;
+//		console.log('adjusting volume for', stem.name, 'to', value);
 	}
 
-	function adjustPan(x, y, z, scope) {
-		if (!scope.gainNode) return;
-
+	function adjustPan(x, y, z, stem) {
 		var scale = 10;
 		x = x*scale - scale/2;
 		y = y*scale - scale/2;
 		z = z*scale - scale/2;
 
-		scope.panNode.setPosition(x, y, z);
-		console.log('adjusting pan', 'for', scope.key, 'to', x, y, z);
+		stem.player.panNode.setPosition(x, y, z);
+//		console.log('adjusting pan', 'for', stem.name, 'to', x, y, z);
 	}
 
 	var exports = {
@@ -54,26 +50,38 @@ define(function(){
 	};
 
 	var recognizers = {
-		space: spaceRecognizer
+		space: spaceRecognizer,
+		'pinch-start': pinchStartRecognizer,
+		'pinch-stop': pinchStopRecognizer
+
 	}
 
-	function spaceRecognizer(value, scope) {
+	function pinchStartRecognizer(value, stem) {
 		if (value.hand == 'left') {
-			adjustFilter(value.x, 'low', scope);
-			adjustGain(value.y, scope);
-			// adjustPan(value.x, value.y, value.z, scope);
-
-		} else { // Right hand
-			// adjustFilter(value.x, 'high', scope);
-			adjustFilter(value.x, 'low', scope);
-			adjustGain(value.y, scope);
+			adjustGain(0, stem);
+			adjustFilter(0, 'low', stem);
 		}
-
 	}
 
-	function processMessage(msg, scope) {
+	function pinchStopRecognizer(value, stem) {
+		if (value.hand == 'left') {
+			adjustGain(1, stem);
+			adjustFilter(1, 'low', stem);
+		}
+	}
+
+	function spaceRecognizer(value, stem) {
+		if (value.hand == 'right') {
+			adjustFilter(value.x, 'low', stem);
+			adjustGain(value.y, stem);
+		} else if (value.hand == 'left') {
+			adjustFilter(1 - value.x, 'band', stem); // invert
+		}
+	}
+
+	function processMessage(msg, stem) {
 		if (msg.type in recognizers) {
-			recognizers[msg.type](msg, scope);
+			recognizers[msg.type](msg, stem);
 		}
 	}
 
