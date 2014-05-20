@@ -35,7 +35,7 @@ define(['require', 'leap', 'detectors', 'pubsub'], function(require, Leap, detec
 
 		function selectTrack(tracks) {
 			scope.$apply(function(){
-				var index = parseInt(window.location.hash || '0', 10);
+				var index = parseInt(window.location.hash.substr(1), 10);
 				scope.tracks = tracks;
 				scope.selectedTrack = scope.tracks[scope.tracks.length > index ? index : 0];
 			});

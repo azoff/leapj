@@ -24,7 +24,9 @@ define(['visuals', 'pubsub', 'gestures'], function(visuals, pubsub, gestures){
 			var canvas = el.find('canvas');
 			scope.visualizer = new visuals.Visualizer(canvas, scope.stem.player);
 			scope.visualizer.start();
-			scope.loading = false;
+			scope.$apply(function(){
+				scope.loading = false;
+			});
 		}
 
 	}
