@@ -40,7 +40,7 @@ define(['visuals', 'pubsub', 'gestures', 'user'], function(visuals, pubsub, gest
 
 		function applyUser(user) {
 			scope.visualizer.setBaseColor(user.color);
-			scope.borderColor = user.color;
+			scope.borderColor = visuals.rgbToHex(user.color);
 			scope.stem.name = user.alias;
 		}
 

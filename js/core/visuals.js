@@ -20,10 +20,6 @@ define(['exports'], function(exports){
 		return hex.length == 1 ? "0" + hex : hex;
 	}
 
-	function rgbToHex(rgb) {
-		return "#" + intToHex(rgb[0]) + intToHex(rgb[1]) + intToHex(rgb[2]);
-	}
-
 	var Visualizer = exports.Visualizer = function(canvas, player) {
 		this._player = player;
 		this._canvas = canvas;
@@ -98,6 +94,10 @@ define(['exports'], function(exports){
 		if (analyser) this.draw(analyser);
 		if (this._looping)
 			requestAnimationFrame(this.looper());
+	};
+
+	var rgbToHex = exports.rgbToHex = function(rgb) {
+		return "#" + intToHex(rgb[0]) + intToHex(rgb[1]) + intToHex(rgb[2]);
 	};
 
 	exports.randomNeutralRGB = function() {
