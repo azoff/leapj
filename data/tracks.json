@@ -1,5 +1,15 @@
 [
 	{
+		"name": "Mashup",
+		"artist": "Aylan",
+		"stems": {
+			"drum1": "https://leapj-assets.s3.amazonaws.com/audio/with_stems/mashup-stems/drum1.mp3",
+			"drum2": "https://leapj-assets.s3.amazonaws.com/audio/with_stems/mashup-stems/drum2.mp3",
+			"melody": "https://leapj-assets.s3.amazonaws.com/audio/with_stems/mashup-stems/melody.mp3",
+			"voice": "https://leapj-assets.s3.amazonaws.com/audio/with_stems/mashup-stems/voice.mp3"
+		}
+	},
+	{
 		"name": "Armistice",
 		"artist": "Phoenix",
 		"stems": {
