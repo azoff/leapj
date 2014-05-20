@@ -1,6 +1,7 @@
 define(function(){
 
 	function togglePhaser(value, stem) {
+		if (!stem.player.phaserNode) return;
 		stem.player.phaserNode.toggleBypass(value);
 	}
 
