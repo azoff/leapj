@@ -63,11 +63,12 @@ body {
 }
 
 #start {
+
 	top: 50%;
 	left: 50%;
 	width: 40%;
 	position: absolute;
-	margin: ($size-unit*-2) 0 0 (-20%);
+	margin: (-48px) 0 0 (-20%);
 	z-index: 11;
 
 	[type=text] {
@@ -75,30 +76,49 @@ body {
 	}
 	button {
 		width: 50%;
-		display: inline-block;
-		position: relative;
-		@include opacity(0);
-		@include transition(opacity 500ms);
-		left: -9999px;
-	}
-	&.has-room {
-		[type=text] {
-			@include border-radius(5px 5px 0 0);
-			border-bottom-width: 0;
-		}
-		button {
-			@include opacity(1);
-			left: auto;
-		}
 	}
 	button, [type=text] {
+		@include opacity(1);
 		font-size: $size-unit * 2;
+		display: inline-block;
+		position: relative;
+	}
+	button, #room {
+		@include transition(opacity 500ms);
+		@include opacity(0);
+		left: -9999px;
 	}
 	#start-receiving {
+		border-right: solid 0;
 		@include border-radius(0 0 0 5px);
 	}
 	#start-gesturing {
 		@include border-radius(0 0 5px 0);
+	}
+	#room {
+		@include border-radius(0 0 5px 5px);
+	}
+	&.has-alias {
+		margin-top: -72px;
+		#alias {
+			@include border-radius(5px 5px 0 0);
+			border-bottom: solid 0;
+		}
+		#room {
+			@include opacity(1);
+			left: auto
+		}
+	}
+	&.has-room {
+		margin-top: -108px;
+		#room {
+			@include border-radius(0);
+			border-bottom-width: 0;
+		}
+	}
+	&.has-alias.has-room button {
+		@include opacity(1);
+		left: auto;
 	}
 	&.started {
 		top: -200px;

@@ -19,8 +19,9 @@
 
 	<div id="content" ng-controller="tracks">
 
-		<div ng-show="tracks" id="start" ng-class="{'has-room':room,started:mode}">
-			<input type="text" placeholder="Where you at?!" ng-model="room" />
+		<div ng-show="tracks" id="start" ng-class="{'has-alias':alias,'has-room':room,started:mode}">
+			<input id="alias" type="text" placeholder="Name Please" ng-model="alias" />
+			<input id="room" type="text" placeholder="Join A Room" ng-model="room" />
 			<button id="start-receiving" ng-click="startReceiving()">Dance.
 			</button><button id="start-gesturing" ng-click="startSending()">Leap.</button>
 		</div>
