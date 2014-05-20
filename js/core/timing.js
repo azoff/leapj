@@ -24,16 +24,6 @@ define(['audio'], function(audio){
 		this.audio = ts.audio || newAdjustedAudioTimestamp();
 	}
 
-	Timestamp.prototype.scheduleAtTimestamp = function(execute) {
-		var unix = this.unix;
-		var audio = this.audio;
-		function test() {
-			if (newUnixTimestamp() <= unix) execute(audio);
-			else window.requestAnimationFrame(test);
-		}
-		test();
-	}
-
 	return {
 		Timestamp: Timestamp
 	}

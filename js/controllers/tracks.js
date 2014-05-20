@@ -43,9 +43,14 @@ define(['require', 'leap', 'detectors', 'pubsub', 'user'], function(require, Lea
 
 		function selectTrack(tracks) {
 			scope.$apply(function(){
-				var index = parseInt(window.location.hash.substr(1), 10);
+				var name = window.location.hash.substr(1);
 				scope.tracks = tracks;
-				scope.selectedTrack = scope.tracks[scope.tracks.length > index ? index : 0];
+				scope.selectedTrack = scope.tracks[0];
+				if (name) {
+					scope.alias = scope.room = name;
+					scope.start();
+					users.session._stems = scope.selectedTrack.stems;
+				}
 			});
 		}
 
