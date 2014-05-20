@@ -5,7 +5,7 @@ define(['pubsub', 'timing', 'user', 'SayCheese', 'jquery'], function(pubsub, tim
 	return function(scope, el) {
 
 		var camera;
-		var size = 360;
+		var size = 64;
 
 		publishPic();
 
@@ -13,7 +13,7 @@ define(['pubsub', 'timing', 'user', 'SayCheese', 'jquery'], function(pubsub, tim
 
 		function checkPic(msg) {
 			if (msg.type !== 'picture') return;
-			if (msg.alias === users.session.alias) return;
+			if (msg.user.alias === users.session.alias) return;
 			createUserImage(msg);
 		}
 
@@ -21,7 +21,9 @@ define(['pubsub', 'timing', 'user', 'SayCheese', 'jquery'], function(pubsub, tim
 			var data = msg.data;
 			var container = getUserContainer(msg.user).empty();
 			var canvas = $(document.createElement('canvas')).appendTo(container);
-			canvas.get(0).getContext('2d').putImageData(data, 0, 0);
+			var context = canvas.get(0).getContext('2d');
+			console.log(context.putImageData);
+			context.putImageData(data, 0, 0);
 		}
 
 		function getUserContainer(user) {
@@ -33,7 +35,7 @@ define(['pubsub', 'timing', 'user', 'SayCheese', 'jquery'], function(pubsub, tim
 
 		function publishPic(snapshot) {
 
-			var timeout = 64;
+			var timeout = 3000;
 
 			if (!camera) {
 				var container = getUserContainer(users.session);
