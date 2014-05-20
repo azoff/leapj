@@ -24,8 +24,8 @@ define(['visuals', 'pubsub', 'gestures', 'user'], function(visuals, pubsub, gest
 
 		function resetPlayhead(offset) {
 			users.session.playStart = offset;
-			scope.stem.stop();
-			scope.stem.play(offset);
+			scope.stem.player.stop();
+			scope.stem.player.play(offset);
 		}
 
 		function applyControlMessage(msg) {
