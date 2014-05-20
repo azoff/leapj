@@ -20,7 +20,7 @@ define(['pubsub', 'timing', 'user', 'SayCheese', 'jquery'], function(pubsub, tim
 		function createUserImage(msg) {
 			var data = msg.data;
 			var container = getUserContainer(msg.user).empty();
-			var canvas = $('<canvas/>').appendTo(container);
+			var canvas = $(document.createElement('canvas')).appendTo(container);
 			canvas.get(0).getContext('2d').putImageData(data, 0, 0);
 		}
 
@@ -33,7 +33,7 @@ define(['pubsub', 'timing', 'user', 'SayCheese', 'jquery'], function(pubsub, tim
 
 		function publishPic(snapshot) {
 
-			var timeout = 3000;
+			var timeout = 64;
 
 			if (!camera) {
 				var container = getUserContainer(users.session);
