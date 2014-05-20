@@ -1,4 +1,4 @@
-define(['jquery', 'exports'], function($, exports){
+define(['jquery', 'exports', 'user'], function($, exports, users){
 
 	var AudioContext = window.AudioContext || window.webkitAudioContext;
 
@@ -29,7 +29,7 @@ define(['jquery', 'exports'], function($, exports){
 	};
 
 	Player.prototype.play = function(startTime) {
-		var offset = startTime ? ((new Date().getTime()/1000) - startTime) : 0;
+		var offset = startTime ? (users.newTimestamp() - startTime) : 0;
 		var source = this._source = api.createBufferSource(); source.buffer = this._buffer;
 		this._middleware(source).connect(speakers);
 		source.start(0, offset);

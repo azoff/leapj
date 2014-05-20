@@ -34,6 +34,9 @@ define(['visuals'], function(visuals){
 	};
 
 	return {
+		newTimestamp: function() {
+			return new Date().getTime() / 1000;
+		},
 		session: new User(),
 		User: User
 	};

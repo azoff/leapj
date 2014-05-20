@@ -23,7 +23,7 @@ define(['visuals', 'pubsub', 'gestures', 'user'], function(visuals, pubsub, gest
 		}
 
 		function resetPlayhead(offset) {
-			users.session.playStart = user.playStart;
+			users.session.playStart = offset;
 			scope.stem.stop();
 			scope.stem.play(offset);
 		}
