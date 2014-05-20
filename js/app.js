@@ -19,7 +19,8 @@
 			leap: 'leap/leap-0.6.0',
 			leapPlugins: 'leap/leap-plugins-0.1.6',
 			leapHand: 'leap/leap.rigged-hand-0.1.4.min',
-			SayCheese: 'say-cheese/say-cheese'
+			SayCheese: 'say-cheese/say-cheese',
+			tuna: 'tuna/tuna'
 		},
 		shim: {
 			angular: {

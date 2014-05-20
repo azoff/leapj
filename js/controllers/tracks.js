@@ -34,6 +34,8 @@ define(['require', 'leap', 'detectors', 'pubsub', 'user'], function(require, Lea
 		function detectMotions(frame) {
 			detectors.space(frame, publishMotionEvent);
 			detectors.pinch(frame, publishMotionEvent);
+			detectors.triangle(frame, publishMotionEvent);
+			detectors.swipe(frame, publishMotionEvent);
 		}
 
 		function publishMotionEvent(event) {
