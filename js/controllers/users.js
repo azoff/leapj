@@ -21,10 +21,8 @@ define(['pubsub', 'timing', 'user', 'SayCheese', 'jquery'], function(pubsub, tim
 			var data = msg.data;
 			var container = getUserContainer(msg.user);
 			if (!container) return;
-			var canvas = $(document.createElement('canvas')).appendTo(container.empty());
-			var context = canvas.get(0).getContext('2d');
-			console.log(context.putImageData);
-			context.putImageData(data, 0, 0);
+			var img = $(document.createElement('img')).appendTo(container.empty());
+			img.src = data;
 		}
 
 		function getUserContainer(user) {
@@ -49,8 +47,8 @@ define(['pubsub', 'timing', 'user', 'SayCheese', 'jquery'], function(pubsub, tim
 			}
 
 			setTimeout(function(){ camera.takeSnapshot(size, size); }, timeout);
-			if (snapshot && snapshot.getContext)
-				pubsub.publish({ type: 'picture', data: snapshot.getContext('2d').getImageData(0, 0, size, size) });
+			if (snapshot && snapshot.toDataURL)
+				pubsub.publish({ type: 'picture', data: snapshot.toDataURL() });
 
 		}
 
